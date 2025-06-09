@@ -1,0 +1,1068 @@
+2025-06-08 08:48:36,780 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 08:48:36,781 - discord.client - INFO - logging in using static token
+2025-06-08 08:48:37,728 - database - INFO - データベースの初期化が完了しました
+2025-06-08 08:48:37,728 - __main__ - ERROR - BOTの初期化に失敗: 'NoneType' object has no attribute 'change_presence'
+2025-06-08 08:48:37,729 - __main__ - ERROR - Bot起動エラー: 'NoneType' object has no attribute 'change_presence'
+2025-06-08 08:49:26,740 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 08:49:26,743 - discord.client - INFO - logging in using static token
+2025-06-08 08:49:27,493 - database - INFO - データベースの初期化が完了しました
+2025-06-08 08:49:27,493 - __main__ - ERROR - BOTの初期化に失敗: 'NoneType' object has no attribute 'change_presence'
+2025-06-08 08:49:27,494 - __main__ - ERROR - Bot起動エラー: 'NoneType' object has no attribute 'change_presence'
+2025-06-08 08:53:09,100 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 08:53:09,102 - discord.client - INFO - logging in using static token
+2025-06-08 08:53:09,861 - database - INFO - データベースの初期化が完了しました
+2025-06-08 08:53:09,861 - __main__ - ERROR - BOTの初期化に失敗: 'NoneType' object has no attribute 'change_presence'
+2025-06-08 08:53:09,862 - __main__ - ERROR - Bot起動エラー: 'NoneType' object has no attribute 'change_presence'
+2025-06-08 08:57:34,513 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 08:57:34,515 - discord.client - INFO - logging in using static token
+2025-06-08 08:57:35,292 - database - INFO - データベースの初期化が完了しました
+2025-06-08 08:57:35,293 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 08:57:35,805 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: d681f6ef5a3a9e56ff7a575a1b5d6a1a).
+2025-06-08 08:57:38,011 - __main__ - INFO - Klee bot#1963 として接続しました
+2025-06-08 08:57:38,011 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 08:57:38,011 - __main__ - INFO - 接続サーバー数: 6
+2025-06-08 08:57:38,012 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 08:59:06,831 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 08:59:06,832 - discord.client - INFO - logging in using static token
+2025-06-08 08:59:07,678 - database - INFO - データベースの初期化が完了しました
+2025-06-08 08:59:07,679 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 08:59:08,200 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 9b556920ce6549f1d5a05ac0bcd7b926).
+2025-06-08 08:59:10,344 - __main__ - INFO - Klee bot#1963 として接続しました
+2025-06-08 08:59:10,344 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 08:59:10,344 - __main__ - INFO - 接続サーバー数: 6
+2025-06-08 08:59:10,345 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 09:02:04,980 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 09:02:04,982 - discord.client - INFO - logging in using static token
+2025-06-08 09:02:05,735 - database - INFO - データベースの初期化が完了しました
+2025-06-08 09:02:05,735 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 09:02:06,250 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: dce58cd9222a406f35631ed5f21a406b).
+2025-06-08 09:02:08,439 - __main__ - INFO - Klee bot#1963 として接続しました
+2025-06-08 09:02:08,439 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 09:02:08,440 - __main__ - INFO - 接続サーバー数: 6
+2025-06-08 09:02:08,441 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 09:05:22,737 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 09:08:03,440 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 09:08:03,441 - discord.client - INFO - logging in using static token
+2025-06-08 09:08:04,356 - database - INFO - データベースの初期化が完了しました
+2025-06-08 09:08:05,185 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 09:08:05,186 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 09:08:05,716 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 2789588085a7b5673494440a20307a03).
+2025-06-08 09:08:07,929 - __main__ - INFO - Klee bot#1963 として接続しました
+2025-06-08 09:08:07,929 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 09:08:07,929 - __main__ - INFO - 接続サーバー数: 6
+2025-06-08 09:08:07,930 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 09:08:49,529 - discord.app_commands.tree - ERROR - Ignoring exception in command tree
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1089, in wrapper
+    await self._call(interaction)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1221, in _call
+    command, options = self._get_app_command_options(data)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1125, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'upload_csv' not found
+2025-06-08 09:09:56,263 - discord.app_commands.tree - ERROR - Ignoring exception in command tree
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1089, in wrapper
+    await self._call(interaction)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1221, in _call
+    command, options = self._get_app_command_options(data)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1125, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'upload_csv' not found
+2025-06-08 09:10:05,156 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 09:10:05,157 - discord.client - INFO - logging in using static token
+2025-06-08 09:10:05,928 - database - INFO - データベースの初期化が完了しました
+2025-06-08 09:10:06,341 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 09:10:06,342 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 09:10:06,881 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 28f9bab6075cc8ec03215f41c3c8f1d8).
+2025-06-08 09:10:09,157 - __main__ - INFO - Klee bot#1963 として接続しました
+2025-06-08 09:10:09,157 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 09:10:09,158 - __main__ - INFO - 接続サーバー数: 6
+2025-06-08 09:10:09,158 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 09:10:30,440 - discord.app_commands.tree - ERROR - Ignoring exception in command tree
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1089, in wrapper
+    await self._call(interaction)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1221, in _call
+    command, options = self._get_app_command_options(data)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1125, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'upload_csv' not found
+2025-06-08 09:13:19,992 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 09:14:18,601 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 09:14:18,602 - discord.client - INFO - logging in using static token
+2025-06-08 09:14:19,323 - database - INFO - データベースの初期化が完了しました
+2025-06-08 09:14:19,944 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 09:14:19,945 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 09:14:20,460 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 5e468f49af79007ad3537e8b3dea6aa6).
+2025-06-08 09:14:22,593 - __main__ - INFO - Klee bot#1963 として接続しました
+2025-06-08 09:14:22,593 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 09:14:22,594 - __main__ - INFO - 接続サーバー数: 6
+2025-06-08 09:14:22,594 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 09:14:43,868 - discord.app_commands.tree - ERROR - Ignoring exception in command tree
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1089, in wrapper
+    await self._call(interaction)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1221, in _call
+    command, options = self._get_app_command_options(data)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1125, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'upload_csv' not found
+2025-06-08 09:14:44,326 - database - INFO - データベースをバックアップしました: ./backups//backup_20250608_091444.db
+2025-06-08 09:14:44,327 - __main__ - INFO - バックアップを作成: ./backups//backup_20250608_091444.db
+2025-06-08 09:14:44,828 - csv_manager - INFO - equipmentデータを114件処理しました
+2025-06-08 09:15:01,175 - discord.app_commands.tree - ERROR - Ignoring exception in command tree
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1089, in wrapper
+    await self._call(interaction)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1221, in _call
+    command, options = self._get_app_command_options(data)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1125, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'upload_csv' not found
+2025-06-08 09:15:01,574 - database - INFO - データベースをバックアップしました: ./backups//backup_20250608_091501.db
+2025-06-08 09:15:01,574 - __main__ - INFO - バックアップを作成: ./backups//backup_20250608_091501.db
+2025-06-08 09:16:36,649 - discord.app_commands.tree - ERROR - Ignoring exception in command tree
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1089, in wrapper
+    await self._call(interaction)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1221, in _call
+    command, options = self._get_app_command_options(data)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1125, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'upload_csv' not found
+2025-06-08 09:16:37,137 - database - INFO - データベースをバックアップしました: ./backups//backup_20250608_091637.db
+2025-06-08 09:16:37,137 - __main__ - INFO - バックアップを作成: ./backups//backup_20250608_091637.db
+2025-06-08 09:16:37,565 - csv_manager - ERROR - データ挿入エラー: table materials has no column named 正式名称
+2025-06-08 09:16:37,566 - csv_manager - ERROR - CSV処理エラー: table materials has no column named 正式名称
+2025-06-08 09:52:57,438 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 09:53:10,107 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 09:54:17,304 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 09:54:17,306 - discord.client - INFO - logging in using static token
+2025-06-08 09:54:18,064 - database - INFO - データベースの初期化が完了しました
+2025-06-08 09:54:18,523 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 09:54:18,524 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 09:54:19,129 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 078afbb67751c997bd9d1cafb9df9988).
+2025-06-08 09:54:21,346 - __main__ - INFO - Klee bot#1963 として接続しました
+2025-06-08 09:54:21,396 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 09:54:21,454 - __main__ - INFO - 接続サーバー数: 5
+2025-06-08 09:54:21,455 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 09:54:38,967 - discord.app_commands.tree - ERROR - Ignoring exception in command tree
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1089, in wrapper
+    await self._call(interaction)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1221, in _call
+    command, options = self._get_app_command_options(data)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1125, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'upload_csv' not found
+2025-06-08 09:54:39,410 - database - INFO - データベースをバックアップしました: ./backups//backup_20250608_095439.db
+2025-06-08 09:54:39,410 - __main__ - INFO - バックアップを作成: ./backups//backup_20250608_095439.db
+2025-06-08 09:54:40,077 - csv_manager - ERROR - データ挿入エラー: table equipments has no column named acquisition_location
+2025-06-08 09:54:40,078 - csv_manager - ERROR - CSV処理エラー: table equipments has no column named acquisition_location
+2025-06-08 09:56:53,735 - discord.gateway - INFO - Shard ID None has successfully RESUMED session d681f6ef5a3a9e56ff7a575a1b5d6a1a.
+2025-06-08 10:00:06,890 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 10:01:13,725 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 10:01:13,733 - database - INFO - gatheringsテーブルからusageカラムを削除します
+2025-06-08 10:01:13,818 - database - INFO - gatheringsテーブルのマイグレーションが完了しました
+2025-06-08 10:01:13,841 - database - INFO - データベースの初期化が完了しました
+2025-06-08 10:02:37,738 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 10:02:38,021 - database - INFO - データベースの初期化が完了しました
+2025-06-08 10:03:01,102 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 10:03:45,989 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 10:03:46,274 - database - INFO - データベースの初期化が完了しました
+2025-06-08 10:05:29,391 - discord.app_commands.tree - ERROR - Ignoring exception in command tree
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1089, in wrapper
+    await self._call(interaction)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1221, in _call
+    command, options = self._get_app_command_options(data)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1125, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'genpic' not found
+2025-06-08 10:26:04,795 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 10:26:04,796 - discord.client - INFO - logging in using static token
+2025-06-08 10:26:05,500 - database - INFO - データベースの初期化が完了しました
+2025-06-08 10:26:05,893 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 10:26:05,894 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 10:26:06,456 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: a840478ee144ea93ec30854e3be9c92c).
+2025-06-08 10:26:08,519 - __main__ - INFO - Klee bot#1963 として接続しました
+2025-06-08 10:26:08,519 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 10:26:08,520 - __main__ - INFO - 接続サーバー数: 5
+2025-06-08 10:26:08,520 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 10:28:47,221 - discord.app_commands.tree - ERROR - Ignoring exception in command tree
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1089, in wrapper
+    await self._call(interaction)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1221, in _call
+    command, options = self._get_app_command_options(data)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1125, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'upload_csv' not found
+2025-06-08 10:28:47,659 - database - INFO - データベースをバックアップしました: ./backups//backup_20250608_102847.db
+2025-06-08 10:28:47,659 - __main__ - INFO - バックアップを作成: ./backups//backup_20250608_102847.db
+2025-06-08 10:28:48,419 - csv_manager - INFO - equipmentデータを114件処理しました
+2025-06-08 10:28:59,269 - discord.app_commands.tree - ERROR - Ignoring exception in command tree
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1089, in wrapper
+    await self._call(interaction)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1221, in _call
+    command, options = self._get_app_command_options(data)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1125, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'upload_csv' not found
+2025-06-08 10:28:59,858 - database - INFO - データベースをバックアップしました: ./backups//backup_20250608_102859.db
+2025-06-08 10:28:59,858 - __main__ - INFO - バックアップを作成: ./backups//backup_20250608_102859.db
+2025-06-08 10:29:00,243 - csv_manager - INFO - materialデータを105件処理しました
+2025-06-08 10:29:10,288 - discord.app_commands.tree - ERROR - Ignoring exception in command tree
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1089, in wrapper
+    await self._call(interaction)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1221, in _call
+    command, options = self._get_app_command_options(data)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1125, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'upload_csv' not found
+2025-06-08 10:29:10,616 - database - INFO - データベースをバックアップしました: ./backups//backup_20250608_102910.db
+2025-06-08 10:29:10,616 - __main__ - INFO - バックアップを作成: ./backups//backup_20250608_102910.db
+2025-06-08 10:29:27,601 - discord.app_commands.tree - ERROR - Ignoring exception in command tree
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1089, in wrapper
+    await self._call(interaction)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1221, in _call
+    command, options = self._get_app_command_options(data)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1125, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'upload_csv' not found
+2025-06-08 10:29:27,962 - database - INFO - データベースをバックアップしました: ./backups//backup_20250608_102927.db
+2025-06-08 10:29:27,962 - __main__ - INFO - バックアップを作成: ./backups//backup_20250608_102927.db
+2025-06-08 10:49:11,392 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 10:49:11,629 - database - INFO - データベースの初期化が完了しました
+2025-06-08 10:50:15,277 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 10:50:15,279 - discord.client - INFO - logging in using static token
+2025-06-08 10:50:16,098 - database - INFO - データベースの初期化が完了しました
+2025-06-08 10:50:16,435 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 10:50:16,435 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 10:50:16,988 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 598a0e138c723b24d5a47c474bcd9cc3).
+2025-06-08 10:50:19,227 - __main__ - INFO - Klee bot#1963 として接続しました
+2025-06-08 10:50:19,228 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 10:50:19,228 - __main__ - INFO - 接続サーバー数: 5
+2025-06-08 10:50:19,229 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 10:50:35,358 - discord.app_commands.tree - ERROR - Ignoring exception in command tree
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1089, in wrapper
+    await self._call(interaction)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1221, in _call
+    command, options = self._get_app_command_options(data)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1125, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'upload_csv' not found
+2025-06-08 10:50:35,762 - database - INFO - データベースをバックアップしました: ./backups//backup_20250608_105035.db
+2025-06-08 10:50:35,762 - __main__ - INFO - バックアップを作成: ./backups//backup_20250608_105035.db
+2025-06-08 10:50:36,300 - csv_manager - INFO - equipmentデータを114件処理しました
+2025-06-08 10:50:47,677 - discord.app_commands.tree - ERROR - Ignoring exception in command tree
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1089, in wrapper
+    await self._call(interaction)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1221, in _call
+    command, options = self._get_app_command_options(data)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1125, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'upload_csv' not found
+2025-06-08 10:50:48,013 - database - INFO - データベースをバックアップしました: ./backups//backup_20250608_105047.db
+2025-06-08 10:50:48,013 - __main__ - INFO - バックアップを作成: ./backups//backup_20250608_105047.db
+2025-06-08 10:50:48,996 - csv_manager - INFO - materialデータを105件処理しました
+2025-06-08 10:50:58,235 - discord.app_commands.tree - ERROR - Ignoring exception in command tree
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1089, in wrapper
+    await self._call(interaction)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1221, in _call
+    command, options = self._get_app_command_options(data)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1125, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'upload_csv' not found
+2025-06-08 10:50:58,576 - database - INFO - データベースをバックアップしました: ./backups//backup_20250608_105058.db
+2025-06-08 10:50:58,576 - __main__ - INFO - バックアップを作成: ./backups//backup_20250608_105058.db
+2025-06-08 10:53:22,488 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 10:53:56,717 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 10:54:40,627 - discord.app_commands.tree - ERROR - Ignoring exception in command tree
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1089, in wrapper
+    await self._call(interaction)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1221, in _call
+    command, options = self._get_app_command_options(data)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1125, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'upload_csv' not found
+2025-06-08 10:54:41,034 - database - INFO - データベースをバックアップしました: ./backups//backup_20250608_105441.db
+2025-06-08 10:54:41,035 - __main__ - INFO - バックアップを作成: ./backups//backup_20250608_105441.db
+2025-06-08 10:54:47,574 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 10:54:47,575 - discord.client - INFO - logging in using static token
+2025-06-08 10:54:48,470 - database - INFO - データベースの初期化が完了しました
+2025-06-08 10:54:48,927 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 10:54:48,927 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 10:54:49,406 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: fa9a2896dece62048fb4fb62ce71b5cb).
+2025-06-08 10:54:51,472 - __main__ - INFO - Klee bot#1963 として接続しました
+2025-06-08 10:54:51,472 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 10:54:51,473 - __main__ - INFO - 接続サーバー数: 5
+2025-06-08 10:54:51,473 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 10:55:01,945 - discord.app_commands.tree - ERROR - Ignoring exception in command tree
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1089, in wrapper
+    await self._call(interaction)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1221, in _call
+    command, options = self._get_app_command_options(data)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1125, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'upload_csv' not found
+2025-06-08 10:55:02,316 - database - INFO - データベースをバックアップしました: ./backups//backup_20250608_105502.db
+2025-06-08 10:55:02,316 - __main__ - INFO - バックアップを作成: ./backups//backup_20250608_105502.db
+2025-06-08 10:55:02,762 - csv_manager - INFO - mobデータを39件処理しました
+2025-06-08 10:55:15,708 - discord.app_commands.tree - ERROR - Ignoring exception in command tree
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1089, in wrapper
+    await self._call(interaction)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1221, in _call
+    command, options = self._get_app_command_options(data)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1125, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'stats' not found
+2025-06-08 10:55:40,511 - search_engine - ERROR - 素材使用アイテム検索エラー: no such column: required_materials
+2025-06-08 10:55:53,394 - discord.app_commands.tree - ERROR - Ignoring exception in command tree
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1089, in wrapper
+    await self._call(interaction)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1221, in _call
+    command, options = self._get_app_command_options(data)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1125, in _get_app_command_options
+    raise CommandNotFound(name, parents)
+discord.app_commands.errors.CommandNotFound: Application command 'stats' not found
+2025-06-08 10:56:12,378 - search_engine - ERROR - 素材使用アイテム検索エラー: no such column: required_materials
+2025-06-08 10:56:49,520 - search_engine - ERROR - 素材使用アイテム検索エラー: no such column: required_materials
+2025-06-08 11:03:54,909 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 11:04:31,281 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 11:05:05,612 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 11:11:24,483 - discord.gateway - INFO - Shard ID None has successfully RESUMED session fa9a2896dece62048fb4fb62ce71b5cb.
+2025-06-08 11:34:41,963 - discord.gateway - INFO - Shard ID None has successfully RESUMED session d681f6ef5a3a9e56ff7a575a1b5d6a1a.
+2025-06-08 11:50:13,937 - discord.gateway - INFO - Shard ID None has successfully RESUMED session fa9a2896dece62048fb4fb62ce71b5cb.
+2025-06-08 12:02:32,747 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 12:02:32,748 - discord.client - INFO - logging in using static token
+2025-06-08 12:02:33,460 - database - INFO - データベースの初期化が完了しました
+2025-06-08 12:02:33,768 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 12:02:33,768 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 12:02:34,340 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 5b7830b56e2b5151061c86afd36764aa).
+2025-06-08 12:02:36,600 - __main__ - INFO - Klee bot#1963 として接続しました
+2025-06-08 12:02:36,600 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 12:02:36,601 - __main__ - INFO - 接続サーバー数: 5
+2025-06-08 12:02:36,601 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 12:02:45,438 - embed_manager - ERROR - アイテム詳細Embed作成エラー: 'EmbedManager' object has no attribute '_add_basic_info_section'
+2025-06-08 12:02:51,892 - search_engine - ERROR - 素材使用アイテム検索エラー: no such column: required_materials
+2025-06-08 12:02:56,768 - embed_manager - ERROR - アイテム詳細Embed作成エラー: 'EmbedManager' object has no attribute '_add_basic_info_section'
+2025-06-08 12:02:59,307 - search_engine - ERROR - 素材使用アイテム検索エラー: no such column: required_materials
+2025-06-08 12:10:28,222 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 12:10:28,224 - discord.client - INFO - logging in using static token
+2025-06-08 12:10:28,979 - database - INFO - データベースの初期化が完了しました
+2025-06-08 12:10:29,393 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 12:10:29,393 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 12:10:29,912 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 71f1eb032563399d966f820ac1816ebf).
+2025-06-08 12:10:31,936 - __main__ - INFO - Klee bot#1963 として接続しました
+2025-06-08 12:10:31,936 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 12:10:31,937 - __main__ - INFO - 接続サーバー数: 3
+2025-06-08 12:10:31,937 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 12:10:37,905 - embed_manager - ERROR - アイテム詳細Embed作成エラー: 'EmbedManager' object has no attribute '_add_basic_info_section'
+2025-06-08 12:13:05,124 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 12:13:05,124 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-08 12:13:05,126 - discord.client - INFO - logging in using static token
+2025-06-08 12:13:05,981 - database - INFO - データベースの初期化が完了しました
+2025-06-08 12:13:06,407 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 12:13:06,407 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 12:13:06,959 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 6384a5a09ea1ac053cfb9cccc12d0c75).
+2025-06-08 12:13:09,001 - __main__ - INFO - Klee bot#1963 として接続しました
+2025-06-08 12:13:09,001 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 12:13:09,001 - __main__ - INFO - 接続サーバー数: 3
+2025-06-08 12:13:09,002 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 12:13:13,247 - __main__ - INFO - アイテム検索開始: '石' from klee.com
+2025-06-08 12:13:13,332 - embed_manager - ERROR - アイテム詳細Embed作成エラー: 'EmbedManager' object has no attribute '_add_basic_info_section'
+2025-06-08 12:13:26,074 - __main__ - INFO - アイテム検索開始: '魔法石' from klee.com
+2025-06-08 12:13:26,129 - embed_manager - ERROR - アイテム詳細Embed作成エラー: 'EmbedManager' object has no attribute '_add_basic_info_section'
+2025-06-08 12:13:36,330 - __main__ - INFO - アイテム検索開始: '魔法石１' from klee.com
+2025-06-08 12:13:47,294 - search_engine - ERROR - 素材使用アイテム検索エラー: no such column: required_materials
+2025-06-08 12:20:30,001 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 12:20:30,001 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-08 12:20:30,003 - discord.client - INFO - logging in using static token
+2025-06-08 12:20:31,316 - database - INFO - データベースの初期化が完了しました
+2025-06-08 12:20:31,724 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 12:20:31,725 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 12:20:32,417 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 1716320908399934a20e098baf324033).
+2025-06-08 12:20:34,518 - __main__ - INFO - Klee bot#1963 として接続しました
+2025-06-08 12:20:34,519 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 12:20:34,519 - __main__ - INFO - 接続サーバー数: 3
+2025-06-08 12:20:34,520 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 12:22:15,424 - __main__ - INFO - アイテム検索開始: '石' from klee.com
+2025-06-08 12:22:32,576 - __main__ - INFO - アイテム検索開始: '魔法石' from klee.com
+2025-06-08 12:29:07,220 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 12:29:07,220 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-08 12:29:07,222 - discord.client - INFO - logging in using static token
+2025-06-08 12:29:07,923 - database - INFO - データベースの初期化が完了しました
+2025-06-08 12:29:08,293 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 12:29:08,294 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 12:29:08,981 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 9c893ba481d3b581696b3fa1c0ba426b).
+2025-06-08 12:29:11,132 - __main__ - INFO - Klee bot#1963 として接続しました
+2025-06-08 12:29:11,133 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 12:29:11,134 - __main__ - INFO - 接続サーバー数: 3
+2025-06-08 12:29:11,134 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 12:29:16,923 - __main__ - INFO - アイテム検索開始: '魔法石' from klee.com
+2025-06-08 12:30:00,827 - __main__ - INFO - アイテム検索開始: '究極進化結晶' from klee.com
+2025-06-08 12:35:51,993 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 12:35:51,994 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-08 12:35:51,995 - discord.client - INFO - logging in using static token
+2025-06-08 12:35:52,731 - database - INFO - データベースの初期化が完了しました
+2025-06-08 12:35:53,297 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 12:35:53,297 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 12:35:53,792 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: d85273cd70f23b9f7188323c43868b52).
+2025-06-08 12:35:56,107 - __main__ - INFO - [PID:91653] Klee bot#1963 として接続しました
+2025-06-08 12:35:56,108 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 12:35:56,108 - __main__ - INFO - 接続サーバー数: 3
+2025-06-08 12:35:56,109 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 12:36:02,479 - __main__ - INFO - [PID:91653] アイテム検索開始: '石' from klee.com
+2025-06-08 12:37:12,911 - __main__ - INFO - [PID:91653] アイテム検索開始: '石' from klee.com
+2025-06-08 12:37:21,237 - __main__ - INFO - [PID:91653] アイテム検索開始: '石' from klee.com
+2025-06-08 21:10:16,855 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 21:10:16,856 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-08 21:10:16,857 - discord.client - INFO - logging in using static token
+2025-06-08 21:10:17,644 - database - INFO - データベースの初期化が完了しました
+2025-06-08 21:10:18,115 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 21:10:18,115 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 21:10:18,646 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 315423a700c24ff63342459a2ddd73cf).
+2025-06-08 21:10:20,652 - __main__ - INFO - [PID:245] Klee bot#1963 として接続しました
+2025-06-08 21:10:20,654 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 21:10:20,656 - __main__ - INFO - 接続サーバー数: 2
+2025-06-08 21:10:20,656 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 21:12:05,673 - __main__ - INFO - [PID:245] アイテム検索開始: '魔法石' from klee.com
+2025-06-08 21:12:10,532 - embed_manager - ERROR - 関連アイテム表示エラー: 'materials'
+2025-06-08 21:12:35,365 - __main__ - INFO - [PID:245] アイテム検索開始: '破片' from klee.com
+2025-06-08 21:12:46,982 - __main__ - INFO - [PID:245] アイテム検索開始: 'オーク' from klee.com
+2025-06-08 21:13:08,975 - __main__ - INFO - [PID:245] アイテム検索開始: 'オークの毛皮' from klee.com
+2025-06-08 21:13:16,279 - __main__ - INFO - [PID:245] アイテム検索開始: '石' from klee.com
+2025-06-08 21:56:12,869 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 21:56:12,869 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-08 21:56:12,871 - discord.client - INFO - logging in using static token
+2025-06-08 21:56:13,646 - database - INFO - データベースの初期化が完了しました
+2025-06-08 21:56:14,056 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 21:56:14,056 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 21:56:14,571 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 8fb49591567de828f054c6fc93b223e3).
+2025-06-08 21:56:16,589 - __main__ - INFO - [PID:386] Klee bot#1963 として接続しました
+2025-06-08 21:56:16,589 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 21:56:16,589 - __main__ - INFO - 接続サーバー数: 2
+2025-06-08 21:56:16,590 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 21:56:18,232 - __main__ - INFO - [PID:386] アイテム検索開始: '石' from klee.com
+2025-06-08 21:59:17,388 - __main__ - INFO - [PID:386] アイテム検索開始: 'トトの羽' from klee.com
+2025-06-08 22:00:22,159 - embed_manager - ERROR - 関連アイテム表示エラー: 'materials'
+2025-06-08 22:06:34,655 - __main__ - INFO - [PID:386] アイテム検索開始: 'オーク' from klee.com
+2025-06-08 22:09:28,722 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 22:09:28,722 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-08 22:09:28,724 - discord.client - INFO - logging in using static token
+2025-06-08 22:09:29,420 - database - INFO - データベースの初期化が完了しました
+2025-06-08 22:09:29,796 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 22:09:29,797 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 22:09:30,407 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 2d4cd819e56d33f2290a08beef280e72).
+2025-06-08 22:09:32,597 - __main__ - INFO - [PID:461] Klee bot#1963 として接続しました
+2025-06-08 22:09:32,598 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 22:09:32,598 - __main__ - INFO - 接続サーバー数: 2
+2025-06-08 22:09:32,599 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 22:09:34,853 - __main__ - INFO - [PID:461] アイテム検索開始: 'オーク' from klee.com
+2025-06-08 22:10:01,582 - __main__ - INFO - [PID:461] アイテム検索開始: '石' from klee.com
+2025-06-08 22:18:59,545 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 22:18:59,546 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-08 22:18:59,547 - discord.client - INFO - logging in using static token
+2025-06-08 22:19:00,357 - database - INFO - データベースの初期化が完了しました
+2025-06-08 22:19:00,689 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 22:19:00,690 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 22:19:01,188 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 3f7982a9ee0e6fae1ae73382619625dd).
+2025-06-08 22:19:03,269 - __main__ - INFO - [PID:521] Klee bot#1963 として接続しました
+2025-06-08 22:19:03,270 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 22:19:03,270 - __main__ - INFO - 接続サーバー数: 2
+2025-06-08 22:19:03,270 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 22:19:54,705 - __main__ - INFO - [PID:521] アイテム検索開始: 'オーク' from klee.com
+2025-06-08 22:20:09,744 - __main__ - INFO - [PID:521] アイテム検索開始: 'サソリ' from klee.com
+2025-06-08 22:20:40,240 - __main__ - INFO - [PID:521] アイテム検索開始: '石' from klee.com
+2025-06-08 22:20:53,589 - __main__ - INFO - [PID:521] アイテム検索開始: 'ストーンソード' from klee.com
+2025-06-08 22:37:14,258 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 22:37:14,258 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-08 22:37:14,260 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-08 22:37:14,260 - discord.client - INFO - logging in using static token
+2025-06-08 22:37:14,261 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-08 22:37:14,261 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-08 22:37:14,262 - __main__ - INFO - Botが正常に終了しました
+2025-06-08 22:37:14,262 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<Event.wait() done, defined at /usr/lib/python3.9/asyncio/locks.py:213> exception=RuntimeError("Task <Task pending name='Task-3' coro=<Event.wait() running at /usr/lib/python3.9/asyncio/locks.py:226> cb=[_wait.<locals>._on_completion() at /usr/lib/python3.9/asyncio/tasks.py:513]> got Future <Future pending> attached to a different loop")>
+Traceback (most recent call last):
+  File "/usr/lib/python3.9/asyncio/locks.py", line 226, in wait
+    await fut
+RuntimeError: Task <Task pending name='Task-3' coro=<Event.wait() running at /usr/lib/python3.9/asyncio/locks.py:226> cb=[_wait.<locals>._on_completion() at /usr/lib/python3.9/asyncio/tasks.py:513]> got Future <Future pending> attached to a different loop
+2025-06-08 22:39:30,760 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 22:39:30,761 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-08 22:39:30,762 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-08 22:39:30,762 - discord.client - INFO - logging in using static token
+2025-06-08 22:39:31,601 - database - INFO - データベースの初期化が完了しました
+2025-06-08 22:39:31,954 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 22:39:31,955 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 22:39:32,483 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 4b81e26861f47476605ad1de866d3375).
+2025-06-08 22:39:34,522 - __main__ - INFO - [PID:809] Klee bot#1963 として接続しました
+2025-06-08 22:39:34,522 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 22:39:34,522 - __main__ - INFO - 接続サーバー数: 2
+2025-06-08 22:39:34,523 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 22:39:42,757 - __main__ - INFO - [PID:809] アイテム検索開始: 'オーク' from klee.com
+2025-06-08 22:39:51,895 - __main__ - INFO - [PID:809] アイテム検索開始: '石' from klee.com
+2025-06-08 22:43:41,776 - __main__ - INFO - [PID:809] アイテム検索開始: '盗賊' from klee.com
+2025-06-08 22:45:54,778 - __main__ - INFO - [PID:809] アイテム検索開始: '布' from klee.com
+2025-06-08 22:45:59,550 - __main__ - INFO - [PID:809] アイテム検索開始: 'かわ' from klee.com
+2025-06-08 22:46:03,616 - __main__ - INFO - [PID:809] アイテム検索開始: '皮' from klee.com
+2025-06-08 22:47:47,672 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-08 22:47:47,674 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-08 22:47:47,675 - __main__ - INFO - Botが正常に終了しました
+2025-06-08 22:47:49,916 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 22:47:49,916 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-08 22:47:49,919 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-08 22:47:49,919 - discord.client - INFO - logging in using static token
+2025-06-08 22:47:50,635 - database - INFO - データベースの初期化が完了しました
+2025-06-08 22:47:51,032 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 22:47:51,033 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 22:47:51,562 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: a1006253afa1c0e83826d44ccaf67437).
+2025-06-08 22:47:53,574 - __main__ - INFO - [PID:893] Klee bot#1963 として接続しました
+2025-06-08 22:47:53,574 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 22:47:53,575 - __main__ - INFO - 接続サーバー数: 2
+2025-06-08 22:47:53,575 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 22:48:02,462 - __main__ - INFO - [PID:893] アイテム検索開始: '布' from klee.com
+2025-06-08 22:48:21,692 - __main__ - INFO - [PID:893] アイテム検索開始: '石' from klee.com
+2025-06-08 22:49:04,403 - __main__ - INFO - [PID:893] アイテム検索開始: 'オーク' from klee.com
+2025-06-08 22:51:17,547 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-08 22:51:17,548 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-08 22:51:17,550 - __main__ - INFO - Botが正常に終了しました
+2025-06-08 22:51:20,197 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 22:51:20,197 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-08 22:51:20,199 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-08 22:51:20,199 - discord.client - INFO - logging in using static token
+2025-06-08 22:51:20,970 - database - INFO - データベースの初期化が完了しました
+2025-06-08 22:51:21,339 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 22:51:21,356 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 22:51:21,857 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 8eae4edfee3c9359ca1202c22d11b6d5).
+2025-06-08 22:51:23,870 - __main__ - INFO - [PID:970] Klee bot#1963 として接続しました
+2025-06-08 22:51:23,870 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 22:51:23,870 - __main__ - INFO - 接続サーバー数: 2
+2025-06-08 22:51:23,872 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 22:51:33,249 - __main__ - INFO - [PID:970] アイテム検索開始: '石' from klee.com
+2025-06-08 22:51:37,493 - __main__ - INFO - [PID:970] アイテム検索開始: 'オーク' from klee.com
+2025-06-08 22:54:35,235 - __main__ - INFO - [PID:970] アイテム検索開始: '盗賊' from klee.com
+2025-06-08 22:54:59,939 - __main__ - INFO - [PID:970] アイテム検索開始: '革' from klee.com
+2025-06-08 22:55:07,363 - __main__ - INFO - [PID:970] アイテム検索開始: '皮' from klee.com
+2025-06-08 23:12:00,673 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-08 23:12:00,673 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-08 23:12:00,674 - __main__ - INFO - Botが正常に終了しました
+2025-06-08 23:12:06,288 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 23:12:06,288 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-08 23:12:06,290 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-08 23:12:06,290 - discord.client - INFO - logging in using static token
+2025-06-08 23:12:07,146 - database - INFO - データベースの初期化が完了しました
+2025-06-08 23:12:07,600 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 23:12:07,600 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 23:12:08,171 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 29a5a76b9199b07f67cb61687a1984cc).
+2025-06-08 23:12:10,252 - __main__ - INFO - [PID:1037] Klee bot#1963 として接続しました
+2025-06-08 23:12:10,253 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 23:12:10,253 - __main__ - INFO - 接続サーバー数: 2
+2025-06-08 23:12:10,254 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 23:12:19,264 - __main__ - INFO - [PID:1037] アイテム検索開始: '石　オーク　盗賊' from klee.com
+2025-06-08 23:12:49,646 - __main__ - INFO - [PID:1037] アイテム検索開始: '石　オーク　盗賊　皮　革' from klee.com
+2025-06-08 23:13:05,267 - __main__ - INFO - [PID:1037] アイテム検索開始: '盗賊' from klee.com
+2025-06-08 23:14:17,324 - __main__ - INFO - [PID:1037] アイテム検索開始: 'オーク' from klee.com
+2025-06-08 23:14:36,319 - __main__ - INFO - [PID:1037] アイテム検索開始: '石' from klee.com
+2025-06-08 23:16:44,921 - __main__ - INFO - [PID:1037] アイテム検索開始: '盗賊' from klee.com
+2025-06-08 23:17:38,546 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-08 23:17:38,546 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-08 23:17:38,547 - __main__ - INFO - Botが正常に終了しました
+2025-06-08 23:21:30,671 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 23:21:30,671 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-08 23:21:30,675 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-08 23:21:30,676 - discord.client - INFO - logging in using static token
+2025-06-08 23:21:31,389 - database - INFO - データベースの初期化が完了しました
+2025-06-08 23:21:31,748 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 23:21:31,749 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 23:21:32,264 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 29af7ce3b7bb3153fdb0786f0628698d).
+2025-06-08 23:21:34,268 - __main__ - INFO - [PID:1101] Klee bot#1963 として接続しました
+2025-06-08 23:21:34,273 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 23:21:34,273 - __main__ - INFO - 接続サーバー数: 2
+2025-06-08 23:21:34,274 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 23:21:37,033 - __main__ - INFO - [PID:1101] アイテム検索開始: '盗賊' from klee.com
+2025-06-08 23:21:43,910 - __main__ - INFO - [PID:1101] アイテム検索開始: '石' from klee.com
+2025-06-08 23:22:48,771 - __main__ - INFO - [PID:1101] アイテム検索開始: '革' from klee.com
+2025-06-08 23:23:15,929 - __main__ - INFO - [PID:1101] アイテム検索開始: '魔法石' from klee.com
+2025-06-08 23:24:35,102 - __main__ - INFO - [PID:1101] アイテム検索開始: 'オーク' from klee.com
+2025-06-08 23:25:39,848 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-08 23:25:39,848 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-08 23:25:39,849 - __main__ - INFO - Botが正常に終了しました
+2025-06-08 23:40:02,404 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 23:40:02,404 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-08 23:40:02,406 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-08 23:40:02,406 - discord.client - INFO - logging in using static token
+2025-06-08 23:40:03,208 - database - INFO - データベースの初期化が完了しました
+2025-06-08 23:40:03,535 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 23:40:03,536 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 23:40:04,048 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: b5b87a37dde404f7b1ace4b5fa4e0e03).
+2025-06-08 23:40:06,063 - __main__ - INFO - [PID:1165] Klee bot#1963 として接続しました
+2025-06-08 23:40:06,064 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 23:40:06,064 - __main__ - INFO - 接続サーバー数: 2
+2025-06-08 23:40:06,065 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 23:41:03,963 - __main__ - INFO - [PID:1165] アイテム検索開始: 'オーク' from klee.com
+2025-06-08 23:41:20,322 - __main__ - INFO - [PID:1165] アイテム検索開始: '石' from klee.com
+2025-06-08 23:46:56,810 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-08 23:46:56,810 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-08 23:46:56,811 - __main__ - INFO - Botが正常に終了しました
+2025-06-08 23:48:35,152 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 23:48:35,152 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-08 23:48:35,154 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-08 23:48:35,154 - discord.client - INFO - logging in using static token
+2025-06-08 23:48:35,907 - database - INFO - データベースの初期化が完了しました
+2025-06-08 23:48:36,373 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 23:48:36,374 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 23:48:36,981 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: a8c3c1763addc52f89a76d4b901bb6e2).
+2025-06-08 23:48:38,993 - __main__ - INFO - [PID:1229] Klee bot#1963 として接続しました
+2025-06-08 23:48:38,994 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 23:48:38,994 - __main__ - INFO - 接続サーバー数: 2
+2025-06-08 23:48:38,994 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 23:48:52,034 - __main__ - INFO - [PID:1229] アイテム検索開始: 'オーク' from klee.com
+2025-06-08 23:49:06,535 - __main__ - INFO - [PID:1229] アイテム検索開始: '石' from klee.com
+2025-06-08 23:49:18,192 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-08 23:49:18,193 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-08 23:49:18,194 - __main__ - INFO - Botが正常に終了しました
+2025-06-08 23:49:22,778 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 23:49:22,778 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-08 23:49:22,780 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-08 23:49:22,780 - discord.client - INFO - logging in using static token
+2025-06-08 23:49:23,511 - database - INFO - データベースの初期化が完了しました
+2025-06-08 23:49:24,011 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 23:49:24,011 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 23:49:24,522 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 41bcb6729fe616ebd07947b6bda96798).
+2025-06-08 23:49:26,542 - __main__ - INFO - [PID:1263] Klee bot#1963 として接続しました
+2025-06-08 23:49:26,542 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 23:49:26,542 - __main__ - INFO - 接続サーバー数: 2
+2025-06-08 23:49:26,543 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 23:49:35,263 - __main__ - INFO - [PID:1263] アイテム検索開始: 'オーク' from klee.com
+2025-06-08 23:50:20,184 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-08 23:50:20,184 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-08 23:50:20,186 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-08 23:50:20,186 - discord.client - INFO - logging in using static token
+2025-06-08 23:50:21,006 - database - INFO - データベースの初期化が完了しました
+2025-06-08 23:50:21,338 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-08 23:50:21,338 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-08 23:50:21,838 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 79d3923d02231d13249579a64641ee8a).
+2025-06-08 23:50:24,003 - __main__ - INFO - [PID:1301] Klee bot#1963 として接続しました
+2025-06-08 23:50:24,003 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-08 23:50:24,004 - __main__ - INFO - 接続サーバー数: 2
+2025-06-08 23:50:24,004 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-08 23:50:46,743 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-08 23:50:46,743 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-08 23:50:46,744 - __main__ - INFO - Botが正常に終了しました
+2025-06-08 23:50:46,272 - __main__ - INFO - [PID:1301] アイテム検索開始: 'オーク' from klee.com
+2025-06-08 23:50:59,065 - __main__ - INFO - [PID:1301] アイテム検索開始: 'テスト' from klee.com
+2025-06-08 23:51:01,857 - __main__ - INFO - [PID:1301] アイテム検索開始: '石' from klee.com
+2025-06-08 23:52:43,300 - __main__ - INFO - [PID:1301] アイテム検索開始: 'オーク' from klee.com
+2025-06-09 00:44:16,780 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 00:44:16,780 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 00:44:16,782 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 00:44:16,782 - discord.client - INFO - logging in using static token
+2025-06-09 00:44:15,311 - database - INFO - データベースの初期化が完了しました
+2025-06-09 00:44:15,723 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 00:44:15,724 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 00:44:16,227 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 61b1cf7fa68473acdfd57958a8ad03e6).
+2025-06-09 00:44:18,233 - __main__ - INFO - [PID:137] Klee bot#1963 として接続しました
+2025-06-09 00:44:18,233 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 00:44:18,233 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 00:44:18,234 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 00:44:22,547 - __main__ - INFO - [PID:137] アイテム検索開始: 'オーク' from klee.com
+2025-06-09 00:44:30,224 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 00:44:30,224 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 00:44:30,225 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 00:50:44,457 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 00:50:44,458 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 00:50:44,459 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 00:50:44,460 - discord.client - INFO - logging in using static token
+2025-06-09 00:50:45,194 - database - INFO - データベースの初期化が完了しました
+2025-06-09 00:50:45,530 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 00:50:45,531 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 00:50:46,019 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 8d00442934828fd9e7562b851fda85ae).
+2025-06-09 00:50:48,025 - __main__ - INFO - [PID:184] Klee bot#1963 として接続しました
+2025-06-09 00:50:48,026 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 00:50:48,026 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 00:50:48,031 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 00:50:55,516 - __main__ - INFO - [PID:184] アイテム検索開始: 'オーク' from klee.com
+2025-06-09 00:52:27,692 - __main__ - INFO - [PID:184] アイテム検索開始: '石' from klee.com
+2025-06-09 00:54:12,187 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 00:54:12,188 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 00:54:12,188 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 01:03:29,279 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 01:03:29,280 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 01:03:29,281 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 01:03:29,281 - discord.client - INFO - logging in using static token
+2025-06-09 01:03:30,044 - database - INFO - データベースの初期化が完了しました
+2025-06-09 01:03:30,694 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 01:03:30,694 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 01:03:31,239 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 97799850bb916eebd45e1bc840fc510a).
+2025-06-09 01:03:33,264 - __main__ - INFO - [PID:283] Klee bot#1963 として接続しました
+2025-06-09 01:03:33,264 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 01:03:33,264 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 01:03:33,265 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 01:03:35,394 - __main__ - INFO - [PID:283] アイテム検索開始: 'オーク' from klee.com
+2025-06-09 01:03:42,933 - __main__ - INFO - [PID:283] アイテム検索開始: '石' from klee.com
+2025-06-09 01:05:12,365 - __main__ - INFO - [PID:283] アイテム検索開始: 'ストーンアックス' from klee.com
+2025-06-09 01:11:04,847 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 01:11:04,848 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 01:11:04,849 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 01:15:19,939 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 01:15:19,939 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 01:15:19,941 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 01:15:19,941 - discord.client - INFO - logging in using static token
+2025-06-09 01:15:20,733 - database - INFO - データベースの初期化が完了しました
+2025-06-09 01:15:21,113 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 01:15:21,113 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 01:15:21,664 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 736e7df9f66fd6062bb6f1a097c6cfde).
+2025-06-09 01:15:21,275 - __main__ - INFO - [PID:369] Klee bot#1963 として接続しました
+2025-06-09 01:15:21,276 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 01:15:21,276 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 01:15:21,276 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 01:15:25,600 - __main__ - INFO - [PID:369] アイテム検索開始: 'ヘビーストーンアックス' from klee.com
+2025-06-09 01:15:44,344 - __main__ - INFO - [PID:369] アイテム検索開始: 'ボア' from klee.com
+2025-06-09 01:19:28,959 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 01:19:28,961 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 01:19:28,964 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 01:25:35,041 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 01:25:35,041 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 01:25:35,042 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 01:25:35,043 - discord.client - INFO - logging in using static token
+2025-06-09 01:25:35,964 - database - INFO - データベースの初期化が完了しました
+2025-06-09 01:25:36,310 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 01:25:36,310 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 01:25:36,840 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 14a7f2939554e7c633dfccce45a09cb8).
+2025-06-09 01:25:38,857 - __main__ - INFO - [PID:409] Klee bot#1963 として接続しました
+2025-06-09 01:25:38,857 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 01:25:38,858 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 01:25:38,858 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 01:25:40,025 - __main__ - INFO - [PID:409] アイテム検索開始: '石' from klee.com
+2025-06-09 01:29:44,204 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 01:29:44,205 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 01:29:44,206 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 01:32:52,849 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 01:32:52,850 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 01:32:52,851 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 01:32:52,851 - discord.client - INFO - logging in using static token
+2025-06-09 01:32:53,750 - database - INFO - データベースの初期化が完了しました
+2025-06-09 01:32:54,165 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 01:32:54,165 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 01:32:54,699 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 462db5c57c0d0f8cc18e6fe20d41f3ba).
+2025-06-09 01:32:56,743 - __main__ - INFO - [PID:477] Klee bot#1963 として接続しました
+2025-06-09 01:32:56,744 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 01:32:56,746 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 01:32:56,746 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 01:33:00,011 - __main__ - INFO - [PID:477] アイテム検索開始: 'オーク' from klee.com
+2025-06-09 01:33:28,878 - __main__ - INFO - [PID:477] アイテム検索開始: '石' from klee.com
+2025-06-09 01:33:55,759 - __main__ - INFO - [PID:477] アイテム検索開始: 'ストーンアックス' from klee.com
+2025-06-09 01:36:20,727 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 01:36:20,728 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 01:36:20,729 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 01:40:57,133 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 01:40:57,133 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 01:40:57,135 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 01:40:57,135 - discord.client - INFO - logging in using static token
+2025-06-09 01:40:57,897 - database - INFO - データベースの初期化が完了しました
+2025-06-09 01:40:58,246 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 01:40:58,246 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 01:40:58,843 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 0bab283dc8b98afc39d2e9923a894e59).
+2025-06-09 01:40:58,282 - __main__ - INFO - [PID:544] Klee bot#1963 として接続しました
+2025-06-09 01:40:58,283 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 01:40:58,284 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 01:40:58,285 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 01:41:00,093 - __main__ - INFO - [PID:544] アイテム検索開始: 'オーク' from klee.com
+2025-06-09 01:41:10,003 - __main__ - INFO - [PID:544] アイテム検索開始: '魔法石' from klee.com
+2025-06-09 01:45:06,344 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 01:45:06,345 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 01:45:06,346 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 01:45:11,295 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 01:45:11,295 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 01:45:11,297 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 01:45:11,298 - discord.client - INFO - logging in using static token
+2025-06-09 01:45:12,089 - database - INFO - データベースの初期化が完了しました
+2025-06-09 01:45:12,628 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 01:45:12,630 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 01:45:13,160 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: e17340f2f88e3ecef0e9ae2a17c185ea).
+2025-06-09 01:45:15,190 - __main__ - INFO - [PID:599] Klee bot#1963 として接続しました
+2025-06-09 01:45:15,190 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 01:45:15,191 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 01:45:15,191 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 01:45:19,705 - __main__ - INFO - [PID:599] アイテム検索開始: '魔法石' from klee.com
+2025-06-09 01:45:33,840 - __main__ - INFO - [PID:599] アイテム検索開始: 'オーク' from klee.com
+2025-06-09 01:47:55,603 - __main__ - INFO - [PID:599] アイテム検索開始: 'ストーンアックス' from klee.com
+2025-06-09 01:50:01,789 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 01:50:01,790 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 01:50:01,791 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 01:50:04,338 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 01:50:04,338 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 01:50:04,339 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 01:50:04,340 - discord.client - INFO - logging in using static token
+2025-06-09 01:50:05,137 - database - INFO - データベースの初期化が完了しました
+2025-06-09 01:50:05,567 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 01:50:05,568 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 01:50:06,072 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: c80f261711d96e4a9a74dafc77f28ba4).
+2025-06-09 01:50:08,184 - __main__ - INFO - [PID:637] Klee bot#1963 として接続しました
+2025-06-09 01:50:08,186 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 01:50:08,189 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 01:50:08,192 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 01:50:07,888 - __main__ - INFO - [PID:637] アイテム検索開始: 'オーク' from klee.com
+2025-06-09 01:50:33,393 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 01:50:33,394 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 01:50:33,395 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 01:52:14,486 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 01:52:14,486 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 01:52:14,488 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 01:52:14,488 - discord.client - INFO - logging in using static token
+2025-06-09 01:52:15,186 - database - INFO - データベースの初期化が完了しました
+2025-06-09 01:52:15,524 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 01:52:15,526 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 01:52:16,213 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: dea422dd2d203e9733cb99e6bb9a4a78).
+2025-06-09 01:52:18,322 - __main__ - INFO - [PID:669] Klee bot#1963 として接続しました
+2025-06-09 01:52:18,328 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 01:52:18,334 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 01:52:18,341 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 01:52:19,927 - __main__ - INFO - [PID:669] アイテム検索開始: 'オーク' from klee.com
+2025-06-09 01:56:23,487 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 01:56:23,488 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 01:56:23,489 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 01:56:27,330 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 01:56:27,330 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 01:56:27,331 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 01:56:27,332 - discord.client - INFO - logging in using static token
+2025-06-09 01:56:28,045 - database - INFO - データベースの初期化が完了しました
+2025-06-09 01:56:28,367 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 01:56:28,368 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 01:56:28,875 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: af1115232310da037b6ca2a1e8844e8e).
+2025-06-09 01:56:30,964 - __main__ - INFO - [PID:700] Klee bot#1963 として接続しました
+2025-06-09 01:56:30,964 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 01:56:30,965 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 01:56:30,966 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 01:56:32,707 - __main__ - INFO - [PID:700] アイテム検索開始: 'オーク' from klee.com
+2025-06-09 01:57:51,248 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 01:57:51,255 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 01:57:51,261 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 01:57:52,882 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 01:57:52,882 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 01:57:52,884 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 01:57:52,884 - discord.client - INFO - logging in using static token
+2025-06-09 01:57:53,722 - database - INFO - データベースの初期化が完了しました
+2025-06-09 01:57:54,152 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 01:57:54,153 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 01:57:54,702 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: ab8e8c55009bf60ec5f6d430e891eb68).
+2025-06-09 01:57:54,078 - __main__ - INFO - [PID:731] Klee bot#1963 として接続しました
+2025-06-09 01:57:54,078 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 01:57:54,079 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 01:57:54,079 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 01:57:56,213 - __main__ - INFO - [PID:731] アイテム検索開始: 'オーク' from klee.com
+2025-06-09 02:04:47,157 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 02:04:47,158 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 02:04:47,159 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 02:05:32,788 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 02:05:32,788 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 02:05:32,790 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 02:05:32,791 - discord.client - INFO - logging in using static token
+2025-06-09 02:05:33,668 - database - INFO - データベースの初期化が完了しました
+2025-06-09 02:05:34,023 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 02:05:34,024 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 02:05:34,575 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 986a9f6eb4c644926afd7af0dcabb835).
+2025-06-09 02:05:36,605 - __main__ - INFO - [PID:798] Klee bot#1963 として接続しました
+2025-06-09 02:05:36,606 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 02:05:36,606 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 02:05:36,607 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 02:05:38,676 - __main__ - INFO - [PID:798] アイテム検索開始: '０－九' from klee.com
+2025-06-09 02:05:39,771 - __main__ - INFO - [PID:798] アイテム検索開始: 'オーク' from klee.com
+2025-06-09 02:05:48,256 - __main__ - INFO - [PID:798] アイテム検索開始: '魔法石' from klee.com
+2025-06-09 02:06:56,772 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 02:06:56,773 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 02:06:56,775 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 02:07:07,381 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 02:07:07,381 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 02:07:07,384 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 02:07:07,384 - discord.client - INFO - logging in using static token
+2025-06-09 02:07:08,086 - database - INFO - データベースの初期化が完了しました
+2025-06-09 02:07:08,487 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 02:07:08,487 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 02:07:09,050 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 4500aeef2a9ee46f60f3981c66655435).
+2025-06-09 02:07:11,059 - __main__ - INFO - [PID:868] Klee bot#1963 として接続しました
+2025-06-09 02:07:11,066 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 02:07:11,066 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 02:07:11,067 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 02:07:12,726 - __main__ - INFO - [PID:868] アイテム検索開始: '魔法石' from klee.com
+2025-06-09 02:07:25,143 - __main__ - INFO - [PID:868] アイテム検索開始: 'オーク' from klee.com
+2025-06-09 02:11:42,506 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 02:11:42,507 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 02:11:42,509 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 02:12:39,849 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 02:12:39,850 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 02:12:39,851 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 02:12:39,852 - discord.client - INFO - logging in using static token
+2025-06-09 02:12:40,633 - database - INFO - データベースの初期化が完了しました
+2025-06-09 02:12:41,100 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 02:12:41,102 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 02:12:41,730 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 84a589baea2a1d0e36d44324a9af0e21).
+2025-06-09 02:12:43,768 - __main__ - INFO - [PID:928] Klee bot#1963 として接続しました
+2025-06-09 02:12:43,768 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 02:12:43,769 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 02:12:43,769 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 02:12:45,439 - __main__ - INFO - [PID:928] アイテム検索開始: 'オーク' from klee.com
+2025-06-09 02:14:45,126 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 02:14:45,127 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 02:14:45,127 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 02:15:06,489 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 02:15:06,490 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 02:15:06,492 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 02:15:06,492 - discord.client - INFO - logging in using static token
+2025-06-09 02:15:07,392 - database - INFO - データベースの初期化が完了しました
+2025-06-09 02:15:07,971 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 02:15:07,971 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 02:15:08,652 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 6fd00cec499d5ecc9cb506b2ea93edf8).
+2025-06-09 02:15:10,714 - __main__ - INFO - [PID:968] Klee bot#1963 として接続しました
+2025-06-09 02:15:10,714 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 02:15:10,715 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 02:15:10,715 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 02:16:08,817 - __main__ - INFO - [PID:968] アイテム検索開始: 'オーク' from klee.com
+2025-06-09 02:17:28,132 - __main__ - INFO - [PID:968] アイテム検索開始: 'ストーンアックス' from klee.com
+2025-06-09 02:17:43,608 - __main__ - INFO - [PID:968] アイテム検索開始: '魔法石' from klee.com
+2025-06-09 02:17:56,451 - __main__ - INFO - [PID:968] アイテム検索開始: '石' from klee.com
+2025-06-09 02:39:46,037 - discord.gateway - INFO - Shard ID None has successfully RESUMED session 6fd00cec499d5ecc9cb506b2ea93edf8.
+2025-06-09 02:51:35,457 - __main__ - INFO - [PID:968] アイテム検索開始: 'テスト' from klee.com
+2025-06-09 02:51:58,707 - __main__ - INFO - [PID:968] アイテム検索開始: '牙' from klee.com
+2025-06-09 02:52:13,572 - __main__ - INFO - [PID:968] アイテム検索開始: 'ボア' from klee.com
+2025-06-09 02:52:27,905 - __main__ - INFO - [PID:968] アイテム検索開始: 'ボアの' from klee.com
+2025-06-09 02:53:00,421 - __main__ - INFO - [PID:968] アイテム検索開始: '破片' from klee.com
+2025-06-09 02:53:20,226 - __main__ - INFO - [PID:968] アイテム検索開始: 'ゴーレム' from klee.com
+2025-06-09 02:53:32,047 - __main__ - INFO - [PID:968] アイテム検索開始: '番人' from klee.com
+2025-06-09 03:35:25,839 - __main__ - INFO - [PID:968] アイテム検索開始: '魔法石lv1' from klee.com
+2025-06-09 03:57:09,856 - __main__ - INFO - [PID:968] アイテム検索開始: '番人' from klee.com
+2025-06-09 03:57:16,044 - __main__ - INFO - [PID:968] アイテム検索開始: '盗賊' from klee.com
+2025-06-09 03:58:12,808 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 03:58:12,808 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 03:58:12,809 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 03:58:17,462 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 03:58:17,463 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 03:58:17,464 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 03:58:17,465 - discord.client - INFO - logging in using static token
+2025-06-09 03:58:18,168 - database - INFO - データベースの初期化が完了しました
+2025-06-09 03:58:18,616 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 03:58:18,616 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 03:58:19,242 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: b175b6798a8c6d4e47fbfe664294906b).
+2025-06-09 03:58:21,283 - __main__ - INFO - [PID:1149] Klee bot#1963 として接続しました
+2025-06-09 03:58:21,283 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 03:58:21,283 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 03:58:21,284 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 03:58:27,879 - __main__ - INFO - [PID:1149] アイテム検索開始: '盗賊' from klee.com
+2025-06-09 03:59:00,531 - __main__ - INFO - [PID:1149] アイテム検索開始: '番人' from klee.com
+2025-06-09 04:00:44,731 - __main__ - INFO - [PID:1149] アイテム検索開始: 'ストーンソード' from klee.com
+2025-06-09 04:04:10,992 - __main__ - INFO - [PID:1149] アイテム検索開始: 'note book LM' from klee.com
+2025-06-09 04:12:15,960 - __main__ - INFO - [PID:1149] アイテム検索開始: 'ボア' from klee.com
+2025-06-09 04:47:13,013 - __main__ - INFO - [PID:1149] アイテム検索開始: 'ボア' from klee.com
+2025-06-09 04:47:24,576 - __main__ - INFO - [PID:1149] アイテム検索開始: '石' from klee.com
+2025-06-09 04:48:15,543 - __main__ - INFO - [PID:1149] アイテム検索開始: 'オーク' from klee.com
+2025-06-09 04:48:28,688 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 04:48:28,689 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 04:48:28,689 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 04:49:22,344 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 04:49:22,344 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 04:49:22,346 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 04:49:22,347 - discord.client - INFO - logging in using static token
+2025-06-09 04:49:23,049 - database - INFO - データベースの初期化が完了しました
+2025-06-09 04:49:23,452 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 04:49:23,453 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 04:49:24,193 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: a7ae336b4cf8fdcaa5736b5296f48bb1).
+2025-06-09 04:49:26,401 - __main__ - INFO - [PID:1289] Klee bot#1963 として接続しました
+2025-06-09 04:49:26,402 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 04:49:26,402 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 04:49:26,403 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 04:49:35,221 - __main__ - INFO - [PID:1289] アイテム検索開始: 'グリーン' from klee.com
+2025-06-09 04:49:47,147 - __main__ - INFO - [PID:1289] アイテム検索開始: '牙' from klee.com
+2025-06-09 04:51:49,620 - __main__ - INFO - [PID:1289] アイテム検索開始: '肉' from klee.com
+2025-06-09 04:52:48,662 - __main__ - INFO - [PID:1289] アイテム検索開始: '究極結晶' from klee.com
+2025-06-09 05:00:56,006 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 05:00:56,006 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 05:00:56,009 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 05:01:03,589 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 05:01:03,589 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 05:01:03,591 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 05:01:03,592 - discord.client - INFO - logging in using static token
+2025-06-09 05:01:04,325 - database - INFO - データベースの初期化が完了しました
+2025-06-09 05:01:04,731 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 05:01:04,731 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 05:01:05,425 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: e6a15d8bad9efd2e50045d3a09ebaef6).
+2025-06-09 05:01:07,455 - __main__ - INFO - [PID:1473] Klee bot#1963 として接続しました
+2025-06-09 05:01:07,456 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 05:01:07,456 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 05:01:07,457 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 05:01:57,424 - __main__ - INFO - [PID:1473] アイテム検索開始: 'オーク' from klee.com
+2025-06-09 05:14:46,251 - __main__ - INFO - [PID:1473] アイテム検索開始: '魔法石' from klee.com
+2025-06-09 05:15:38,682 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 05:15:38,682 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 05:15:38,683 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 05:16:44,127 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 05:16:44,127 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 05:16:44,129 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 05:16:44,129 - discord.client - INFO - logging in using static token
+2025-06-09 05:16:44,976 - database - INFO - データベースの初期化が完了しました
+2025-06-09 05:16:45,324 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 05:16:45,325 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 05:16:45,802 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: b2ae9d3cf408c4cc93ae2552e70a6250).
+2025-06-09 05:16:47,870 - __main__ - INFO - [PID:1735] Klee bot#1963 として接続しました
+2025-06-09 05:16:47,871 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 05:16:47,871 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 05:16:47,872 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 05:16:52,256 - __main__ - INFO - [PID:1735] アイテム検索開始: 'かわ' from klee.com
+2025-06-09 05:17:01,945 - __main__ - INFO - [PID:1735] アイテム検索開始: 'あかわ' from klee.com
+2025-06-09 05:17:12,893 - __main__ - INFO - [PID:1735] アイテム検索開始: 'そうすい' from klee.com
+2025-06-09 05:17:18,403 - __main__ - INFO - [PID:1735] アイテム検索開始: 'あおみず' from klee.com
+2025-06-09 05:17:26,196 - __main__ - INFO - [PID:1735] アイテム検索開始: '蒼水' from klee.com
+2025-06-09 05:17:39,460 - __main__ - INFO - [PID:1735] アイテム検索開始: '青水' from klee.com
+2025-06-09 05:18:02,827 - __main__ - INFO - [PID:1735] アイテム検索開始: '牙' from klee.com
+2025-06-09 05:25:00,730 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 05:25:00,731 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 05:25:00,732 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 05:28:30,088 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 05:28:30,089 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 05:28:30,090 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 05:28:30,091 - discord.client - INFO - logging in using static token
+2025-06-09 05:28:30,792 - database - INFO - データベースの初期化が完了しました
+2025-06-09 05:28:31,139 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 05:28:31,139 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 05:28:31,702 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 8534fc23a762f8e5393aa2ab21885c8d).
+2025-06-09 05:28:33,721 - __main__ - INFO - [PID:1988] Klee bot#1963 として接続しました
+2025-06-09 05:28:33,721 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 05:28:33,722 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 05:28:33,724 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 05:28:45,795 - __main__ - INFO - [PID:1988] アイテム検索開始: 'ヘビーストーンアックス' from klee.com
+2025-06-09 05:31:33,816 - __main__ - INFO - [PID:1988] アイテム検索開始: 'ボア' from klee.com
+2025-06-09 05:41:35,858 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 05:41:35,859 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 05:41:35,860 - __main__ - INFO - Botが正常に終了しました
+2025-06-09 05:41:41,485 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-09 05:41:41,485 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-09 05:41:41,487 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-09 05:41:41,488 - discord.client - INFO - logging in using static token
+2025-06-09 05:41:42,309 - database - INFO - データベースの初期化が完了しました
+2025-06-09 05:41:42,693 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-09 05:41:42,694 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-09 05:41:43,231 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 3c9bdcb347d1d3f8cb5b3783e857646f).
+2025-06-09 05:41:45,275 - __main__ - INFO - [PID:2050] Klee bot#1963 として接続しました
+2025-06-09 05:41:45,276 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-09 05:41:45,276 - __main__ - INFO - 接続サーバー数: 2
+2025-06-09 05:41:45,277 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-09 05:41:52,123 - __main__ - INFO - [PID:2050] アイテム検索開始: 'ボア' from klee.com
+2025-06-09 05:42:03,645 - __main__ - INFO - [PID:2050] アイテム検索開始: 'かわ' from klee.com
+2025-06-09 05:42:09,776 - search_engine - INFO - NPCテーブル未実装: オークの毛皮
+2025-06-09 05:42:54,563 - __main__ - INFO - [PID:2050] アイテム検索開始: '石' from klee.com
+2025-06-09 05:42:56,648 - search_engine - INFO - NPCテーブル未実装: 石
+2025-06-09 05:45:09,365 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-09 05:45:09,365 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-09 05:45:09,366 - __main__ - INFO - Botが正常に終了しました

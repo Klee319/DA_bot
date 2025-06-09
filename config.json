@@ -1,0 +1,66 @@
+{
+  "bot": {
+    "token": "環境変数から取得",
+    "command_prefix": "!",
+    "activity": "アイテム検索中..."
+  },
+  "database": {
+    "path": "./data/items.db",
+    "backup_path": "./backups/"
+  },
+  "csv_mapping": {
+    "equipment": {
+      "正式名称": "formal_name",
+      "一般名称": "common_name",
+      "入手場所": "acquisition_location",
+      "入手カテゴリ": "acquisition_category",
+      "種類": "type",
+      "必要素材": "required_materials",
+      "効果": "item_effect",
+      "一言": "description",
+      "画像リンク": "image_url"
+    },
+    "material": {
+      "正式名称": "formal_name",
+      "一般名称": "common_name",
+      "入手カテゴリ": "acquisition_category",
+      "入手方法": "acquisition_method",
+      "利用カテゴリ": "usage_category",
+      "使用用途": "usage_purpose",
+      "一言": "description",
+      "画像リンク": "image_url"
+    },
+    "mob": {
+      "正式名称": "formal_name",
+      "一般名称": "common_name",
+      "出没エリア": "area",
+      "出没エリア詳細": "area_detail",
+      "必要レベル": "required_level",
+      "ドロップ品": "drops",
+      "EXP": "exp",
+      "Gold": "gold",
+      "必要守備力": "required_defense",
+      "一言": "description",
+      "画像リンク": "image_url"
+    },
+    "gathering": {
+      "収集場所": "location",
+      "収集方法": "collection_method",
+      "入手素材": "obtained_materials",
+      "必要ツールレベル": "required_tools",
+      "一言": "description"
+    }
+  },
+  "permissions": {
+    "admin_users": [],
+    "admin_roles": [],
+    "log_channel_id": null
+  },
+  "features": {
+    "max_search_items": 3,
+    "search_history_days": 30,
+    "pagination_size": 10,
+    "image_validation": true,
+    "auto_backup": true
+  }
+}
