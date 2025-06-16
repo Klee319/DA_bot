@@ -125,10 +125,9 @@ class SearchEngine:
                 for result in partial_results:
                     if not any(r['id'] == result['id'] and r['item_type'] == result['item_type'] for r in all_results):
                         all_results.append(result)
-                # 重複除去とスコアリングを行ってから制限
+                # 重複除去とスコアリングを行う（制限なし）
                 sorted_results = self._deduplicate_and_score_results(all_results, normalized_query)
-                # 検索結果は多めに返す（表示時に制限する）
-                return sorted_results[:self.max_results * 3]
+                return sorted_results
             
             # 3. ワイルドカード検索（*や?が含まれている場合）
             if self._has_wildcards(query):
@@ -184,16 +183,16 @@ class SearchEngine:
                 # equipments, materials, mobsテーブルは formal_name で検索
                 for table in ['equipments', 'materials', 'mobs']:
                     cursor = await db.execute(
-                        f"SELECT *, '{table}' as item_type FROM {table} WHERE LOWER(formal_name) = ? LIMIT ?",
-                        (query, self.max_results)
+                        f"SELECT *, '{table}' as item_type FROM {table} WHERE LOWER(formal_name) = ?",
+                        (query,)
                     )
                     rows = await cursor.fetchall()
                     results.extend([dict(row) for row in rows])
                 
                 # npcsテーブルは name で検索
                 cursor = await db.execute(
-                    "SELECT *, 'npcs' as item_type, name as formal_name FROM npcs WHERE LOWER(name) = ? LIMIT ?",
-                    (query, self.max_results)
+                    "SELECT *, 'npcs' as item_type, name as formal_name FROM npcs WHERE LOWER(name) = ?",
+                    (query,)
                 )
                 rows = await cursor.fetchall()
                 results.extend([dict(row) for row in rows])
@@ -217,8 +216,8 @@ class SearchEngine:
                 for table in tables:
                     # 複数の一般名称をカンマ区切りで格納している場合に対応
                     cursor = await db.execute(
-                        f"SELECT *, '{table}' as item_type FROM {table} WHERE LOWER(common_name) = ? OR LOWER(common_name) LIKE ? OR LOWER(common_name) LIKE ? OR LOWER(common_name) LIKE ? LIMIT ?",
-                        (query, f'{query},%', f'%,{query},%', f'%,{query}', self.max_results)
+                        f"SELECT *, '{table}' as item_type FROM {table} WHERE LOWER(common_name) = ? OR LOWER(common_name) LIKE ? OR LOWER(common_name) LIKE ? OR LOWER(common_name) LIKE ?",
+                        (query, f'{query},%', f'%,{query},%', f'%,{query}')
                     )
                     rows = await cursor.fetchall()
                     results.extend([dict(row) for row in rows])
@@ -269,7 +268,8 @@ class SearchEngine:
                     if fnmatch(name.lower(), normalized_query.lower()):
                         results.append(row_dict)
                 
-                return results[:self.max_results]
+                # 制限なしで返す
+                return results
                 
         except Exception as e:
             logger.error(f"ワイルドカード検索エラー: {e}")
@@ -290,16 +290,16 @@ class SearchEngine:
                     for variation in query_variations:
                         # 正式名称での検索
                         cursor = await db.execute(
-                            f"SELECT *, '{table}' as item_type FROM {table} WHERE LOWER(formal_name) = ? LIMIT ?",
-                            (variation, self.max_results)
+                            f"SELECT *, '{table}' as item_type FROM {table} WHERE LOWER(formal_name) = ?",
+                            (variation,)
                         )
                         rows = await cursor.fetchall()
                         results.extend([dict(row) for row in rows])
                         
                         # 一般名称での検索
                         cursor = await db.execute(
-                            f"SELECT *, '{table}' as item_type FROM {table} WHERE LOWER(common_name) = ? AND common_name IS NOT NULL LIMIT ?",
-                            (variation, self.max_results)
+                            f"SELECT *, '{table}' as item_type FROM {table} WHERE LOWER(common_name) = ? AND common_name IS NOT NULL",
+                            (variation,)
                         )
                         rows = await cursor.fetchall()
                         results.extend([dict(row) for row in rows])
@@ -307,8 +307,8 @@ class SearchEngine:
                 # npcsテーブルの検索
                 for variation in query_variations:
                     cursor = await db.execute(
-                        "SELECT *, 'npcs' as item_type, name as formal_name FROM npcs WHERE LOWER(name) = ? LIMIT ?",
-                        (variation, self.max_results)
+                        "SELECT *, 'npcs' as item_type, name as formal_name FROM npcs WHERE LOWER(name) = ?",
+                        (variation,)
                     )
                     rows = await cursor.fetchall()
                     results.extend([dict(row) for row in rows])
@@ -322,7 +322,8 @@ class SearchEngine:
                         seen.add(key)
                         unique_results.append(result)
                 
-                return unique_results[:self.max_results]
+                # 制限なしで返す
+                return unique_results
                 
         except Exception as e:
             logger.error(f"表記ゆれ検索エラー: {e}")
@@ -439,48 +440,41 @@ class SearchEngine:
                 
                 # 各バリエーションで検索
                 for variation in query_variations:
-                    if len(results) >= self.max_results * 5:  # 制限をさらに緩和
-                        break
-                    
                     # formal_name/common_nameを持つテーブル
                     for table in ['equipments', 'materials', 'mobs']:
-                        if len(results) >= self.max_results * 5:
-                            break
                         
                         # 前方一致を優先
                         cursor = await db.execute(
-                            f"SELECT *, '{table}' as item_type, 'prefix' as match_type FROM {table} WHERE LOWER(formal_name) LIKE ? OR LOWER(common_name) LIKE ? LIMIT ?",
-                            (f'{variation}%', f'{variation}%', self.max_results * 3)
+                            f"SELECT *, '{table}' as item_type, 'prefix' as match_type FROM {table} WHERE LOWER(formal_name) LIKE ? OR LOWER(common_name) LIKE ?",
+                            (f'{variation}%', f'{variation}%')
                         )
                         rows = await cursor.fetchall()
                         results.extend([dict(row) for row in rows])
                         
                         # 部分一致（前方一致以外の部分一致）
-                        if len(results) < self.max_results * 5:
-                            cursor = await db.execute(
-                                f"SELECT *, '{table}' as item_type, 'partial' as match_type FROM {table} WHERE (LOWER(formal_name) LIKE ? OR LOWER(common_name) LIKE ?) LIMIT ?",
-                                (f'%{variation}%', f'%{variation}%', self.max_results * 3)
-                            )
-                            rows = await cursor.fetchall()
-                            results.extend([dict(row) for row in rows])
+                        cursor = await db.execute(
+                            f"SELECT *, '{table}' as item_type, 'partial' as match_type FROM {table} WHERE (LOWER(formal_name) LIKE ? OR LOWER(common_name) LIKE ?)",
+                            (f'%{variation}%', f'%{variation}%')
+                        )
+                        rows = await cursor.fetchall()
+                        results.extend([dict(row) for row in rows])
                     
                     # npcsテーブル
-                    if len(results) < self.max_results * 5:
-                        # 前方一致
-                        cursor = await db.execute(
-                            "SELECT *, 'npcs' as item_type, name as formal_name, 'prefix' as match_type FROM npcs WHERE LOWER(name) LIKE ? LIMIT ?",
-                            (f'{variation}%', self.max_results)
-                        )
-                        rows = await cursor.fetchall()
-                        results.extend([dict(row) for row in rows])
-                        
-                        # 部分一致
-                        cursor = await db.execute(
-                            "SELECT *, 'npcs' as item_type, name as formal_name, 'partial' as match_type FROM npcs WHERE LOWER(name) LIKE ? LIMIT ?",
-                            (f'%{variation}%', self.max_results)
-                        )
-                        rows = await cursor.fetchall()
-                        results.extend([dict(row) for row in rows])
+                    # 前方一致
+                    cursor = await db.execute(
+                        "SELECT *, 'npcs' as item_type, name as formal_name, 'prefix' as match_type FROM npcs WHERE LOWER(name) LIKE ?",
+                        (f'{variation}%',)
+                    )
+                    rows = await cursor.fetchall()
+                    results.extend([dict(row) for row in rows])
+                    
+                    # 部分一致
+                    cursor = await db.execute(
+                        "SELECT *, 'npcs' as item_type, name as formal_name, 'partial' as match_type FROM npcs WHERE LOWER(name) LIKE ?",
+                        (f'%{variation}%',)
+                    )
+                    rows = await cursor.fetchall()
+                    results.extend([dict(row) for row in rows])
                 
                 # 重複除去と関連性スコアによるソート
                 unique_results = self._deduplicate_and_score_results(results, query)
