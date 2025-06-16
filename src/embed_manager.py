@@ -954,7 +954,7 @@ class AcquisitionDetailsButton(discord.ui.Button):
                             # NPCが複数の交換パターンを持つ場合の処理
                             obtainable_items = npc.get('obtainable_items', '')
                             if business_type in ['交換', '購入', 'クエスト'] and obtainable_items:
-                                from src.npc_parser import NPCExchangeParser
+                                from .npc_parser import NPCExchangeParser
                                 exchanges = NPCExchangeParser.parse_exchange_items(
                                     obtainable_items,
                                     npc.get('required_materials', ''),
@@ -1286,9 +1286,11 @@ class UsageDetailsButton(discord.ui.Button):
                 item_list = []
                 
                 if item_type == 'materials':
-                    item_list.extend(related_items.get('usage_destinations', []))
+                    # optionsと同じ数に制限
+                    item_list.extend(related_items.get('usage_destinations', [])[:5])
                 elif item_type == 'mobs':
-                    item_list.extend(related_items.get('dropped_items', []))
+                    # optionsと同じ数に制限
+                    item_list.extend(related_items.get('dropped_items', [])[:5])
                 
                 detailed_view = NewRelatedItemsView(related_items, view.embed_manager, options, item_list)
                 embed.set_footer(text="アイテムを選択して詳細を表示")
@@ -1648,7 +1650,7 @@ class NewRelatedItemSelect(discord.ui.Select):
                         
                         # 複数交換パターンの解析
                         if items and business_type in ['購入', '交換', 'クエスト']:
-                            from src.npc_parser import NPCExchangeParser
+                            from .npc_parser import NPCExchangeParser
                             exchanges = NPCExchangeParser.parse_exchange_items(
                                 items, materials, exp_str, gold_str
                             )
