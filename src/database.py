@@ -102,6 +102,25 @@ class DatabaseManager:
         # 既存のgatheringsテーブルにusageカラムが存在する場合は再構築
         await self._migrate_gatherings_table(db)
         
+        # npcs テーブル
+        await db.execute('''
+            CREATE TABLE IF NOT EXISTS npcs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                location TEXT NOT NULL,
+                name TEXT NOT NULL,
+                business_type TEXT,
+                obtainable_items TEXT,
+                required_materials TEXT,
+                exp TEXT,
+                gold TEXT,
+                description TEXT,
+                image_path TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(location, name, business_type)
+            )
+        ''')
+        
         # user_favorites テーブル
         await db.execute('''
             CREATE TABLE IF NOT EXISTS user_favorites (

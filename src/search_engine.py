@@ -813,23 +813,17 @@ class SearchEngine:
                 mob['relation_detail'] = '討伐ドロップ'
                 related_items['acquisition_sources'].append(mob)
             
-            # 2. 採集場所の情報を取得（採集場所テーブル実装準備）
-            if acquisition_category in ['採取', '採掘', '釣り']:
-                gathering_info = await self._search_gathering_locations(item_name, acquisition_category, acquisition_location)
-                if gathering_info:
-                    related_items['gathering_locations'] = gathering_info
-                else:
-                    # 採集場所テーブル未実装時のフォールバック
-                    related_items['acquisition_info'] = {
-                        'category': acquisition_category,
-                        'method': acquisition_method,
-                        'location': acquisition_location
-                    }
+            # 2. 採集場所の情報を取得
+            gathering_info = await self._search_gathering_locations(item_name, acquisition_category, acquisition_location)
+            for gathering in gathering_info:
+                gathering['relation_type'] = 'gathering_location'
+                related_items['acquisition_sources'].append(gathering)
             
-            # 3. NPC交換・購入情報を取得（NPCテーブル実装準備）
+            # 3. NPC交換・購入情報を取得
             npc_sources = await self._search_npc_sources(item_name)
-            if npc_sources:
-                related_items['npc_sources'] = npc_sources
+            for npc in npc_sources:
+                npc['relation_type'] = 'npc_source'
+                related_items['acquisition_sources'].append(npc)
             
             # 4. その他の入手方法
             if acquisition_category and acquisition_category not in ['討伐', '採取', '採掘', '釣り', 'NPC', 'ギルドクエスト']:
@@ -850,46 +844,69 @@ class SearchEngine:
                 }
     
     async def _search_gathering_locations(self, item_name: str, category: str, location: str) -> List[Dict[str, Any]]:
-        """採集場所テーブルから採集情報を検索（実装準備）"""
+        """採集場所テーブルから採集情報を検索"""
         try:
-            # TODO: 採集場所テーブル実装後に実装
-            # 以下は実装準備のためのプレースホルダー
-            
-            # 将来的な実装イメージ：
-            # async with aiosqlite.connect(self.db_manager.db_path) as db:
-            #     db.row_factory = aiosqlite.Row
-            #     cursor = await db.execute(
-            #         "SELECT * FROM gathering_locations WHERE item_name = ? AND category = ?",
-            #         (item_name, category)
-            #     )
-            #     rows = await cursor.fetchall()
-            #     return [dict(row) for row in rows]
-            
-            logger.info(f"採集場所テーブル未実装: {item_name}, {category}, {location}")
-            return []
+            async with aiosqlite.connect(self.db_manager.db_path) as db:
+                db.row_factory = aiosqlite.Row
+                results = []
+                
+                # gatheringsテーブルから入手素材に含まれる採集場所を検索
+                cursor = await db.execute(
+                    "SELECT *, 'gatherings' as item_type FROM gatherings WHERE obtained_materials LIKE ? AND obtained_materials IS NOT NULL",
+                    (f'%{item_name}%',)
+                )
+                rows = await cursor.fetchall()
+                
+                for row in rows:
+                    row_dict = dict(row)
+                    obtained_materials = row_dict.get('obtained_materials', '')
+                    
+                    # 素材リストをパースして完全一致をチェック
+                    if self._material_exactly_matches(obtained_materials, item_name):
+                        row_dict['relation_type'] = 'gathering_location'
+                        row_dict['relation_detail'] = f"{row_dict.get('collection_method', '')}で採集"
+                        results.append(row_dict)
+                
+                return results
             
         except Exception as e:
             logger.warning(f"採集場所検索エラー: {e}")
             return []
     
     async def _search_npc_sources(self, item_name: str) -> List[Dict[str, Any]]:
-        """NPCテーブルから交換・購入情報を検索（実装準備）"""
+        """NPCテーブルから交換・購入情報を検索"""
         try:
-            # TODO: NPCテーブル実装後に実装
-            # 以下は実装準備のためのプレースホルダー
-            
-            # 将来的な実装イメージ：
-            # async with aiosqlite.connect(self.db_manager.db_path) as db:
-            #     db.row_factory = aiosqlite.Row
-            #     cursor = await db.execute(
-            #         "SELECT * FROM npcs WHERE exchange_items LIKE ? OR shop_items LIKE ?",
-            #         (f'%{item_name}%', f'%{item_name}%')
-            #     )
-            #     rows = await cursor.fetchall()
-            #     return [dict(row) for row in rows]
-            
-            logger.info(f"NPCテーブル未実装: {item_name}")
-            return []
+            async with aiosqlite.connect(self.db_manager.db_path) as db:
+                db.row_factory = aiosqlite.Row
+                results = []
+                
+                # npcsテーブルから入手アイテムに含まれるNPCを検索
+                cursor = await db.execute(
+                    "SELECT *, 'npcs' as item_type FROM npcs WHERE obtainable_items LIKE ? AND obtainable_items IS NOT NULL",
+                    (f'%{item_name}%',)
+                )
+                rows = await cursor.fetchall()
+                
+                for row in rows:
+                    row_dict = dict(row)
+                    obtainable_items = row_dict.get('obtainable_items', '')
+                    
+                    # アイテムリストをパースして完全一致をチェック
+                    if self._material_exactly_matches(obtainable_items, item_name):
+                        row_dict['relation_type'] = 'npc_source'
+                        
+                        # NPCの業務タイプに応じた詳細設定
+                        business_type = row_dict.get('business_type', '')
+                        if business_type == '購入':
+                            row_dict['relation_detail'] = f"購入 ({row_dict.get('gold', '')}G)"
+                        elif business_type == '交換':
+                            row_dict['relation_detail'] = f"交換 (必要: {row_dict.get('required_materials', '')})"
+                        else:
+                            row_dict['relation_detail'] = business_type
+                            
+                        results.append(row_dict)
+                
+                return results
             
         except Exception as e:
             logger.warning(f"NPC検索エラー: {e}")

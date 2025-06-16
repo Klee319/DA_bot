@@ -110,7 +110,8 @@ class CSVManager:
             'equipment': ['正式名称'],
             'material': ['正式名称'],
             'mob': ['正式名称'],
-            'gathering': ['場所', '収集方法']
+            'gathering': ['収集場所', '収集方法'],
+            'npc': ['配置場所', '名前']
         }
         return required_columns.get(csv_type, [])
     
@@ -119,6 +120,11 @@ class CSVManager:
         errors = []
         
         try:
+            # NPCタイプの場合は特別な処理
+            if csv_type == 'npc':
+                # NPCのEXP/GOLDは複数値のカンマ区切りやEXPプレフィックス付きを許可
+                return []
+            
             # 数値カラムの検証（~記号を含む値も許可）
             numeric_columns = ['必要レベル', 'EXP', 'Gold', '必要守備力']
             for col in numeric_columns:
@@ -178,7 +184,7 @@ class CSVManager:
             df_renamed = df.rename(columns=mapping)
             
             # 日本語テキストの正規化
-            text_columns = ['formal_name', 'common_name', 'description']
+            text_columns = ['formal_name', 'common_name', 'description', 'name', 'location']
             for col in text_columns:
                 if col in df_renamed.columns:
                     df_renamed[col] = df_renamed[col].astype(str).apply(self._normalize_japanese_text)
@@ -186,33 +192,48 @@ class CSVManager:
             # NULL値の処理
             df_renamed = df_renamed.where(pd.notnull(df_renamed), None)
             
-            # 数値カラムの処理（純粋な数値はint、~やカンマ含む値はそのまま文字列で保持）
-            numeric_columns = ['required_level', 'exp', 'gold', 'required_defense']
-            for col in numeric_columns:
-                if col in df_renamed.columns:
-                    # 各値を個別に処理（NULL値も考慮）
-                    processed_values = []
-                    original_values = df_renamed[col].values
-                    
-                    for value in original_values:
-                        # pd.isna()とNaNの判定を追加
-                        if pd.isna(value) or value == '' or str(value).strip() == '' or str(value) == 'nan':
-                            processed_values.append(None)
-                        else:
-                            str_value = str(value).strip()
-                            # ~やカンマが含まれていない純粋な数値の場合はintに変換
-                            if '~' not in str_value and ',' not in str_value:
-                                try:
-                                    # 小数点を含む場合は四捨五入してintに
-                                    processed_values.append(int(float(str_value)))
-                                except ValueError:
-                                    # 変換できない場合はそのまま文字列
-                                    processed_values.append(str_value)
+            # NPCタイプの場合は特別な処理
+            if csv_type == 'npc':
+                # NPCのEXP/GOLDカラムの処理
+                npc_special_columns = ['exp', 'gold']
+                for col in npc_special_columns:
+                    if col in df_renamed.columns:
+                        processed_values = []
+                        for value in df_renamed[col].values:
+                            if pd.isna(value) or value == '' or str(value).strip() == '' or str(value) == 'nan':
+                                processed_values.append(None)
                             else:
-                                # ~やカンマを含む場合はそのまま文字列で保持
-                                processed_values.append(str_value)
-                    
-                    df_renamed[col] = processed_values
+                                # そのまま文字列として保持（EXPプレフィックスやカンマ区切りを保持）
+                                processed_values.append(str(value).strip())
+                        df_renamed[col] = processed_values
+            else:
+                # 数値カラムの処理（純粋な数値はint、~やカンマ含む値はそのまま文字列で保持）
+                numeric_columns = ['required_level', 'exp', 'gold', 'required_defense']
+                for col in numeric_columns:
+                    if col in df_renamed.columns:
+                        # 各値を個別に処理（NULL値も考慮）
+                        processed_values = []
+                        original_values = df_renamed[col].values
+                        
+                        for value in original_values:
+                            # pd.isna()とNaNの判定を追加
+                            if pd.isna(value) or value == '' or str(value).strip() == '' or str(value) == 'nan':
+                                processed_values.append(None)
+                            else:
+                                str_value = str(value).strip()
+                                # ~やカンマが含まれていない純粋な数値の場合はintに変換
+                                if '~' not in str_value and ',' not in str_value:
+                                    try:
+                                        # 小数点を含む場合は四捨五入してintに
+                                        processed_values.append(int(float(str_value)))
+                                    except ValueError:
+                                        # 変換できない場合はそのまま文字列
+                                        processed_values.append(str_value)
+                                else:
+                                    # ~やカンマを含む場合はそのまま文字列で保持
+                                    processed_values.append(str_value)
+                        
+                        df_renamed[col] = processed_values
             
             # NULL値の再処理（数値処理後に実行）
             df_renamed = df_renamed.where(pd.notnull(df_renamed), None)
@@ -261,7 +282,8 @@ class CSVManager:
                 'equipment': 'equipments',
                 'material': 'materials',
                 'mob': 'mobs',
-                'gathering': 'gatherings'
+                'gathering': 'gatherings',
+                'npc': 'npcs'
             }
             table_name = table_mapping[csv_type]
             
@@ -305,7 +327,8 @@ class CSVManager:
                 'equipment': 'equipments',
                 'material': 'materials',
                 'mob': 'mobs',
-                'gathering': 'gatherings'
+                'gathering': 'gatherings',
+                'npc': 'npcs'
             }
             table_name = table_mapping[csv_type]
             
@@ -345,7 +368,8 @@ class CSVManager:
                 'equipment': 'equipments',
                 'material': 'materials',
                 'mob': 'mobs',
-                'gathering': 'gatherings'
+                'gathering': 'gatherings',
+                'npc': 'npcs'
             }
             table_name = table_mapping[csv_type]
             

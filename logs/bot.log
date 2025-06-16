@@ -1066,3 +1066,101 @@ RuntimeError: Task <Task pending name='Task-3' coro=<Event.wait() running at /us
 2025-06-09 05:45:09,365 - __main__ - INFO - シャットダウンシグナルを受信しました
 2025-06-09 05:45:09,365 - __main__ - INFO - Botをシャットダウンしています...
 2025-06-09 05:45:09,366 - __main__ - INFO - Botが正常に終了しました
+2025-06-16 11:04:24,627 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-16 11:04:24,627 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-16 11:04:24,628 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-16 11:04:24,628 - discord.client - INFO - logging in using static token
+2025-06-16 11:04:25,429 - database - INFO - データベースの初期化が完了しました
+2025-06-16 11:04:25,836 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-16 11:04:25,837 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-16 11:04:26,335 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 814814236948a68ec2d11d0628c52ef6).
+2025-06-16 11:04:28,352 - __main__ - INFO - [PID:6921] Klee bot#1963 として接続しました
+2025-06-16 11:04:28,352 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-16 11:04:28,353 - __main__ - INFO - 接続サーバー数: 2
+2025-06-16 11:04:28,353 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-16 11:05:16,209 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_110516.db
+2025-06-16 11:05:16,209 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_110516.db
+2025-06-16 11:14:52,047 - discord.client - ERROR - Attempting a reconnect in 1.08s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-16 11:14:53,535 - discord.gateway - INFO - Shard ID None has successfully RESUMED session 814814236948a68ec2d11d0628c52ef6.
+2025-06-16 11:18:56,036 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_111856.db
+2025-06-16 11:18:56,036 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_111856.db
+2025-06-16 11:18:56,711 - csv_manager - INFO - equipmentデータを437件処理しました
+2025-06-16 11:19:10,542 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_111910.db
+2025-06-16 11:19:10,543 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_111910.db
+2025-06-16 11:19:11,116 - csv_manager - INFO - materialデータを111件処理しました
+2025-06-16 11:19:20,179 - discord.client - ERROR - Attempting a reconnect in 0.77s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-16 11:19:21,367 - discord.gateway - INFO - Shard ID None has successfully RESUMED session 814814236948a68ec2d11d0628c52ef6.
+2025-06-16 11:19:22,975 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_111922.db
+2025-06-16 11:19:22,975 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_111922.db
+2025-06-16 11:19:23,448 - csv_manager - INFO - mobデータを39件処理しました
+2025-06-16 11:19:39,200 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_111939.db
+2025-06-16 11:19:39,200 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_111939.db
+2025-06-16 11:19:39,663 - csv_manager - ERROR - データ挿入エラー: table gatherings has no column named 入手素材（通常）
+2025-06-16 11:19:39,663 - csv_manager - ERROR - CSV処理エラー: table gatherings has no column named 入手素材（通常）
+2025-06-16 11:22:06,189 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-16 11:22:06,189 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-16 11:22:06,190 - __main__ - INFO - Botが正常に終了しました
+2025-06-16 11:22:11,274 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-16 11:22:11,275 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-16 11:22:11,276 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-16 11:22:11,276 - discord.client - INFO - logging in using static token
+2025-06-16 11:22:12,003 - database - INFO - データベースの初期化が完了しました
+2025-06-16 11:22:12,352 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-16 11:22:12,352 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-16 11:22:12,868 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: a7b21daaab4ef2749c16b716ca0b5dfb).
+2025-06-16 11:22:14,871 - __main__ - INFO - [PID:7028] Klee bot#1963 として接続しました
+2025-06-16 11:22:14,871 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-16 11:22:14,872 - __main__ - INFO - 接続サーバー数: 2
+2025-06-16 11:22:14,872 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-16 11:26:55,848 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_112655.db
+2025-06-16 11:26:55,848 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_112655.db
+2025-06-16 11:26:56,289 - csv_manager - INFO - gatheringデータを21件処理しました
+2025-06-16 11:27:02,959 - __main__ - INFO - [PID:7028] アイテム検索開始: '石' from klee.com
+2025-06-16 11:27:06,364 - embed_manager - ERROR - 入手元詳細エラー: 'formal_name'
+2025-06-16 11:33:53,847 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-16 11:33:53,848 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-16 11:33:53,849 - __main__ - INFO - Botが正常に終了しました
+2025-06-16 11:33:59,609 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-16 11:33:59,609 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-16 11:33:59,610 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-16 11:33:59,611 - discord.client - INFO - logging in using static token
+2025-06-16 11:34:00,295 - database - INFO - データベースの初期化が完了しました
+2025-06-16 11:34:00,609 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-16 11:34:00,610 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-16 11:34:01,192 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: cc6e732ab517f73a08db5a4463c7fc36).
+2025-06-16 11:34:03,195 - __main__ - INFO - [PID:7124] Klee bot#1963 として接続しました
+2025-06-16 11:34:03,196 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-16 11:34:03,196 - __main__ - INFO - 接続サーバー数: 2
+2025-06-16 11:34:03,196 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-16 11:34:06,751 - __main__ - INFO - [PID:7124] アイテム検索開始: '石' from klee.com
+2025-06-16 11:35:09,029 - __main__ - INFO - [PID:7124] アイテム検索開始: '鉛' from klee.com
+2025-06-16 11:37:01,276 - __main__ - INFO - [PID:7124] アイテム検索開始: '鉄' from klee.com
+2025-06-16 11:38:08,344 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-16 11:38:08,345 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-16 11:38:08,346 - __main__ - INFO - Botが正常に終了しました
+2025-06-16 11:42:55,714 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-16 11:42:55,714 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-16 11:42:55,716 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-16 11:42:55,716 - discord.client - INFO - logging in using static token
+2025-06-16 11:42:56,461 - database - INFO - データベースの初期化が完了しました
+2025-06-16 11:42:56,964 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-16 11:42:56,964 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-16 11:42:57,434 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 796bef48336a8a4f06612d506b71d799).
+2025-06-16 11:42:59,438 - __main__ - INFO - [PID:7233] Klee bot#1963 として接続しました
+2025-06-16 11:42:59,440 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-16 11:42:59,441 - __main__ - INFO - 接続サーバー数: 2
+2025-06-16 11:42:59,442 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-16 11:44:13,488 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_114413.db
+2025-06-16 11:44:13,489 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_114413.db

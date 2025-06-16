@@ -49,6 +49,17 @@
       "入手素材": "obtained_materials",
       "必要ツールレベル": "required_tools",
       "一言": "description"
+    },
+    "npc": {
+      "配置場所": "location",
+      "名前": "name",
+      "対応業務": "business_type",
+      "入手アイテム": "obtainable_items",
+      "必要素材": "required_materials",
+      "EXP": "exp",
+      "GOLD": "gold",
+      "一言": "description",
+      "画像パス": "image_path"
     }
   },
   "permissions": {

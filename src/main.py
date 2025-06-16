@@ -324,7 +324,8 @@ class AdminCommands(commands.Cog):
         app_commands.Choice(name='装備', value='equipment'),
         app_commands.Choice(name='素材', value='material'),
         app_commands.Choice(name='モンスター', value='mob'),
-        app_commands.Choice(name='採集', value='gathering')
+        app_commands.Choice(name='採集', value='gathering'),
+        app_commands.Choice(name='NPC', value='npc')
     ])
     async def upload_csv(self, interaction: discord.Interaction, csv_type: str, csv_file: discord.Attachment):
         """CSV ファイルをアップロード"""
@@ -383,6 +384,72 @@ class AdminCommands(commands.Cog):
         except Exception as e:
             logger.error(f"統計表示エラー: {e}")
             await interaction.followup.send("統計表示中にエラーが発生しました")
+    
+    @commands.command(name='upload_csv')
+    async def upload_csv_command(self, ctx, csv_type: str = None):
+        """CSVファイルをアップロード（通常コマンド版）"""
+        # 管理者権限チェック
+        user_roles = [role.id for role in ctx.author.roles] if ctx.author.roles else []
+        if not self.bot.is_admin(ctx.author.id, user_roles):
+            await ctx.reply("このコマンドは管理者のみ実行可能です")
+            return
+        
+        # csv_typeの検証
+        valid_types = ['equipment', 'material', 'mob', 'gathering', 'npc']
+        if not csv_type or csv_type not in valid_types:
+            await ctx.reply(f"CSVタイプを指定してください: {', '.join(valid_types)}")
+            return
+        
+        # 添付ファイルチェック
+        if not ctx.message.attachments:
+            await ctx.reply("CSVファイルを添付してください")
+            return
+        
+        attachment = ctx.message.attachments[0]
+        if not attachment.filename.endswith('.csv'):
+            await ctx.reply("CSVファイルを選択してください")
+            return
+        
+        # 処理中メッセージ
+        processing_msg = await ctx.reply("CSVファイルを処理中...")
+        
+        try:
+            # バックアップを作成
+            if self.bot.config['features']['auto_backup']:
+                backup_file = await self.bot.db_manager.backup_database(
+                    self.bot.config['database']['backup_path']
+                )
+                logger.info(f"バックアップを作成: {backup_file}")
+            
+            # CSVを処理
+            result = await self.bot.csv_manager.process_csv_upload(attachment, csv_type)
+            
+            if result['success']:
+                embed = discord.Embed(
+                    title="✅ CSV アップロード成功",
+                    description=result['message'],
+                    color=discord.Color.green()
+                )
+                embed.add_field(name="処理件数", value=f"{result['processed']}件", inline=True)
+                embed.add_field(name="タイプ", value=csv_type, inline=True)
+                await processing_msg.edit(content=None, embed=embed)
+            else:
+                embed = discord.Embed(
+                    title="❌ CSV アップロード失敗",
+                    description=result['error'],
+                    color=discord.Color.red()
+                )
+                if 'errors' in result:
+                    embed.add_field(
+                        name="エラー詳細",
+                        value="\n".join(result['errors'][:5]),
+                        inline=False
+                    )
+                await processing_msg.edit(content=None, embed=embed)
+                
+        except Exception as e:
+            logger.error(f"CSVアップロードエラー: {e}")
+            await processing_msg.edit(content="CSVアップロード中にエラーが発生しました")
 
 # グローバル変数でbotインスタンスとシャットダウンイベントを保持
 bot_instance = None
