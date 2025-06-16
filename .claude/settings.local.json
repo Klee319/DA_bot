@@ -25,7 +25,8 @@
       "Bash(rg:*)",
       "Bash(sqlite3:*)",
       "Bash(pkill:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(dpkg:*)"
     ],
     "deny": []
   },
