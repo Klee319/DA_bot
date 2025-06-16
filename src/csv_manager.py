@@ -207,8 +207,41 @@ class CSVManager:
             # NULL値の処理
             df_renamed = df_renamed.where(pd.notnull(df_renamed), None)
             
+            # 主要なカラムが空の行を削除
+            if csv_type in ['equipment', 'material', 'mob']:
+                if 'formal_name' in df_renamed.columns:
+                    # formal_nameが空、None、'nan'、空白のみの行を削除
+                    df_renamed = df_renamed[
+                        (df_renamed['formal_name'].notna()) & 
+                        (df_renamed['formal_name'] != '') & 
+                        (df_renamed['formal_name'].str.strip() != '') &
+                        (df_renamed['formal_name'] != 'nan')
+                    ]
+                    logger.info(f"空のformal_name行を削除後のレコード数: {len(df_renamed)}")
+            elif csv_type == 'gathering':
+                if 'location' in df_renamed.columns:
+                    # locationが空の行を削除
+                    df_renamed = df_renamed[
+                        (df_renamed['location'].notna()) & 
+                        (df_renamed['location'] != '') & 
+                        (df_renamed['location'].str.strip() != '') &
+                        (df_renamed['location'] != 'nan')
+                    ]
+                    logger.info(f"空のlocation行を削除後のレコード数: {len(df_renamed)}")
+            
             # NPCタイプの場合は特別な処理
             if csv_type == 'npc':
+                # nameカラムが空の行を削除
+                if 'name' in df_renamed.columns:
+                    # nameが空、None、'nan'、空白のみの行を削除
+                    df_renamed = df_renamed[
+                        (df_renamed['name'].notna()) & 
+                        (df_renamed['name'] != '') & 
+                        (df_renamed['name'].str.strip() != '') &
+                        (df_renamed['name'] != 'nan')
+                    ]
+                    logger.info(f"空のname行を削除後のレコード数: {len(df_renamed)}")
+                
                 # NPCのEXP/GOLDカラムの処理
                 npc_special_columns = ['exp', 'gold']
                 for col in npc_special_columns:

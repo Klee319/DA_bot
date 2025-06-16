@@ -51,8 +51,8 @@
       "一言": "description"
     },
     "npc": {
-      "配置場所": "location",
       "名前": "name",
+      "配置場所": "location",
       "対応業務": "business_type",
       "入手アイテム": "obtainable_items",
       "必要素材": "required_materials",

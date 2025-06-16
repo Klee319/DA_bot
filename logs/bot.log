@@ -1245,3 +1245,121 @@ discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
 2025-06-16 22:12:42,393 - __main__ - INFO - シャットダウンシグナルを受信しました
 2025-06-16 22:12:42,393 - __main__ - INFO - Botをシャットダウンしています...
 2025-06-16 22:12:42,394 - __main__ - INFO - Botが正常に終了しました
+2025-06-16 22:33:46,301 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-16 22:33:46,302 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-16 22:33:46,304 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-16 22:33:46,304 - discord.client - INFO - logging in using static token
+2025-06-16 22:33:46,981 - database - INFO - データベースの初期化が完了しました
+2025-06-16 22:33:47,285 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-16 22:33:47,285 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-16 22:33:47,734 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 5ff8be330b58f3a9382034058195e547).
+2025-06-16 22:33:49,777 - __main__ - INFO - [PID:3345] Klee bot#1963 として接続しました
+2025-06-16 22:33:49,777 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-16 22:33:49,778 - __main__ - INFO - 接続サーバー数: 2
+2025-06-16 22:33:49,778 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-16 22:33:54,875 - __main__ - INFO - [PID:3345] アイテム検索開始: '骨' from klee.com
+2025-06-16 22:34:11,338 - __main__ - INFO - [PID:3345] アイテム検索開始: '砂岩' from klee.com
+2025-06-16 22:34:33,221 - embed_manager - WARNING - Item list length mismatch: options=5, items=23
+2025-06-16 22:34:39,464 - __main__ - INFO - [PID:3345] アイテム検索開始: '紅玉' from klee.com
+2025-06-16 22:35:05,298 - __main__ - INFO - [PID:3345] アイテム検索開始: 'デイリーチケット' from klee.com
+2025-06-16 22:35:41,576 - __main__ - INFO - [PID:3345] アイテム検索開始: 'デイリーコイン' from klee.com
+2025-06-16 22:36:05,238 - __main__ - INFO - [PID:3345] アイテム検索開始: 'アヴィル' from klee.com
+2025-06-16 22:36:05,340 - search_engine - ERROR - 検索候補取得エラー: no such column: formal_name
+2025-06-16 22:36:28,565 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_223628.db
+2025-06-16 22:36:28,565 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_223628.db
+2025-06-16 22:36:29,253 - csv_manager - INFO - CSVから読み込んだカラム: ['配置場所', '対応業務', '入手アイテム', '必要素材', 'EXP', 'GOLD', '一言', '画像パス', '名前', 'Unnamed: 9', '画像テスト']
+2025-06-16 22:36:29,255 - csv_manager - INFO - Original columns: ['配置場所', '対応業務', '入手アイテム', '必要素材', 'EXP', 'GOLD', '一言', '画像パス', '名前', 'Unnamed: 9', '画像テスト']
+2025-06-16 22:36:29,255 - csv_manager - INFO - Mapping for npc: {'配置場所': 'location', '名前': 'name', '対応業務': 'business_type', '入手アイテム': 'obtainable_items', '必要素材': 'required_materials', 'EXP': 'exp', 'GOLD': 'gold', '一言': 'description', '画像パス': 'image_path'}
+2025-06-16 22:36:29,256 - csv_manager - WARNING - マッピングされていないカラム: ['Unnamed: 9', '画像テスト']
+2025-06-16 22:36:29,257 - csv_manager - INFO - マッピングされていないカラムを削除しました: ['Unnamed: 9', '画像テスト']
+2025-06-16 22:36:29,257 - csv_manager - INFO - Renamed columns: ['location', 'business_type', 'obtainable_items', 'required_materials', 'exp', 'gold', 'description', 'image_path', 'name']
+2025-06-16 22:36:29,276 - csv_manager - ERROR - データ挿入エラー: NOT NULL constraint failed: npcs.name
+2025-06-16 22:36:29,278 - csv_manager - ERROR - テーブル名: npcs
+2025-06-16 22:36:29,279 - csv_manager - ERROR - カラム: ['location', 'business_type', 'obtainable_items', 'required_materials', 'exp', 'gold', 'description', 'image_path', 'name', 'created_at', 'updated_at']
+2025-06-16 22:36:29,279 - csv_manager - ERROR - SQL: INSERT OR REPLACE INTO npcs (`location`, `business_type`, `obtainable_items`, `required_materials`, `exp`, `gold`, `description`, `image_path`, `name`, `created_at`, `updated_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-06-16 22:36:29,279 - csv_manager - ERROR - CSV処理エラー: NOT NULL constraint failed: npcs.name
+2025-06-16 22:41:02,034 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_224101.db
+2025-06-16 22:41:02,035 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_224101.db
+2025-06-16 22:41:02,469 - csv_manager - INFO - CSVから読み込んだカラム: ['正式名称', '一般名称', '入手場所', '入手カテゴリ', '種類', '必要素材', '効果', '一言', '画像リンク']
+2025-06-16 22:41:02,472 - csv_manager - INFO - Original columns: ['正式名称', '一般名称', '入手場所', '入手カテゴリ', '種類', '必要素材', '効果', '一言', '画像リンク']
+2025-06-16 22:41:02,472 - csv_manager - INFO - Mapping for equipment: {'正式名称': 'formal_name', '一般名称': 'common_name', '入手場所': 'acquisition_location', '入手カテゴリ': 'acquisition_category', '種類': 'type', '必要素材': 'required_materials', '効果': 'item_effect', '一言': 'description', '画像リンク': 'image_url'}
+2025-06-16 22:41:02,473 - csv_manager - INFO - Renamed columns: ['formal_name', 'common_name', 'acquisition_location', 'acquisition_category', 'type', 'required_materials', 'item_effect', 'description', 'image_url']
+2025-06-16 22:41:02,514 - csv_manager - INFO - equipmentデータを437件処理しました
+2025-06-16 22:41:12,067 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_224112.db
+2025-06-16 22:41:12,068 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_224112.db
+2025-06-16 22:41:12,519 - csv_manager - INFO - CSVから読み込んだカラム: ['正式名称', '一般名称', '入手カテゴリ', '入手方法', '利用カテゴリ', '使用用途', '一言', '画像リンク']
+2025-06-16 22:41:12,520 - csv_manager - INFO - Original columns: ['正式名称', '一般名称', '入手カテゴリ', '入手方法', '利用カテゴリ', '使用用途', '一言', '画像リンク']
+2025-06-16 22:41:12,520 - csv_manager - INFO - Mapping for material: {'正式名称': 'formal_name', '一般名称': 'common_name', '入手カテゴリ': 'acquisition_category', '入手方法': 'acquisition_method', '利用カテゴリ': 'usage_category', '使用用途': 'usage_purpose', '一言': 'description', '画像リンク': 'image_url'}
+2025-06-16 22:41:12,521 - csv_manager - INFO - Renamed columns: ['formal_name', 'common_name', 'acquisition_category', 'acquisition_method', 'usage_category', 'usage_purpose', 'description', 'image_url']
+2025-06-16 22:41:12,542 - csv_manager - INFO - materialデータを111件処理しました
+2025-06-16 22:41:20,719 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_224120.db
+2025-06-16 22:41:20,720 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_224120.db
+2025-06-16 22:41:21,311 - csv_manager - INFO - CSVから読み込んだカラム: ['配置場所', '対応業務', '入手アイテム', '必要素材', 'EXP', 'GOLD', '一言', '画像パス', '名前', 'Unnamed: 9', 'Unnamed: 10']
+2025-06-16 22:41:30,651 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_224130.db
+2025-06-16 22:41:30,652 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_224130.db
+2025-06-16 22:41:31,078 - csv_manager - INFO - CSVから読み込んだカラム: ['収集場所', '収集方法', '必要ツールレベル', '入手素材', '一言']
+2025-06-16 22:41:31,079 - csv_manager - INFO - Original columns: ['収集場所', '収集方法', '必要ツールレベル', '入手素材', '一言']
+2025-06-16 22:41:31,079 - csv_manager - INFO - Mapping for gathering: {'収集場所': 'location', '収集方法': 'collection_method', '入手素材': 'obtained_materials', '必要ツールレベル': 'required_tools', '一言': 'description'}
+2025-06-16 22:41:31,079 - csv_manager - INFO - Renamed columns: ['location', 'collection_method', 'required_tools', 'obtained_materials', 'description']
+2025-06-16 22:41:31,190 - csv_manager - INFO - gatheringデータを21件処理しました
+2025-06-16 22:41:47,244 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_224147.db
+2025-06-16 22:41:47,245 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_224147.db
+2025-06-16 22:41:47,745 - csv_manager - INFO - CSVから読み込んだカラム: ['配置場所', '対応業務', '入手アイテム', '必要素材', 'EXP', 'GOLD', '一言', '画像パス', '名前', 'Unnamed: 9', 'Unnamed: 10']
+2025-06-16 22:41:47,746 - csv_manager - INFO - Original columns: ['配置場所', '対応業務', '入手アイテム', '必要素材', 'EXP', 'GOLD', '一言', '画像パス', '名前', 'Unnamed: 9', 'Unnamed: 10']
+2025-06-16 22:41:47,746 - csv_manager - INFO - Mapping for npc: {'配置場所': 'location', '名前': 'name', '対応業務': 'business_type', '入手アイテム': 'obtainable_items', '必要素材': 'required_materials', 'EXP': 'exp', 'GOLD': 'gold', '一言': 'description', '画像パス': 'image_path'}
+2025-06-16 22:41:47,746 - csv_manager - WARNING - マッピングされていないカラム: ['Unnamed: 9', 'Unnamed: 10']
+2025-06-16 22:41:47,747 - csv_manager - INFO - マッピングされていないカラムを削除しました: ['Unnamed: 9', 'Unnamed: 10']
+2025-06-16 22:41:47,747 - csv_manager - INFO - Renamed columns: ['location', 'business_type', 'obtainable_items', 'required_materials', 'exp', 'gold', 'description', 'image_path', 'name']
+2025-06-16 22:41:47,765 - csv_manager - ERROR - データ挿入エラー: NOT NULL constraint failed: npcs.name
+2025-06-16 22:41:47,765 - csv_manager - ERROR - テーブル名: npcs
+2025-06-16 22:41:47,765 - csv_manager - ERROR - カラム: ['location', 'business_type', 'obtainable_items', 'required_materials', 'exp', 'gold', 'description', 'image_path', 'name', 'created_at', 'updated_at']
+2025-06-16 22:41:47,765 - csv_manager - ERROR - SQL: INSERT OR REPLACE INTO npcs (`location`, `business_type`, `obtainable_items`, `required_materials`, `exp`, `gold`, `description`, `image_path`, `name`, `created_at`, `updated_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-06-16 22:41:47,766 - csv_manager - ERROR - CSV処理エラー: NOT NULL constraint failed: npcs.name
+2025-06-16 22:45:18,296 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_224518.db
+2025-06-16 22:45:18,297 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_224518.db
+2025-06-16 22:45:18,768 - csv_manager - INFO - CSVから読み込んだカラム: ['名前', '配置場所', '対応業務', '入手アイテム', '必要素材', 'EXP', 'GOLD', '一言', '画像パス', 'Unnamed: 9', 'Unnamed: 10', 'Unnamed: 11']
+2025-06-16 22:45:18,769 - csv_manager - INFO - Original columns: ['名前', '配置場所', '対応業務', '入手アイテム', '必要素材', 'EXP', 'GOLD', '一言', '画像パス', 'Unnamed: 9', 'Unnamed: 10', 'Unnamed: 11']
+2025-06-16 22:45:18,769 - csv_manager - INFO - Mapping for npc: {'配置場所': 'location', '名前': 'name', '対応業務': 'business_type', '入手アイテム': 'obtainable_items', '必要素材': 'required_materials', 'EXP': 'exp', 'GOLD': 'gold', '一言': 'description', '画像パス': 'image_path'}
+2025-06-16 22:45:18,770 - csv_manager - WARNING - マッピングされていないカラム: ['Unnamed: 9', 'Unnamed: 10', 'Unnamed: 11']
+2025-06-16 22:45:18,771 - csv_manager - INFO - マッピングされていないカラムを削除しました: ['Unnamed: 9', 'Unnamed: 10', 'Unnamed: 11']
+2025-06-16 22:45:18,773 - csv_manager - INFO - Renamed columns: ['name', 'location', 'business_type', 'obtainable_items', 'required_materials', 'exp', 'gold', 'description', 'image_path']
+2025-06-16 22:45:18,790 - csv_manager - ERROR - データ挿入エラー: NOT NULL constraint failed: npcs.name
+2025-06-16 22:45:18,790 - csv_manager - ERROR - テーブル名: npcs
+2025-06-16 22:45:18,790 - csv_manager - ERROR - カラム: ['name', 'location', 'business_type', 'obtainable_items', 'required_materials', 'exp', 'gold', 'description', 'image_path', 'created_at', 'updated_at']
+2025-06-16 22:45:18,790 - csv_manager - ERROR - SQL: INSERT OR REPLACE INTO npcs (`name`, `location`, `business_type`, `obtainable_items`, `required_materials`, `exp`, `gold`, `description`, `image_path`, `created_at`, `updated_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-06-16 22:45:18,791 - csv_manager - ERROR - CSV処理エラー: NOT NULL constraint failed: npcs.name
+2025-06-16 22:45:42,211 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-16 22:45:42,212 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-16 22:45:42,213 - __main__ - INFO - Botが正常に終了しました
+2025-06-16 22:45:53,909 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-16 22:45:53,909 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-16 22:45:53,911 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-16 22:45:53,911 - discord.client - INFO - logging in using static token
+2025-06-16 22:45:54,701 - database - INFO - データベースの初期化が完了しました
+2025-06-16 22:45:55,085 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-16 22:45:55,085 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-16 22:45:55,546 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 034712081d7377bd80a6d591a7050492).
+2025-06-16 22:45:57,562 - __main__ - INFO - [PID:3677] Klee bot#1963 として接続しました
+2025-06-16 22:45:57,562 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-16 22:45:57,563 - __main__ - INFO - 接続サーバー数: 2
+2025-06-16 22:45:57,563 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-16 22:46:05,058 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_224605.db
+2025-06-16 22:46:05,058 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_224605.db
+2025-06-16 22:46:05,643 - csv_manager - INFO - CSVから読み込んだカラム: ['名前', '配置場所', '対応業務', '入手アイテム', '必要素材', 'EXP', 'GOLD', '一言', '画像パス', 'Unnamed: 9', 'Unnamed: 10', 'Unnamed: 11']
+2025-06-16 22:46:05,644 - csv_manager - INFO - Original columns: ['名前', '配置場所', '対応業務', '入手アイテム', '必要素材', 'EXP', 'GOLD', '一言', '画像パス', 'Unnamed: 9', 'Unnamed: 10', 'Unnamed: 11']
+2025-06-16 22:46:05,644 - csv_manager - INFO - Mapping for npc: {'名前': 'name', '配置場所': 'location', '対応業務': 'business_type', '入手アイテム': 'obtainable_items', '必要素材': 'required_materials', 'EXP': 'exp', 'GOLD': 'gold', '一言': 'description', '画像パス': 'image_path'}
+2025-06-16 22:46:05,645 - csv_manager - WARNING - マッピングされていないカラム: ['Unnamed: 9', 'Unnamed: 10', 'Unnamed: 11']
+2025-06-16 22:46:05,645 - csv_manager - INFO - マッピングされていないカラムを削除しました: ['Unnamed: 9', 'Unnamed: 10', 'Unnamed: 11']
+2025-06-16 22:46:05,646 - csv_manager - INFO - Renamed columns: ['name', 'location', 'business_type', 'obtainable_items', 'required_materials', 'exp', 'gold', 'description', 'image_path']
+2025-06-16 22:46:05,664 - csv_manager - ERROR - データ挿入エラー: NOT NULL constraint failed: npcs.name
+2025-06-16 22:46:05,666 - csv_manager - ERROR - テーブル名: npcs
+2025-06-16 22:46:05,666 - csv_manager - ERROR - カラム: ['name', 'location', 'business_type', 'obtainable_items', 'required_materials', 'exp', 'gold', 'description', 'image_path', 'created_at', 'updated_at']
+2025-06-16 22:46:05,667 - csv_manager - ERROR - SQL: INSERT OR REPLACE INTO npcs (`name`, `location`, `business_type`, `obtainable_items`, `required_materials`, `exp`, `gold`, `description`, `image_path`, `created_at`, `updated_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-06-16 22:46:05,667 - csv_manager - ERROR - CSV処理エラー: NOT NULL constraint failed: npcs.name
+2025-06-16 22:47:39,445 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_224739.db
+2025-06-16 22:47:39,445 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_224739.db
+2025-06-16 22:47:39,832 - csv_manager - INFO - CSVから読み込んだカラム: ['正式名称', '一般名称', '出没エリア', '出没エリア詳細', '必要レベル', 'ドロップ品', 'EXP', 'Gold', '必要守備力', '一言', '画像リンク']
+2025-06-16 22:47:39,835 - csv_manager - INFO - Original columns: ['正式名称', '一般名称', '出没エリア', '出没エリア詳細', '必要レベル', 'ドロップ品', 'EXP', 'Gold', '必要守備力', '一言', '画像リンク']
+2025-06-16 22:47:39,836 - csv_manager - INFO - Mapping for mob: {'正式名称': 'formal_name', '一般名称': 'common_name', '出没エリア': 'area', '出没エリア詳細': 'area_detail', '必要レベル': 'required_level', 'ドロップ品': 'drops', 'EXP': 'exp', 'Gold': 'gold', '必要守備力': 'required_defense', '一言': 'description', '画像リンク': 'image_url'}
+2025-06-16 22:47:39,836 - csv_manager - INFO - Renamed columns: ['formal_name', 'common_name', 'area', 'area_detail', 'required_level', 'drops', 'exp', 'gold', 'required_defense', 'description', 'image_url']
+2025-06-16 22:47:39,862 - csv_manager - INFO - mobデータを42件処理しました
