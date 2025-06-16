@@ -1363,3 +1363,8 @@ discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
 2025-06-16 22:47:39,836 - csv_manager - INFO - Mapping for mob: {'正式名称': 'formal_name', '一般名称': 'common_name', '出没エリア': 'area', '出没エリア詳細': 'area_detail', '必要レベル': 'required_level', 'ドロップ品': 'drops', 'EXP': 'exp', 'Gold': 'gold', '必要守備力': 'required_defense', '一言': 'description', '画像リンク': 'image_url'}
 2025-06-16 22:47:39,836 - csv_manager - INFO - Renamed columns: ['formal_name', 'common_name', 'area', 'area_detail', 'required_level', 'drops', 'exp', 'gold', 'required_defense', 'description', 'image_url']
 2025-06-16 22:47:39,862 - csv_manager - INFO - mobデータを42件処理しました
+2025-06-16 22:49:43,429 - __main__ - INFO - [PID:3677] アイテム検索開始: '大聖森' from klee.com
+2025-06-16 22:50:15,469 - __main__ - INFO - [PID:3677] アイテム検索開始: 'オーク' from klee.com
+2025-06-16 22:56:14,067 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-16 22:56:14,068 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-16 22:56:14,069 - __main__ - INFO - Botが正常に終了しました

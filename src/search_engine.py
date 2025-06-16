@@ -594,7 +594,7 @@ class SearchEngine:
                 # 入手元の検索
                 acquisition_category = item_data.get('acquisition_category', '')
                 
-                if acquisition_category == '討伐':
+                if acquisition_category in ['討伐', 'モブ討伐']:
                     # このequipmentをドロップするmob
                     dropped_by = await self._search_mobs_dropping_item(item_name)
                     for mob in dropped_by:
@@ -612,10 +612,11 @@ class SearchEngine:
                 if item_data.get('drops'):
                     drop_items = await self._parse_drop_list(item_data['drops'])
                     for drop_name in drop_items:
-                        drop_info = await self.search(drop_name)
+                        # 直接データベースから検索（全テーブル対象）
+                        drop_info = await self._search_drop_item_directly(drop_name)
                         if drop_info:
-                            drop_info[0]['relation_type'] = 'drops_from_mob'
-                            related_items['dropped_items'].append(drop_info[0])
+                            drop_info['relation_type'] = 'drops_from_mob'
+                            related_items['dropped_items'].append(drop_info)
             
             # NPCテーブルは未実装のためスキップ
             
@@ -695,6 +696,53 @@ class SearchEngine:
         except Exception as e:
             logger.error(f"素材使用アイテム検索エラー: {e}")
             return []
+    
+    async def _search_drop_item_directly(self, item_name: str) -> Optional[Dict[str, Any]]:
+        """ドロップアイテムを直接データベースから検索（完全一致優先）"""
+        try:
+            async with aiosqlite.connect(self.db_manager.db_path) as db:
+                db.row_factory = aiosqlite.Row
+                
+                # 検索対象テーブル
+                tables = ['equipments', 'materials', 'mobs']
+                
+                # 完全一致検索
+                for table in tables:
+                    cursor = await db.execute(
+                        f"SELECT *, '{table}' as item_type FROM {table} WHERE formal_name = ?",
+                        (item_name,)
+                    )
+                    row = await cursor.fetchone()
+                    if row:
+                        return dict(row)
+                
+                # 「の破片」を除いて再検索（例：「トト・ノーマルの破片」→「トト・ノーマル」）
+                if item_name.endswith('の破片'):
+                    base_name = item_name.replace('の破片', '')
+                    for table in tables:
+                        cursor = await db.execute(
+                            f"SELECT *, '{table}' as item_type FROM {table} WHERE formal_name = ?",
+                            (base_name,)
+                        )
+                        row = await cursor.fetchone()
+                        if row:
+                            return dict(row)
+                
+                # 完全一致がなければ部分一致検索
+                for table in tables:
+                    cursor = await db.execute(
+                        f"SELECT *, '{table}' as item_type FROM {table} WHERE formal_name LIKE ?",
+                        (f'%{item_name}%',)
+                    )
+                    row = await cursor.fetchone()
+                    if row:
+                        return dict(row)
+                
+                return None
+                
+        except Exception as e:
+            logger.error(f"ドロップアイテム直接検索エラー: {e}")
+            return None
     
     async def _search_equipment_using_material(self, material_name: str) -> List[Dict[str, Any]]:
         """指定した素材を使用する装備を検索（部分一致を除外）"""
@@ -845,6 +893,10 @@ class SearchEngine:
             for item in items:
                 item = item.strip()
                 if item == target_item:
+                    return True
+                # 「・ノーマル」系の特殊処理
+                # equipmentが「XXX・ノーマル」で、ドロップが「XXX・ノーマルの破片」の場合
+                if target_item.endswith('・ノーマル') and item == target_item + 'の破片':
                     return True
             
             return False
