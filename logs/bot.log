@@ -1368,3 +1368,49 @@ discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
 2025-06-16 22:56:14,067 - __main__ - INFO - シャットダウンシグナルを受信しました
 2025-06-16 22:56:14,068 - __main__ - INFO - Botをシャットダウンしています...
 2025-06-16 22:56:14,069 - __main__ - INFO - Botが正常に終了しました
+2025-06-16 23:02:33,724 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-16 23:02:33,724 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-16 23:02:33,727 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-16 23:02:33,727 - discord.client - INFO - logging in using static token
+2025-06-16 23:02:34,409 - database - INFO - データベースの初期化が完了しました
+2025-06-16 23:02:34,891 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-16 23:02:34,892 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-16 23:02:35,451 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 01463e600e7bb98694e1e4b0f4ff5458).
+2025-06-16 23:02:37,464 - __main__ - INFO - [PID:4208] Klee bot#1963 として接続しました
+2025-06-16 23:02:37,464 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-16 23:02:37,465 - __main__ - INFO - 接続サーバー数: 2
+2025-06-16 23:02:37,465 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-16 23:02:50,676 - __main__ - INFO - [PID:4208] アイテム検索開始: 'オーク' from klee.com
+2025-06-16 23:03:31,855 - __main__ - INFO - [PID:4208] アイテム検索開始: '翠明なる大聖森の弓' from klee.com
+2025-06-16 23:03:31,985 - search_engine - ERROR - 検索候補取得エラー: no such column: formal_name
+2025-06-16 23:03:46,367 - __main__ - INFO - [PID:4208] アイテム検索開始: '大聖森' from klee.com
+2025-06-16 23:04:24,845 - __main__ - INFO - [PID:4208] アイテム検索開始: '骨' from klee.com
+2025-06-16 23:05:07,538 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_230507.db
+2025-06-16 23:05:07,539 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_230507.db
+2025-06-16 23:05:08,088 - csv_manager - INFO - CSVから読み込んだカラム: ['正式名称', '一般名称', '入手場所', '入手カテゴリ', '種類', '必要素材', '効果', '一言', '画像リンク']
+2025-06-16 23:05:08,089 - csv_manager - INFO - Original columns: ['正式名称', '一般名称', '入手場所', '入手カテゴリ', '種類', '必要素材', '効果', '一言', '画像リンク']
+2025-06-16 23:05:08,089 - csv_manager - INFO - Mapping for equipment: {'正式名称': 'formal_name', '一般名称': 'common_name', '入手場所': 'acquisition_location', '入手カテゴリ': 'acquisition_category', '種類': 'type', '必要素材': 'required_materials', '効果': 'item_effect', '一言': 'description', '画像リンク': 'image_url'}
+2025-06-16 23:05:08,090 - csv_manager - INFO - Renamed columns: ['formal_name', 'common_name', 'acquisition_location', 'acquisition_category', 'type', 'required_materials', 'item_effect', 'description', 'image_url']
+2025-06-16 23:05:08,094 - csv_manager - INFO - 空のformal_name行を削除後のレコード数: 437
+2025-06-16 23:05:08,129 - csv_manager - INFO - equipmentデータを437件処理しました
+2025-06-16 23:05:15,834 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_230515.db
+2025-06-16 23:05:15,834 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_230515.db
+2025-06-16 23:05:16,441 - csv_manager - INFO - CSVから読み込んだカラム: ['正式名称', '一般名称', '出没エリア', '出没エリア詳細', '必要レベル', 'ドロップ品', 'EXP', 'Gold', '必要守備力', '一言', '画像リンク']
+2025-06-16 23:05:16,443 - csv_manager - INFO - Original columns: ['正式名称', '一般名称', '出没エリア', '出没エリア詳細', '必要レベル', 'ドロップ品', 'EXP', 'Gold', '必要守備力', '一言', '画像リンク']
+2025-06-16 23:05:16,444 - csv_manager - INFO - Mapping for mob: {'正式名称': 'formal_name', '一般名称': 'common_name', '出没エリア': 'area', '出没エリア詳細': 'area_detail', '必要レベル': 'required_level', 'ドロップ品': 'drops', 'EXP': 'exp', 'Gold': 'gold', '必要守備力': 'required_defense', '一言': 'description', '画像リンク': 'image_url'}
+2025-06-16 23:05:16,445 - csv_manager - INFO - Renamed columns: ['formal_name', 'common_name', 'area', 'area_detail', 'required_level', 'drops', 'exp', 'gold', 'required_defense', 'description', 'image_url']
+2025-06-16 23:05:16,447 - csv_manager - INFO - 空のformal_name行を削除後のレコード数: 42
+2025-06-16 23:05:16,466 - csv_manager - INFO - mobデータを42件処理しました
+2025-06-16 23:05:18,210 - __main__ - INFO - [PID:4208] アイテム検索開始: '翠命なる大聖森の弓' from klee.com
+2025-06-16 23:08:08,026 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_230807.db
+2025-06-16 23:08:08,028 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_230807.db
+2025-06-16 23:08:08,453 - csv_manager - INFO - CSVから読み込んだカラム: ['名前', '配置場所', '対応業務', '入手アイテム', '必要素材', 'EXP', 'GOLD', '一言', '画像パス', 'Unnamed: 9', 'Unnamed: 10', 'Unnamed: 11']
+2025-06-16 23:08:08,453 - csv_manager - INFO - Original columns: ['名前', '配置場所', '対応業務', '入手アイテム', '必要素材', 'EXP', 'GOLD', '一言', '画像パス', 'Unnamed: 9', 'Unnamed: 10', 'Unnamed: 11']
+2025-06-16 23:08:08,454 - csv_manager - INFO - Mapping for npc: {'名前': 'name', '配置場所': 'location', '対応業務': 'business_type', '入手アイテム': 'obtainable_items', '必要素材': 'required_materials', 'EXP': 'exp', 'GOLD': 'gold', '一言': 'description', '画像パス': 'image_path'}
+2025-06-16 23:08:08,454 - csv_manager - WARNING - マッピングされていないカラム: ['Unnamed: 9', 'Unnamed: 10', 'Unnamed: 11']
+2025-06-16 23:08:08,454 - csv_manager - INFO - マッピングされていないカラムを削除しました: ['Unnamed: 9', 'Unnamed: 10', 'Unnamed: 11']
+2025-06-16 23:08:08,455 - csv_manager - INFO - Renamed columns: ['name', 'location', 'business_type', 'obtainable_items', 'required_materials', 'exp', 'gold', 'description', 'image_path']
+2025-06-16 23:08:08,458 - csv_manager - INFO - 空のname行を削除後のレコード数: 106
+2025-06-16 23:08:08,476 - csv_manager - INFO - npcデータを106件処理しました
+2025-06-16 23:08:20,862 - __main__ - INFO - [PID:4208] アイテム検索開始: 'セシド' from klee.com
+2025-06-16 23:08:49,856 - __main__ - INFO - [PID:4208] アイテム検索開始: 'クエスト' from klee.com

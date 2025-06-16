@@ -318,14 +318,53 @@ class EmbedManager:
                 inline=False
             )
         
-        # 効果
+        # 効果（紋章系は特別な表示形式）
         item_effect = item_data.get('item_effect')
+        item_type_value = item_data.get('type', '')
         if item_effect and str(item_effect).strip():
-            embed.add_field(
-                name="効果:",
-                value=f"\u200B　`{item_effect}`",
-                inline=False
-            )
+            # 紋章系の場合は改行を保持して箇条書き形式で表示
+            if '紋章' in str(item_type_value):
+                # 改行で分割して処理
+                effect_lines = str(item_effect).strip().split('\n')
+                formatted_effects = []
+                level_info = None
+                
+                for line in effect_lines:
+                    line = line.strip()
+                    if line:
+                        if 'レベル:' in line or 'Lv.' in line:
+                            # レベル情報は別途保存
+                            level_info = line
+                        else:
+                            # 効果項目は箇条書きに
+                            if not line.startswith('・'):
+                                line = f"・{line}"
+                            formatted_effects.append(f"　{line}")
+                
+                # 効果セクション
+                if formatted_effects:
+                    # 1行目にゼロ幅スペースを挿入
+                    formatted_effects[0] = "\u200B" + formatted_effects[0]
+                    embed.add_field(
+                        name="効果:",
+                        value="\n".join(formatted_effects),
+                        inline=False
+                    )
+                
+                # 使用可能レベルセクション
+                if level_info:
+                    embed.add_field(
+                        name="使用可能レベル:",
+                        value=f"\u200B　`{level_info.replace('使用可能レベル:', '').strip()}`",
+                        inline=False
+                    )
+            else:
+                # 通常の装備の場合
+                embed.add_field(
+                    name="効果:",
+                    value=f"\u200B　`{item_effect}`",
+                    inline=False
+                )
         
         # 入手場所
         acquisition_location = item_data.get('acquisition_location')
