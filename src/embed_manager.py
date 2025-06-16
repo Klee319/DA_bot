@@ -881,29 +881,96 @@ class AcquisitionDetailsButton(discord.ui.Button):
                 # 3. NPC交換・購入の表示
                 npc_sources = [item for item in related_items.get('acquisition_sources', []) if item.get('relation_type') == 'npc_source']
                 if npc_sources:
-                    npc_items = []
-                    for npc in npc_sources[:5]:
-                        npc_name = npc.get('name', '不明')
-                        npc_location = npc.get('location', '')
-                        business_type = npc.get('business_type', 'その他')
-                        display_text = f"**{npc_name}**"
-                        if npc_location:
-                            display_text += f" ({npc_location})"
-                        display_text += f" - {business_type}"
-                        npc_items.append(f"　• {display_text}")
-                        options.append(discord.SelectOption(
-                            label=f"{npc_name} ({business_type})"[:25],
-                            value=f"npc_{option_index}",
-                            description=npc_location[:50] if npc_location else "NPC"
-                        ))
-                        option_index += 1
-                    if npc_items:
-                        npc_items[0] = "\u200B" + npc_items[0]
-                        embed.add_field(
-                            name="**NPC交換・購入:**",
-                            value="\n".join(npc_items),
-                            inline=False
-                        )
+                    # 入手元と納品先を分類
+                    obtainable_npcs = []
+                    required_npcs = []
+                    
+                    for npc in npc_sources:
+                        if npc.get('source_type') == 'obtainable':
+                            obtainable_npcs.append(npc)
+                        elif npc.get('source_type') == 'required':
+                            required_npcs.append(npc)
+                    
+                    # 入手元の表示
+                    if obtainable_npcs:
+                        npc_items = []
+                        for npc in obtainable_npcs[:5]:
+                            npc_name = npc.get('name', '不明')
+                            npc_location = npc.get('location', '')
+                            business_type = npc.get('business_type', 'その他')
+                            display_text = f"**{npc_name}**"
+                            if npc_location:
+                                display_text += f" ({npc_location})"
+                            display_text += f" - {business_type}"
+                            
+                            # NPCが複数の交換パターンを持つ場合の処理
+                            obtainable_items = npc.get('obtainable_items', '')
+                            if business_type in ['交換', '購入', 'クエスト'] and obtainable_items:
+                                from src.npc_parser import NPCExchangeParser
+                                exchanges = NPCExchangeParser.parse_exchange_items(
+                                    obtainable_items,
+                                    npc.get('required_materials', ''),
+                                    npc.get('exp', ''),
+                                    npc.get('gold', '')
+                                )
+                                
+                                # 該当アイテムを含む交換パターンを特定
+                                item_exchanges = []
+                                for exchange in exchanges:
+                                    if exchange.get('obtainable_item') and view.item_data['formal_name'] in exchange['obtainable_item']:
+                                        item_exchanges.append(exchange)
+                                
+                                if len(item_exchanges) > 1:
+                                    # 複数の交換パターンがある場合
+                                    display_text += f"\n　　※ {len(item_exchanges)}種類の入手方法があります"
+                            
+                            npc_items.append(f"　• {display_text}")
+                            options.append(discord.SelectOption(
+                                label=f"{npc_name} ({business_type})"[:25],
+                                value=f"npc_{option_index}",
+                                description=npc_location[:50] if npc_location else "NPC"
+                            ))
+                            option_index += 1
+                        if npc_items:
+                            npc_items[0] = "\u200B" + npc_items[0]
+                            embed.add_field(
+                                name="**NPC交換・購入:**",
+                                value="\n".join(npc_items),
+                                inline=False
+                            )
+                    
+                    # 納品先・使用先の表示
+                    if required_npcs:
+                        required_items = []
+                        for npc in required_npcs[:5]:
+                            npc_name = npc.get('name', '不明')
+                            npc_location = npc.get('location', '')
+                            business_type = npc.get('business_type', 'その他')
+                            display_text = f"**{npc_name}**"
+                            if npc_location:
+                                display_text += f" ({npc_location})"
+                            
+                            if business_type == 'クエスト':
+                                display_text += f" - クエスト納品"
+                            elif business_type == '交換':
+                                display_text += f" - 交換素材として使用"
+                            else:
+                                display_text += f" - {business_type}"
+                            
+                            required_items.append(f"　• {display_text}")
+                            options.append(discord.SelectOption(
+                                label=f"{npc_name} (納品/使用)"[:25],
+                                value=f"npc_{option_index}",
+                                description=npc_location[:50] if npc_location else "NPC"
+                            ))
+                            option_index += 1
+                        if required_items:
+                            required_items[0] = "\u200B" + required_items[0]
+                            embed.add_field(
+                                name="**納品先・使用先:**",
+                                value="\n".join(required_items),
+                                inline=False
+                            )
                 
                 # 4. その他の入手方法
                 if related_items.get('acquisition_info') and not related_items.get('gathering_locations'):
@@ -1503,18 +1570,77 @@ class NewRelatedItemSelect(discord.ui.Select):
                         business_type = selected_item.get('business_type', '')
                         items = selected_item.get('obtainable_items', '')
                         materials = selected_item.get('required_materials', '')
+                        exp_str = selected_item.get('exp', '')
+                        gold_str = selected_item.get('gold', '')
                         desc = selected_item.get('description', '')
                         
-                        embed.add_field(name="NPC名", value=f"`{name}`", inline=False)
-                        embed.add_field(name="場所", value=f"`{location}`", inline=False)
-                        embed.add_field(name="業務", value=f"`{business_type}`", inline=False)
-                        if items:
+                        embed.title = f"{name} の詳細情報"
+                        embed.add_field(name="NPC名", value=f"`{name}`", inline=True)
+                        embed.add_field(name="場所", value=f"`{location}`", inline=True)
+                        embed.add_field(name="業務", value=f"`{business_type}`", inline=True)
+                        
+                        # 複数交換パターンの解析
+                        if items and business_type in ['購入', '交換', 'クエスト']:
+                            from src.npc_parser import NPCExchangeParser
+                            exchanges = NPCExchangeParser.parse_exchange_items(
+                                items, materials, exp_str, gold_str
+                            )
+                            
+                            if business_type == 'クエスト':
+                                # クエストの受注内容一覧
+                                quest_list = []
+                                for i, exchange in enumerate(exchanges[:10]):
+                                    req_mat = exchange.get('required_materials', '')
+                                    if req_mat:
+                                        quest_list.append(f"• {req_mat}")
+                                if quest_list:
+                                    embed.add_field(
+                                        name="**受注内容:**",
+                                        value="\n".join(quest_list),
+                                        inline=False
+                                    )
+                                    embed.add_field(
+                                        name="\u200b",
+                                        value="*※ 下のボタンでクエスト詳細を検索*",
+                                        inline=False
+                                    )
+                            else:
+                                # 購入・交換の販売商品一覧
+                                item_list = []
+                                unique_items = set()  # 重複除去用
+                                for exchange in exchanges:
+                                    obtainable = exchange.get('obtainable_item', '')
+                                    if obtainable and obtainable not in unique_items:
+                                        unique_items.add(obtainable)
+                                        # アイテム名から個数を分離
+                                        if ':' in obtainable:
+                                            item_name, quantity = obtainable.split(':', 1)
+                                            item_list.append(f"• {item_name.strip()}×{quantity.strip()}")
+                                        else:
+                                            item_list.append(f"• {obtainable}")
+                                
+                                if item_list:
+                                    embed.add_field(
+                                        name="**販売商品:**",
+                                        value="\n".join(item_list[:10]),
+                                        inline=False
+                                    )
+                                    if len(item_list) > 10:
+                                        embed.add_field(
+                                            name="\u200b",
+                                            value=f"...他{len(item_list) - 10}種類",
+                                            inline=False
+                                        )
+                                    embed.add_field(
+                                        name="\u200b",
+                                        value="*※ 下のボタンで取引詳細を検索*",
+                                        inline=False
+                                    )
+                        elif items:
+                            # 旧形式のフォールバック
                             item_list = [f"• {i.strip()}" for i in items.split(',')]
                             embed.add_field(name="取扱アイテム", value="\n".join(item_list[:10]), inline=False)
-                        if materials and business_type in ['購入', '交換']:
-                            mat_list = [f"• {m.strip()}" for m in materials.split(',')]
-                            label = "価格" if business_type == '購入' else "必要素材"
-                            embed.add_field(name=label, value="\n".join(mat_list[:10]), inline=False)
+                        
                         if desc:
                             embed.add_field(name="備考", value=f"`{desc}`", inline=False)
                     

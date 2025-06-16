@@ -30,6 +30,9 @@ class CSVManager:
             # CSVを読み込み（2行目をスキップ：1行目=ヘッダー、2行目=説明、3行目以降=データ）
             df = pd.read_csv(io.BytesIO(content), encoding='utf-8', skiprows=[1])
             
+            # 読み込んだカラム名をログに出力
+            logger.info(f"CSVから読み込んだカラム: {df.columns.tolist()}")
+            
             # バリデーション
             validation_result = await self.validate_csv(df, csv_type)
             if not validation_result['valid']:
@@ -181,7 +184,19 @@ class CSVManager:
         try:
             # カラム名をマッピング
             mapping = self.csv_mapping[csv_type]
+            logger.info(f"Original columns: {df.columns.tolist()}")
+            logger.info(f"Mapping for {csv_type}: {mapping}")
+            
+            # マッピングされていないカラムを検出
+            unmapped_columns = [col for col in df.columns if col not in mapping]
+            if unmapped_columns:
+                logger.warning(f"マッピングされていないカラム: {unmapped_columns}")
+                # マッピングされていないカラムは削除
+                df = df.drop(columns=unmapped_columns)
+                logger.info(f"マッピングされていないカラムを削除しました: {unmapped_columns}")
+            
             df_renamed = df.rename(columns=mapping)
+            logger.info(f"Renamed columns: {df_renamed.columns.tolist()}")
             
             # 日本語テキストの正規化
             text_columns = ['formal_name', 'common_name', 'description', 'name', 'location']
@@ -293,9 +308,20 @@ class CSVManager:
                 
                 # 新しいデータを挿入
                 columns = df.columns.tolist()
+                
+                # カラム名のサニタイズは不要（すでに英語名にマッピング済み）
+                # ただし、念のためログに出力
+                logger.debug(f"挿入するカラム: {columns}")
+                
                 placeholders = ', '.join(['?' for _ in columns])
                 
-                sql = f"INSERT OR REPLACE INTO {table_name} ({', '.join(columns)}) VALUES ({placeholders})"
+                # カラム名をバッククォートで囲む（予約語対策）
+                quoted_columns = [f"`{col}`" for col in columns]
+                sql = f"INSERT OR REPLACE INTO {table_name} ({', '.join(quoted_columns)}) VALUES ({placeholders})"
+                
+                # デバッグ: SQL文とカラム名をログに出力
+                logger.debug(f"Generated SQL: {sql}")
+                logger.debug(f"Columns: {columns}")
                 
                 # DataFrameを辞書のリストに変換
                 data_rows = []
@@ -318,6 +344,9 @@ class CSVManager:
                 
         except Exception as e:
             logger.error(f"データ挿入エラー: {e}")
+            logger.error(f"テーブル名: {table_name}")
+            logger.error(f"カラム: {columns if 'columns' in locals() else 'Not yet defined'}")
+            logger.error(f"SQL: {sql if 'sql' in locals() else 'Not yet defined'}")
             raise
     
     async def export_csv(self, csv_type: str, output_path: str) -> bool:

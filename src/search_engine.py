@@ -880,7 +880,7 @@ class SearchEngine:
                 db.row_factory = aiosqlite.Row
                 results = []
                 
-                # npcsテーブルから入手アイテムに含まれるNPCを検索
+                # 1. npcsテーブルから入手アイテムに含まれるNPCを検索
                 cursor = await db.execute(
                     "SELECT *, 'npcs' as item_type FROM npcs WHERE obtainable_items LIKE ? AND obtainable_items IS NOT NULL",
                     (f'%{item_name}%',)
@@ -894,6 +894,7 @@ class SearchEngine:
                     # アイテムリストをパースして完全一致をチェック
                     if self._material_exactly_matches(obtainable_items, item_name):
                         row_dict['relation_type'] = 'npc_source'
+                        row_dict['source_type'] = 'obtainable'  # 入手可能アイテムからの検索
                         
                         # NPCの業務タイプに応じた詳細設定
                         business_type = row_dict.get('business_type', '')
@@ -906,10 +907,80 @@ class SearchEngine:
                             
                         results.append(row_dict)
                 
+                # 2. 必要素材フィールドからもアイテム名を検索（素材・装備の場合）
+                cursor = await db.execute(
+                    "SELECT *, 'npcs' as item_type FROM npcs WHERE required_materials LIKE ? AND required_materials IS NOT NULL",
+                    (f'%{item_name}%',)
+                )
+                rows = await cursor.fetchall()
+                
+                for row in rows:
+                    row_dict = dict(row)
+                    required_materials = row_dict.get('required_materials', '')
+                    
+                    # 必要素材リストをパースして完全一致をチェック
+                    if self._material_exactly_matches(required_materials, item_name):
+                        # 既に入手元として追加されていないかチェック
+                        already_added = False
+                        for existing in results:
+                            if existing.get('id') == row_dict.get('id'):
+                                already_added = True
+                                break
+                        
+                        if not already_added:
+                            row_dict['relation_type'] = 'npc_source'
+                            row_dict['source_type'] = 'required'  # 必要素材からの検索
+                            
+                            # 素材を必要とするアイテムを検索
+                            obtainable_items = row_dict.get('obtainable_items', '')
+                            business_type = row_dict.get('business_type', '')
+                            
+                            if business_type == 'クエスト':
+                                # クエストの場合は納品要求として表示
+                                row_dict['relation_detail'] = f"クエスト納品 ({item_name})"
+                            elif business_type == '交換':
+                                # 交換の場合は、その素材で何が入手できるかを表示
+                                row_dict['relation_detail'] = f"交換元 (入手: {obtainable_items})"
+                            else:
+                                row_dict['relation_detail'] = f"{business_type} (素材使用)"
+                            
+                            results.append(row_dict)
+                
                 return results
             
         except Exception as e:
             logger.warning(f"NPC検索エラー: {e}")
+            return []
+    
+    async def search_npcs(self, npc_name: str) -> List[Dict[str, Any]]:
+        """NPC名で検索"""
+        try:
+            normalized_name = self._normalize_query(npc_name)
+            
+            async with aiosqlite.connect(self.db_manager.db_path) as db:
+                db.row_factory = aiosqlite.Row
+                
+                # 完全一致検索
+                cursor = await db.execute(
+                    "SELECT * FROM npcs WHERE LOWER(name) = LOWER(?)",
+                    (normalized_name,)
+                )
+                results = await cursor.fetchall()
+                
+                if results:
+                    return [dict(row) for row in results]
+                
+                # 部分一致検索
+                cursor = await db.execute(
+                    "SELECT * FROM npcs WHERE LOWER(name) LIKE LOWER(?)",
+                    (f'%{normalized_name}%',)
+                )
+                results = await cursor.fetchall()
+                
+                return [dict(row) for row in results]
+                
+        except Exception as e:
+            logger.error(f"NPC検索エラー: {e}")
             return []
     
     async def get_search_suggestions(self, partial_query: str, limit: int = 5) -> List[str]:
