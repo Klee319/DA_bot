@@ -818,7 +818,9 @@ class AcquisitionDetailsButton(discord.ui.Button):
                 mob_sources = [item for item in related_items.get('acquisition_sources', []) if item.get('relation_type') == 'drop_from_mob']
                 if mob_sources:
                     field_items = []
-                    for item in mob_sources[:5]:
+                    # 最初の10件を表示
+                    display_count = min(len(mob_sources), 10)
+                    for i, item in enumerate(mob_sources[:display_count]):
                         # mobの場合はformal_nameがある
                         display_name = item.get('formal_name', '不明')
                         field_items.append(f"　• **{display_name}**")
@@ -828,9 +830,13 @@ class AcquisitionDetailsButton(discord.ui.Button):
                             description="ドロップ元"
                         ))
                         option_index += 1
+                    
                     # 1行目にゼロ幅スペースを挿入
                     if field_items:
                         field_items[0] = "\u200B" + field_items[0]
+                        # 残りがある場合は表示
+                        if len(mob_sources) > display_count:
+                            field_items.append(f"　...他{len(mob_sources) - display_count}体")
                         embed.add_field(
                             name="**入手元 (討伐):**",
                             value="\n".join(field_items),
@@ -841,7 +847,8 @@ class AcquisitionDetailsButton(discord.ui.Button):
                 gathering_sources = [item for item in related_items.get('acquisition_sources', []) if item.get('relation_type') == 'gathering_location']
                 if gathering_sources:
                     gathering_items = []
-                    for location in gathering_sources[:5]:
+                    display_count = min(len(gathering_sources), 10)
+                    for i, location in enumerate(gathering_sources[:display_count]):
                         location_name = location.get('location', '不明')
                         collection_method = location.get('collection_method', '')
                         display_text = f"**{location_name}**"
@@ -856,6 +863,8 @@ class AcquisitionDetailsButton(discord.ui.Button):
                         option_index += 1
                     if gathering_items:
                         gathering_items[0] = "\u200B" + gathering_items[0]
+                        if len(gathering_sources) > display_count:
+                            gathering_items.append(f"　...他{len(gathering_sources) - display_count}箇所")
                         embed.add_field(
                             name="**採集場所:**",
                             value="\n".join(gathering_items),
@@ -973,19 +982,23 @@ class AcquisitionDetailsButton(discord.ui.Button):
                             )
                 
                 # 4. その他の入手方法
-                if related_items.get('acquisition_info') and not related_items.get('gathering_locations'):
+                if related_items.get('acquisition_info'):
                     info = related_items['acquisition_info']
-                    if info['category'] not in ['採取', '採掘', '釣り', 'NPC', 'ギルドクエスト']:
+                    # gathering_locationsがある場合、または特定のカテゴリの場合は表示しない
+                    if not related_items.get('gathering_locations') and info['category'] not in ['採取', '採掘', '釣り', 'NPC', 'ギルドクエスト']:
                         method_text = info.get('method', info['category'])
                         location_text = info.get('location', '')
-                        display_text = f"　**{method_text}**"
-                        if location_text:
-                            display_text += f"\n　• 場所: `{location_text}`"
-                        embed.add_field(
-                            name="**その他の入手方法:**",
-                            value=display_text,
-                            inline=False
-                        )
+                        
+                        # method_textが有効な場合のみ表示
+                        if method_text and method_text != 'None':
+                            display_text = f"　**{method_text}**"
+                            if location_text and location_text != 'None':
+                                display_text += f"\n　• 場所: `{location_text}`"
+                            embed.add_field(
+                                name="**その他の入手方法:**",
+                                value=display_text,
+                                inline=False
+                            )
             
             elif item_type == 'equipments':
                 # 装備の必要素材と入手元
@@ -1124,8 +1137,23 @@ class AcquisitionDetailsButton(discord.ui.Button):
                         item_list.extend(gathering_sources)
                         item_list.extend(npc_sources)
                     
-                    detailed_view = NewRelatedItemsView(related_items, view.embed_manager, options, item_list)
-                    embed.set_footer(text="アイテムを選択して詳細を表示")
+                    # Discord.pyの制限: SelectMenuは最大25個の選択肢
+                    if len(options) > 25:
+                        # 最初の24個 + 「もっと見る」オプション
+                        truncated_options = options[:24]
+                        truncated_options.append(discord.SelectOption(
+                            label="...もっと見る",
+                            value="show_more",
+                            description=f"他{len(options) - 24}件のアイテム"
+                        ))
+                        truncated_item_list = item_list[:24] if len(item_list) > 24 else item_list
+                        
+                        detailed_view = NewRelatedItemsView(related_items, view.embed_manager, truncated_options, truncated_item_list)
+                        embed.set_footer(text=f"アイテムを選択して詳細を表示（全{len(options)}件中24件を表示）")
+                    else:
+                        detailed_view = NewRelatedItemsView(related_items, view.embed_manager, options, item_list)
+                        embed.set_footer(text="アイテムを選択して詳細を表示")
+                    
                     await interaction.response.send_message(embed=embed, view=detailed_view, ephemeral=True)
                 else:
                     await interaction.response.send_message(embed=embed, ephemeral=True)

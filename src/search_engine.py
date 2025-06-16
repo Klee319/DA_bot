@@ -105,16 +105,27 @@ class SearchEngine:
         try:
             # クエリを正規化
             normalized_query = self._normalize_query(query)
+            all_results = []
             
             # 1. 正式名称での完全一致検索
-            results = await self._search_exact_formal_name(normalized_query)
-            if results:
-                return results
+            exact_formal_results = await self._search_exact_formal_name(normalized_query)
+            all_results.extend(exact_formal_results)
             
             # 2. 一般名称での完全一致検索
-            results = await self._search_exact_common_name(normalized_query)
-            if results:
-                return results
+            exact_common_results = await self._search_exact_common_name(normalized_query)
+            # 重複を除外しながら追加
+            for result in exact_common_results:
+                if not any(r['id'] == result['id'] and r['item_type'] == result['item_type'] for r in all_results):
+                    all_results.append(result)
+            
+            # 完全一致が見つかった場合は、部分一致も含めて返す
+            if all_results:
+                # 部分一致も検索して追加
+                partial_results = await self._search_partial_match(normalized_query)
+                for result in partial_results:
+                    if not any(r['id'] == result['id'] and r['item_type'] == result['item_type'] for r in all_results):
+                        all_results.append(result)
+                return all_results[:self.max_results]
             
             # 3. ワイルドカード検索（*や?が含まれている場合）
             if self._has_wildcards(query):
