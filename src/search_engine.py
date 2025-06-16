@@ -125,7 +125,10 @@ class SearchEngine:
                 for result in partial_results:
                     if not any(r['id'] == result['id'] and r['item_type'] == result['item_type'] for r in all_results):
                         all_results.append(result)
-                return all_results[:self.max_results]
+                # 重複除去とスコアリングを行ってから制限
+                sorted_results = self._deduplicate_and_score_results(all_results, normalized_query)
+                # 検索結果は多めに返す（表示時に制限する）
+                return sorted_results[:self.max_results * 3]
             
             # 3. ワイルドカード検索（*や?が含まれている場合）
             if self._has_wildcards(query):
@@ -436,33 +439,33 @@ class SearchEngine:
                 
                 # 各バリエーションで検索
                 for variation in query_variations:
-                    if len(results) >= self.max_results * 2:  # 制限を緩和
+                    if len(results) >= self.max_results * 5:  # 制限をさらに緩和
                         break
                     
                     # formal_name/common_nameを持つテーブル
                     for table in ['equipments', 'materials', 'mobs']:
-                        if len(results) >= self.max_results * 2:
+                        if len(results) >= self.max_results * 5:
                             break
                         
                         # 前方一致を優先
                         cursor = await db.execute(
                             f"SELECT *, '{table}' as item_type, 'prefix' as match_type FROM {table} WHERE LOWER(formal_name) LIKE ? OR LOWER(common_name) LIKE ? LIMIT ?",
-                            (f'{variation}%', f'{variation}%', self.max_results)
+                            (f'{variation}%', f'{variation}%', self.max_results * 3)
                         )
                         rows = await cursor.fetchall()
                         results.extend([dict(row) for row in rows])
                         
                         # 部分一致（前方一致以外の部分一致）
-                        if len(results) < self.max_results * 2:
+                        if len(results) < self.max_results * 5:
                             cursor = await db.execute(
                                 f"SELECT *, '{table}' as item_type, 'partial' as match_type FROM {table} WHERE (LOWER(formal_name) LIKE ? OR LOWER(common_name) LIKE ?) LIMIT ?",
-                                (f'%{variation}%', f'%{variation}%', self.max_results)
+                                (f'%{variation}%', f'%{variation}%', self.max_results * 3)
                             )
                             rows = await cursor.fetchall()
                             results.extend([dict(row) for row in rows])
                     
                     # npcsテーブル
-                    if len(results) < self.max_results * 2:
+                    if len(results) < self.max_results * 5:
                         # 前方一致
                         cursor = await db.execute(
                             "SELECT *, 'npcs' as item_type, name as formal_name, 'prefix' as match_type FROM npcs WHERE LOWER(name) LIKE ? LIMIT ?",
@@ -481,7 +484,8 @@ class SearchEngine:
                 
                 # 重複除去と関連性スコアによるソート
                 unique_results = self._deduplicate_and_score_results(results, query)
-                return unique_results[:self.max_results]
+                # 部分一致検索では制限なしで返す（呼び出し元で制限する）
+                return unique_results
                 
         except Exception as e:
             logger.error(f"部分一致検索エラー: {e}")

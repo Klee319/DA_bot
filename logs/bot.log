@@ -1164,3 +1164,84 @@ discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
 2025-06-16 11:42:59,442 - __main__ - INFO - プレゼンス設定が完了しました
 2025-06-16 11:44:13,488 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_114413.db
 2025-06-16 11:44:13,489 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_114413.db
+2025-06-16 20:34:17,783 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-16 20:34:17,783 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-16 20:34:17,785 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-16 20:34:17,785 - discord.client - INFO - logging in using static token
+2025-06-16 20:34:18,476 - database - INFO - データベースの初期化が完了しました
+2025-06-16 20:34:18,854 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-16 20:34:18,855 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-16 20:34:19,346 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: a02c4226f8415e58ca3380013f627fe9).
+2025-06-16 20:34:21,354 - __main__ - INFO - [PID:1232] Klee bot#1963 として接続しました
+2025-06-16 20:34:21,354 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-16 20:34:21,355 - __main__ - INFO - 接続サーバー数: 2
+2025-06-16 20:34:21,355 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-16 20:34:29,996 - __main__ - INFO - [PID:1232] アイテム検索開始: '石' from klee.com
+2025-06-16 20:34:41,874 - __main__ - INFO - [PID:1232] アイテム検索開始: '鉛' from klee.com
+2025-06-16 20:35:11,597 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_203511.db
+2025-06-16 20:35:11,598 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_203511.db
+2025-06-16 20:35:12,145 - csv_manager - ERROR - データ挿入エラー: unrecognized token: ":"
+2025-06-16 20:35:12,145 - csv_manager - ERROR - CSV処理エラー: unrecognized token: ":"
+2025-06-16 20:37:06,225 - database - INFO - データベースをバックアップしました: ./backups//backup_20250616_203706.db
+2025-06-16 20:37:06,226 - __main__ - INFO - バックアップを作成: ./backups//backup_20250616_203706.db
+2025-06-16 20:37:06,638 - csv_manager - INFO - gatheringデータを21件処理しました
+2025-06-16 20:37:21,509 - __main__ - INFO - [PID:1232] アイテム検索開始: '鉛' from klee.com
+2025-06-16 20:37:39,028 - __main__ - INFO - [PID:1232] アイテム検索開始: '赤い宝石' from klee.com
+2025-06-16 20:37:45,182 - embed_manager - WARNING - Item list length mismatch: options=5, items=6
+2025-06-16 20:39:03,135 - embed_manager - WARNING - Item list length mismatch: options=5, items=7
+2025-06-16 20:40:30,342 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-16 20:40:30,342 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-16 20:40:30,343 - __main__ - INFO - Botが正常に終了しました
+2025-06-16 21:14:02,694 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-16 21:14:02,694 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-16 21:14:11,754 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-16 21:14:11,754 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-16 21:14:11,756 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-16 21:14:11,756 - discord.client - INFO - logging in using static token
+2025-06-16 21:14:12,527 - database - INFO - データベースの初期化が完了しました
+2025-06-16 21:14:12,921 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-16 21:14:12,923 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-16 21:14:13,574 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: bd1c09134a156a0a081c47b3b4a69e8a).
+2025-06-16 21:14:15,585 - __main__ - INFO - [PID:1852] Klee bot#1963 として接続しました
+2025-06-16 21:14:15,586 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-16 21:14:15,586 - __main__ - INFO - 接続サーバー数: 2
+2025-06-16 21:14:15,588 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-16 21:14:29,885 - __main__ - INFO - [PID:1852] アイテム検索開始: '紅玉' from klee.com
+2025-06-16 21:14:45,542 - __main__ - INFO - [PID:1852] アイテム検索開始: '魔玉' from klee.com
+2025-06-16 21:15:16,037 - __main__ - INFO - [PID:1852] アイテム検索開始: '大聖森' from klee.com
+2025-06-16 21:15:42,872 - __main__ - INFO - [PID:1852] アイテム検索開始: '大聖森の弓・改' from klee.com
+2025-06-16 21:16:58,469 - __main__ - INFO - [PID:1852] アイテム検索開始: '大森林' from klee.com
+2025-06-16 21:17:13,086 - __main__ - INFO - [PID:1852] アイテム検索開始: '大森林の弓' from klee.com
+2025-06-16 21:17:24,977 - __main__ - INFO - [PID:1852] アイテム検索開始: '大聖森の弓・改' from klee.com
+2025-06-16 21:17:36,070 - __main__ - INFO - [PID:1852] アイテム検索開始: '大森林の弓・改' from klee.com
+2025-06-16 21:18:02,533 - __main__ - INFO - [PID:1852] アイテム検索開始: '砂岩' from klee.com
+2025-06-16 21:18:23,187 - embed_manager - WARNING - Item list length mismatch: options=5, items=23
+2025-06-16 21:22:28,144 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-16 21:22:28,144 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-16 21:22:28,145 - __main__ - INFO - Botが正常に終了しました
+2025-06-16 21:39:40,730 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-16 21:39:40,730 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-16 21:39:40,732 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-16 21:39:40,732 - discord.client - INFO - logging in using static token
+2025-06-16 21:39:41,391 - database - INFO - データベースの初期化が完了しました
+2025-06-16 21:39:41,759 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-16 21:39:41,759 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-16 21:39:42,239 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 17489779e48082cbb762eea7278bcc19).
+2025-06-16 21:39:44,245 - __main__ - INFO - [PID:2659] Klee bot#1963 として接続しました
+2025-06-16 21:39:44,245 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-16 21:39:44,245 - __main__ - INFO - 接続サーバー数: 2
+2025-06-16 21:39:44,246 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-16 21:39:53,527 - __main__ - INFO - [PID:2659] アイテム検索開始: '大森林の弓' from klee.com
+2025-06-16 21:40:03,586 - __main__ - INFO - [PID:2659] アイテム検索開始: '砂岩' from klee.com
+2025-06-16 21:40:11,478 - embed_manager - WARNING - Item list length mismatch: options=5, items=23
+2025-06-16 21:40:30,323 - __main__ - INFO - [PID:2659] アイテム検索開始: '紅玉' from klee.com
+2025-06-16 21:40:43,337 - __main__ - INFO - [PID:2659] アイテム検索開始: '赤い鉱石' from klee.com
+2025-06-16 21:41:51,673 - __main__ - INFO - [PID:2659] アイテム検索開始: '砂岩' from klee.com
+2025-06-16 21:42:52,331 - __main__ - INFO - [PID:2659] アイテム検索開始: '骨' from klee.com
+2025-06-16 21:43:26,088 - __main__ - INFO - [PID:2659] アイテム検索開始: '怨嗟' from klee.com
+2025-06-16 21:47:36,516 - __main__ - INFO - [PID:2659] アイテム検索開始: '弓' from klee.com
+2025-06-16 21:58:16,304 - discord.gateway - INFO - Shard ID None has successfully RESUMED session 17489779e48082cbb762eea7278bcc19.
+2025-06-16 22:06:20,726 - __main__ - INFO - [PID:2659] アイテム検索開始: 'ゼクロ' from klee.com
+2025-06-16 22:12:42,393 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-16 22:12:42,393 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-16 22:12:42,394 - __main__ - INFO - Botが正常に終了しました
