@@ -178,15 +178,22 @@ class SearchEngine:
                 db.row_factory = aiosqlite.Row
                 results = []
                 
-                tables = ['equipments', 'materials', 'mobs']
-                
-                for table in tables:
+                # equipments, materials, mobsテーブルは formal_name で検索
+                for table in ['equipments', 'materials', 'mobs']:
                     cursor = await db.execute(
                         f"SELECT *, '{table}' as item_type FROM {table} WHERE LOWER(formal_name) = ? LIMIT ?",
                         (query, self.max_results)
                     )
                     rows = await cursor.fetchall()
                     results.extend([dict(row) for row in rows])
+                
+                # npcsテーブルは name で検索
+                cursor = await db.execute(
+                    "SELECT *, 'npcs' as item_type, name as formal_name FROM npcs WHERE LOWER(name) = ? LIMIT ?",
+                    (query, self.max_results)
+                )
+                rows = await cursor.fetchall()
+                results.extend([dict(row) for row in rows])
                 
                 return results
                 
@@ -201,12 +208,14 @@ class SearchEngine:
                 db.row_factory = aiosqlite.Row
                 results = []
                 
+                # gatheringsとnpcsにはcommon_nameがないため除外
                 tables = ['equipments', 'materials', 'mobs']
                 
                 for table in tables:
+                    # 複数の一般名称をカンマ区切りで格納している場合に対応
                     cursor = await db.execute(
-                        f"SELECT *, '{table}' as item_type FROM {table} WHERE LOWER(common_name) = ? AND common_name IS NOT NULL LIMIT ?",
-                        (query, self.max_results)
+                        f"SELECT *, '{table}' as item_type FROM {table} WHERE LOWER(common_name) = ? OR LOWER(common_name) LIKE ? OR LOWER(common_name) LIKE ? OR LOWER(common_name) LIKE ? LIMIT ?",
+                        (query, f'{query},%', f'%,{query},%', f'%,{query}', self.max_results)
                     )
                     rows = await cursor.fetchall()
                     results.extend([dict(row) for row in rows])
@@ -227,10 +236,10 @@ class SearchEngine:
                 db.row_factory = aiosqlite.Row
                 results = []
                 
-                tables = ['equipments', 'materials', 'mobs']
+                # テーブルごとに処理
                 
-                for table in tables:
-                    # 全アイテムを取得してPythonでワイルドカードマッチング
+                # formal_name/common_nameを持つテーブル
+                for table in ['equipments', 'materials', 'mobs']:
                     cursor = await db.execute(
                         f"SELECT *, '{table}' as item_type FROM {table}"
                     )
@@ -238,13 +247,24 @@ class SearchEngine:
                     
                     for row in rows:
                         row_dict = dict(row)
-                        # 正式名称と一般名称の両方でマッチングチェック
                         formal_name = row_dict.get('formal_name', '')
                         common_name = row_dict.get('common_name', '') or ''
                         
                         if (fnmatch(formal_name.lower(), normalized_query.lower()) or 
                             fnmatch(common_name.lower(), normalized_query.lower())):
                             results.append(row_dict)
+                
+                # npcsテーブル (nameカラムを使用)
+                cursor = await db.execute(
+                    "SELECT *, 'npcs' as item_type, name as formal_name FROM npcs"
+                )
+                rows = await cursor.fetchall()
+                
+                for row in rows:
+                    row_dict = dict(row)
+                    name = row_dict.get('name', '')
+                    if fnmatch(name.lower(), normalized_query.lower()):
+                        results.append(row_dict)
                 
                 return results[:self.max_results]
                 
@@ -262,9 +282,8 @@ class SearchEngine:
                 db.row_factory = aiosqlite.Row
                 results = []
                 
-                tables = ['equipments', 'materials', 'mobs']
-                
-                for table in tables:
+                # formal_name/common_nameを持つテーブル
+                for table in ['equipments', 'materials', 'mobs']:
                     for variation in query_variations:
                         # 正式名称での検索
                         cursor = await db.execute(
@@ -281,6 +300,15 @@ class SearchEngine:
                         )
                         rows = await cursor.fetchall()
                         results.extend([dict(row) for row in rows])
+                
+                # npcsテーブルの検索
+                for variation in query_variations:
+                    cursor = await db.execute(
+                        "SELECT *, 'npcs' as item_type, name as formal_name FROM npcs WHERE LOWER(name) = ? LIMIT ?",
+                        (variation, self.max_results)
+                    )
+                    rows = await cursor.fetchall()
+                    results.extend([dict(row) for row in rows])
                 
                 # 重複を除去
                 seen = set()
@@ -406,33 +434,50 @@ class SearchEngine:
                 db.row_factory = aiosqlite.Row
                 results = []
                 
-                tables = ['equipments', 'materials', 'mobs']
-                
                 # 各バリエーションで検索
                 for variation in query_variations:
-                    if len(results) >= self.max_results:
+                    if len(results) >= self.max_results * 2:  # 制限を緩和
                         break
-                        
-                    for table in tables:
-                        if len(results) >= self.max_results:
+                    
+                    # formal_name/common_nameを持つテーブル
+                    for table in ['equipments', 'materials', 'mobs']:
+                        if len(results) >= self.max_results * 2:
                             break
-                            
+                        
                         # 前方一致を優先
                         cursor = await db.execute(
                             f"SELECT *, '{table}' as item_type, 'prefix' as match_type FROM {table} WHERE LOWER(formal_name) LIKE ? OR LOWER(common_name) LIKE ? LIMIT ?",
-                            (f'{variation}%', f'{variation}%', (self.max_results - len(results)) // 2)
+                            (f'{variation}%', f'{variation}%', self.max_results)
+                        )
+                        rows = await cursor.fetchall()
+                        results.extend([dict(row) for row in rows])
+                        
+                        # 部分一致（前方一致以外の部分一致）
+                        if len(results) < self.max_results * 2:
+                            cursor = await db.execute(
+                                f"SELECT *, '{table}' as item_type, 'partial' as match_type FROM {table} WHERE (LOWER(formal_name) LIKE ? OR LOWER(common_name) LIKE ?) LIMIT ?",
+                                (f'%{variation}%', f'%{variation}%', self.max_results)
+                            )
+                            rows = await cursor.fetchall()
+                            results.extend([dict(row) for row in rows])
+                    
+                    # npcsテーブル
+                    if len(results) < self.max_results * 2:
+                        # 前方一致
+                        cursor = await db.execute(
+                            "SELECT *, 'npcs' as item_type, name as formal_name, 'prefix' as match_type FROM npcs WHERE LOWER(name) LIKE ? LIMIT ?",
+                            (f'{variation}%', self.max_results)
                         )
                         rows = await cursor.fetchall()
                         results.extend([dict(row) for row in rows])
                         
                         # 部分一致
-                        if len(results) < self.max_results:
-                            cursor = await db.execute(
-                                f"SELECT *, '{table}' as item_type, 'partial' as match_type FROM {table} WHERE (LOWER(formal_name) LIKE ? OR LOWER(common_name) LIKE ?) AND LOWER(formal_name) NOT LIKE ? AND LOWER(common_name) NOT LIKE ? LIMIT ?",
-                                (f'%{variation}%', f'%{variation}%', f'{variation}%', f'{variation}%', self.max_results - len(results))
-                            )
-                            rows = await cursor.fetchall()
-                            results.extend([dict(row) for row in rows])
+                        cursor = await db.execute(
+                            "SELECT *, 'npcs' as item_type, name as formal_name, 'partial' as match_type FROM npcs WHERE LOWER(name) LIKE ? LIMIT ?",
+                            (f'%{variation}%', self.max_results)
+                        )
+                        rows = await cursor.fetchall()
+                        results.extend([dict(row) for row in rows])
                 
                 # 重複除去と関連性スコアによるソート
                 unique_results = self._deduplicate_and_score_results(results, query)
@@ -1004,7 +1049,8 @@ class SearchEngine:
                 db.row_factory = aiosqlite.Row
                 suggestions = set()
                 
-                tables = ['equipments', 'materials', 'mobs']
+                # 全てのテーブルを検索対象に含める
+                tables = ['equipments', 'materials', 'mobs', 'gatherings', 'npcs']
                 
                 for table in tables:
                     # 正式名称から候補を取得
