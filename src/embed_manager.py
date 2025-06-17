@@ -529,8 +529,10 @@ class EmbedManager:
                 exchange_list = []
                 
                 for i, exchange in enumerate(exchanges):
-                    obtainable = exchange.get('obtainable_item', '').strip()
-                    required = exchange.get('required_materials', '').strip()
+                    obtainable = exchange.get('obtainable_item') or ''
+                    required = exchange.get('required_materials') or ''
+                    obtainable = obtainable.strip()
+                    required = required.strip()
                     exp = exchange.get('exp')
                     gold = exchange.get('gold')
                     
@@ -549,19 +551,22 @@ class EmbedManager:
                                 item_name, quantity = obtainable.split(':', 1)
                                 exchange_list.append(f"{item_name.strip()}×{quantity.strip()}")
                             else:
-                                exchange_list.append(obtainable)
+                                exchange_list.append(f"{obtainable}")
                 
                 if exchange_list:
                     # フィールド名を業種に応じて設定
                     if business_type == 'クエスト':
                         field_name = "受注内容:"
                     else:
-                        field_name = "販売商品:"
+                        field_name = "入手アイテム:"
                     
                     # 各行をコードブロックで表示
                     formatted_list = []
-                    for item in exchange_list[:10]:  # 最大10件表示
-                        formatted_list.append(f"• `{item}`")
+                    for i, item in enumerate(exchange_list[:10]):  # 最大10件表示
+                        if i == 0:
+                            formatted_list.append(f"\u200B　• `{item}`")
+                        else:
+                            formatted_list.append(f"　• `{item}`")
                     embed.add_field(
                         name=field_name,
                         value="\n".join(formatted_list),
@@ -582,7 +587,12 @@ class EmbedManager:
                     # カンマ区切りを箇条書きに変換
                     items = [item.strip() for item in required_materials.split(',') if item.strip()]
                     if items:
-                        formatted_items = [f"• `{item}`" for item in items[:10]]
+                        formatted_items = []
+                        for i, item in enumerate(items[:10]):
+                            if i == 0:
+                                formatted_items.append(f"\u200B　• `{item}`")
+                            else:
+                                formatted_items.append(f"　• `{item}`")
                         embed.add_field(
                             name="受注内容:",
                             value="\n".join(formatted_items),
@@ -596,20 +606,26 @@ class EmbedManager:
                     if items:
                         # アイテム名:数量の形式をアイテム名×数量に変換
                         formatted_items = []
-                        for item in items[:10]:
+                        for i, item in enumerate(items[:10]):
                             if ':' in item:
                                 item_name, quantity = item.split(':', 1)
-                                formatted_items.append(f"• `{item_name.strip()}×{quantity.strip()}`")
+                                if i == 0:
+                                    formatted_items.append(f"\u200B　• `{item_name.strip()}×{quantity.strip()}`")
+                                else:
+                                    formatted_items.append(f"　• `{item_name.strip()}×{quantity.strip()}`")
                             else:
-                                formatted_items.append(f"• `{item}`")
+                                if i == 0:
+                                    formatted_items.append(f"\u200B　• `{item}`")
+                                else:
+                                    formatted_items.append(f"　• `{item}`")
                         embed.add_field(
-                            name="取扱商品:" if business_type != 'クエスト' else "受注内容:",
+                            name="入手アイテム:" if business_type != 'クエスト' else "受注内容:",
                             value="\n".join(formatted_items),
                             inline=False
                         )
                     else:
                         embed.add_field(
-                            name="取扱商品:" if business_type != 'クエスト' else "受注内容:",
+                            name="入手アイテム:" if business_type != 'クエスト' else "受注内容:",
                             value=f"\u200B　`{obtainable_items}`",
                             inline=False
                         )
@@ -749,8 +765,19 @@ class EmbedManager:
                 # アイテム情報を表示（一般名称は表示しない）
                 item_info = f"• {i}. {formal_name} ({item_type})"
                 
+                # NPCの場合は場所と説明を表示
+                if item_type == 'npcs':
+                    location = item.get('location', '')
+                    description = item.get('description', '')
+                    if location:
+                        item_info += f" - {location}"
+                    if description:
+                        # 説明は20文字で省略
+                        desc_short = description[:20] + '...' if len(description) > 20 else description
+                        item_info += f" - {desc_short}"
+                
                 # mobの場合は必要レベルも表示
-                if item_type == 'mobs' and required_level:
+                elif item_type == 'mobs' and required_level:
                     try:
                         level_int = int(float(str(required_level).replace(',', '')))
                         item_info += f" - Lv. {level_int}"
@@ -996,7 +1023,10 @@ class AcquisitionDetailsButton(discord.ui.Button):
                     for i, item in enumerate(mob_sources[:display_count]):
                         # mobの場合はformal_nameがある
                         display_name = item.get('formal_name', '不明')
-                        field_items.append(f"• `{display_name}`")
+                        if i == 0:
+                            field_items.append(f"\u200B　• `{display_name}`")
+                        else:
+                            field_items.append(f"　• `{display_name}`")
                         options.append(discord.SelectOption(
                             label=display_name[:25],
                             value=f"source_{option_index}",
@@ -1009,7 +1039,7 @@ class AcquisitionDetailsButton(discord.ui.Button):
                         if len(mob_sources) > display_count:
                             field_items.append(f"...他{len(mob_sources) - display_count}体")
                         embed.add_field(
-                            name="入手元 (討伐):",
+                            name="モブ討伐:",
                             value="\n".join(field_items),
                             inline=False
                         )
@@ -1017,15 +1047,20 @@ class AcquisitionDetailsButton(discord.ui.Button):
                 # 2. 採集場所の表示
                 gathering_sources = [item for item in related_items.get('acquisition_sources', []) if item.get('relation_type') == 'gathering_location']
                 if gathering_sources:
+                    logger.debug(f"gathering_sources 件数: {len(gathering_sources)}")
                     gathering_items = []
                     display_count = min(len(gathering_sources), 10)
                     for i, location in enumerate(gathering_sources[:display_count]):
                         location_name = location.get('location', '不明')
                         collection_method = location.get('collection_method', '')
+                        logger.debug(f"gathering_source[{i}] - location: {location_name}, collection_method: {collection_method}, 元データ: {location}")
                         display_text = f"`{location_name}`"
                         if collection_method:
                             display_text += f" ({collection_method})"
-                        gathering_items.append(f"• {display_text}")
+                        if i == 0:
+                            gathering_items.append(f"\u200B　• {display_text}")
+                        else:
+                            gathering_items.append(f"　• {display_text}")
                         options.append(discord.SelectOption(
                             label=f"{location_name} - {collection_method}"[:25],
                             value=f"gathering_{option_index}",
@@ -1036,7 +1071,7 @@ class AcquisitionDetailsButton(discord.ui.Button):
                         if len(gathering_sources) > display_count:
                             gathering_items.append(f"...他{len(gathering_sources) - display_count}箇所")
                         embed.add_field(
-                            name="採集場所:",
+                            name="ギャザリング:",
                             value="\n".join(gathering_items),
                             inline=False
                         )
@@ -1073,7 +1108,7 @@ class AcquisitionDetailsButton(discord.ui.Button):
                     # 入手元の表示
                     if obtainable_npcs:
                         npc_items = []
-                        for npc in obtainable_npcs[:5]:
+                        for i, npc in enumerate(obtainable_npcs[:5]):
                             npc_name = npc.get('name', '不明')
                             npc_location = npc.get('location', '')
                             business_type = npc.get('business_type', 'その他')
@@ -1099,11 +1134,11 @@ class AcquisitionDetailsButton(discord.ui.Button):
                                     if exchange.get('obtainable_item') and view.item_data['formal_name'] in exchange['obtainable_item']:
                                         item_exchanges.append(exchange)
                                 
-                                if len(item_exchanges) > 1:
-                                    # 複数の交換パターンがある場合
-                                    display_text += f"\n  ※ {len(item_exchanges)}種類の入手方法があります"
                             
-                            npc_items.append(f"• {display_text}")
+                            if i == 0:
+                                npc_items.append(f"\u200B　• {display_text}")
+                            else:
+                                npc_items.append(f"　• {display_text}")
                             options.append(discord.SelectOption(
                                 label=f"{npc_name} ({business_type})"[:25],
                                 value=f"npc_{option_index}",
@@ -1112,7 +1147,7 @@ class AcquisitionDetailsButton(discord.ui.Button):
                             option_index += 1
                         if npc_items:
                             embed.add_field(
-                                name="NPC交換・購入:",
+                                name="NPC:",
                                 value="\n".join(npc_items),
                                 inline=False
                             )
@@ -1120,7 +1155,7 @@ class AcquisitionDetailsButton(discord.ui.Button):
                     # 納品先・使用先の表示
                     if required_npcs:
                         required_items = []
-                        for npc in required_npcs[:5]:
+                        for i, npc in enumerate(required_npcs[:5]):
                             npc_name = npc.get('name', '不明')
                             npc_location = npc.get('location', '')
                             business_type = npc.get('business_type', 'その他')
@@ -1135,7 +1170,10 @@ class AcquisitionDetailsButton(discord.ui.Button):
                             else:
                                 display_text += f" - {business_type}"
                             
-                            required_items.append(f"• {display_text}")
+                            if i == 0:
+                                required_items.append(f"\u200B　• {display_text}")
+                            else:
+                                required_items.append(f"　• {display_text}")
                             options.append(discord.SelectOption(
                                 label=f"{npc_name} (納品/使用)"[:25],
                                 value=f"npc_{option_index}",
@@ -1275,17 +1313,22 @@ class AcquisitionDetailsButton(discord.ui.Button):
                     
                     # materialsの場合
                     if item_type == 'materials':
-                        # gathering locationsを先に追加（順序を保持）
+                        # optionsと同じ順序で追加（mob → gathering → npc）
+                        
+                        # mob sources
+                        mob_sources = [s for s in related_items.get('acquisition_sources', []) if s.get('relation_type') == 'drop_from_mob']
+                        item_list.extend(mob_sources[:10])
+                        
+                        # gathering sources
                         if related_items.get('gathering_locations'):
                             item_list.extend(related_items['gathering_locations'][:10])
                         else:
                             # gathering_sourcesから追加
                             gathering_sources = [s for s in related_items.get('acquisition_sources', []) if s.get('relation_type') == 'gathering_location']
+                            logger.debug(f"item_listに追加するgathering_sources: {len(gathering_sources)}件")
+                            for idx, source in enumerate(gathering_sources[:10]):
+                                logger.debug(f"  [{idx}] location={source.get('location')}, collection_method={source.get('collection_method')}, 全データ={source}")
                             item_list.extend(gathering_sources[:10])
-                        
-                        # mob sources
-                        mob_sources = [s for s in related_items.get('acquisition_sources', []) if s.get('relation_type') == 'drop_from_mob']
-                        item_list.extend(mob_sources[:5])
                         
                         # npc sources（入手元のみ）
                         npc_sources = [s for s in related_items.get('acquisition_sources', []) if s.get('relation_type') == 'npc_source' and s.get('source_type') == 'obtainable']
@@ -1321,10 +1364,10 @@ class AcquisitionDetailsButton(discord.ui.Button):
                         ))
                         truncated_item_list = item_list[:24] if len(item_list) > 24 else item_list
                         
-                        detailed_view = NewRelatedItemsView(related_items, view.embed_manager, truncated_options, truncated_item_list)
+                        detailed_view = NewRelatedItemsView(related_items, view.embed_manager, truncated_options, truncated_item_list, view.item_data)
                         embed.set_footer(text=f"アイテムを選択して詳細を表示（全{len(options)}件中24件を表示）")
                     else:
-                        detailed_view = NewRelatedItemsView(related_items, view.embed_manager, options, item_list)
+                        detailed_view = NewRelatedItemsView(related_items, view.embed_manager, options, item_list, view.item_data)
                         embed.set_footer(text="アイテムを選択して詳細を表示")
                     
                     await interaction.response.send_message(embed=embed, view=detailed_view, ephemeral=True)
@@ -1437,8 +1480,10 @@ class UsageDetailsButton(discord.ui.Button):
                     if exchanges:
                         exchange_list = []
                         for i, exchange in enumerate(exchanges):
-                            obtainable = exchange.get('obtainable_item', '').strip()
-                            required = exchange.get('required_materials', '').strip()
+                            obtainable = exchange.get('obtainable_item') or ''
+                            required = exchange.get('required_materials') or ''
+                            obtainable = obtainable.strip()
+                            required = required.strip()
                             exp = exchange.get('exp')
                             gold = exchange.get('gold')
                             
@@ -1451,13 +1496,13 @@ class UsageDetailsButton(discord.ui.Button):
                                     exchange_list.append(f"`{required}`")
                             else:
                                 if obtainable:
-                                    if business_type == '購入' and required:
-                                        display_text = f"**{obtainable}** → {required}"
-                                    elif business_type == '交換' and required:
-                                        display_text = f"**{obtainable}** ← {required}"
+                                    # アイテム名:数量の形式をアイテム名×数量に変換
+                                    if ':' in obtainable:
+                                        item_name, quantity = obtainable.split(':', 1)
+                                        formatted_obtainable = f"{item_name.strip()}×{quantity.strip()}"
                                     else:
-                                        display_text = f"**{obtainable}**"
-                                    exchange_list.append(f"`{display_text}`")
+                                        formatted_obtainable = obtainable
+                                    exchange_list.append(f"`{formatted_obtainable}`")
                             
                             # 選択肢を追加（embedと同じ内容）
                             if business_type == 'クエスト':
@@ -1482,16 +1527,35 @@ class UsageDetailsButton(discord.ui.Button):
                         
                         if exchange_list:
                             # 各行を箇条書きに変更
-                            formatted_exchange_list = [f"• {item}" for item in exchange_list]
+                            formatted_exchange_list = []
+                            for i, item in enumerate(exchange_list):
+                                if i == 0:
+                                    formatted_exchange_list.append(f"\u200B　• {item}")
+                                else:
+                                    formatted_exchange_list.append(f"　• {item}")
                             
                             if business_type == 'クエスト':
                                 field_name = "受注可能クエスト:"
                             else:
-                                field_name = "取引内容:"
+                                field_name = "入手アイテム:"
                             
                             embed.add_field(
                                 name=field_name,
                                 value="\n".join(formatted_exchange_list),
+                                inline=False
+                            )
+                    else:
+                        # exchangesが空の場合
+                        if business_type == 'クエスト':
+                            embed.add_field(
+                                name="受注可能クエスト:",
+                                value="\u200B　クエスト情報が見つかりませんでした",
+                                inline=False
+                            )
+                        else:
+                            embed.add_field(
+                                name="取引内容:",
+                                value="\u200B　取引情報が見つかりませんでした",
                                 inline=False
                             )
                 
@@ -1849,12 +1913,13 @@ class RelatedItemSelect(discord.ui.Select):
 
 
 class NewRelatedItemsView(discord.ui.View):
-    def __init__(self, related_items: Dict[str, List[Dict[str, Any]]], embed_manager, options: List[discord.SelectOption], item_list: List[Dict[str, Any]] = None):
+    def __init__(self, related_items: Dict[str, List[Dict[str, Any]]], embed_manager, options: List[discord.SelectOption], item_list: List[Dict[str, Any]] = None, item_data: Dict[str, Any] = None):
         super().__init__(timeout=300)
         self.related_items = related_items
         self.embed_manager = embed_manager
         self.all_items = []
         self.item_mapping = {}  # valueからアイテムへのマッピング
+        self.item_data = item_data  # 元のアイテムデータを保持
         
         # item_listが提供されている場合は、それを使用してマッピング
         if item_list and len(item_list) == len(options):
@@ -1867,6 +1932,7 @@ class NewRelatedItemsView(discord.ui.View):
         # セレクトメニューを追加
         if options:
             select = NewRelatedItemSelect(self.item_mapping, embed_manager, options)
+            select.parent_view = self  # 親ビューへの参照を設定
             self.add_item(select)
 
 
@@ -1880,6 +1946,7 @@ class NewRelatedItemSelect(discord.ui.Select):
         )
         self.item_mapping = item_mapping
         self.embed_manager = embed_manager
+        self.parent_view = None  # 親ビューへの参照を保持
     
     async def callback(self, interaction: discord.Interaction):
         try:
@@ -1898,11 +1965,19 @@ class NewRelatedItemSelect(discord.ui.Select):
                     )
                     
                     if selected_value.startswith('gathering_'):
-                        # 採集場所の詳細 - 場所から採集方法を選択した時と同じ形式で表示
+                        # 採集場所の詳細 - 入手元詳細から選択された場合の処理
+                        logger.debug(f"gathering選択 - selected_value: {selected_value}, selected_item: {selected_item}")
                         location = selected_item.get('location', '不明')
                         method = selected_item.get('collection_method', '')
                         
-                        # 同じ場所・採集方法の全データを検索
+                        # 元のアイテム名を取得（これが検索された素材名）
+                        original_item_name = ''
+                        if hasattr(self, 'parent_view') and self.parent_view and hasattr(self.parent_view, 'item_data'):
+                            original_item_name = self.parent_view.item_data.get('formal_name', '')
+                        
+                        logger.info(f"採集情報表示 - 元アイテム名: {original_item_name}, 場所: {location}, 方法: {method}")
+                        
+                        # 同じ場所・採集方法のデータから、この素材が含まれているものを検索
                         from database import DatabaseManager
                         db = DatabaseManager()
                         
@@ -1910,19 +1985,34 @@ class NewRelatedItemSelect(discord.ui.Select):
                             async with aiosqlite.connect(db.db_path) as conn:
                                 conn.row_factory = aiosqlite.Row
                                 
-                                # gatheringsテーブルから同じ場所・採集方法のデータを全て取得
-                                cursor = await conn.execute(
-                                    "SELECT * FROM gatherings WHERE location = ? AND collection_method = ?",
-                                    (location, method)
-                                )
+                                # 特定の素材が含まれる採集情報を取得
+                                if original_item_name:
+                                    # 元の素材名を含む採集情報を検索
+                                    cursor = await conn.execute(
+                                        "SELECT * FROM gatherings WHERE location = ? AND collection_method = ? AND obtained_materials LIKE ?",
+                                        (location, method, f'%{original_item_name}%')
+                                    )
+                                else:
+                                    # フォールバック：場所と方法のみで検索
+                                    cursor = await conn.execute(
+                                        "SELECT * FROM gatherings WHERE location = ? AND collection_method = ?",
+                                        (location, method)
+                                    )
+                                    
                                 rows = await cursor.fetchall()
                                 gathering_data = [dict(row) for row in rows]
                                 
                                 if gathering_data:
-                                    # タイトルを設定
-                                    embed.title = f"**{location}** の **{method}** 情報"
+                                    # タイトルを設定（素材名を含む）
+                                    if original_item_name:
+                                        embed.title = f"**{original_item_name}** の採集情報"
+                                        embed.add_field(name="採集場所:", value=f"`{location}`", inline=True)
+                                        embed.add_field(name="採集方法:", value=f"`{method}`", inline=True)
+                                        embed.add_field(name="\u200b", value="\u200b", inline=True)  # 空白フィールドで改行
+                                    else:
+                                        embed.title = f"**{location}** の **{method}** 情報"
                                     
-                                    # 入手可能素材のリストを作成
+                                    # この場所・方法で入手可能な素材のリスト（素材名をハイライト）
                                     all_materials = []
                                     for data in gathering_data:
                                         materials_str = data.get('obtained_materials', '')
@@ -1934,7 +2024,19 @@ class NewRelatedItemSelect(discord.ui.Select):
                                     unique_materials = sorted(list(set(all_materials)))
                                     
                                     if unique_materials:
-                                        materials_list = [f"• `{mat}`" for mat in unique_materials[:20]]
+                                        materials_list = []
+                                        for i, mat in enumerate(unique_materials[:20]):
+                                            if original_item_name and mat == original_item_name:
+                                                # 検索された素材を強調表示
+                                                if i == 0:
+                                                    materials_list.append(f"\u200B　• **`{mat}`**")
+                                                else:
+                                                    materials_list.append(f"　• **`{mat}`**")
+                                            else:
+                                                if i == 0:
+                                                    materials_list.append(f"\u200B　• `{mat}`")
+                                                else:
+                                                    materials_list.append(f"　• `{mat}`")
                                         embed.add_field(
                                             name="入手可能素材:",
                                             value="\n".join(materials_list),
@@ -1950,16 +2052,31 @@ class NewRelatedItemSelect(discord.ui.Select):
                                     desc = gathering_data[0].get('description', '')
                                     if desc:
                                         embed.add_field(name="備考:", value=f"`{desc}`", inline=False)
+                                    
+                                    # 素材詳細ボタンの案内
+                                    embed.add_field(
+                                        name="\u200b",
+                                        value="*※ 下のボタンで素材詳細を検索*",
+                                        inline=False
+                                    )
                                 else:
-                                    # フォールバック - 元のデータを使用
+                                    # データが見つからない場合
+                                    embed.title = "採集情報が見つかりません"
                                     embed.add_field(name="採集場所:", value=f"`{location}`", inline=False)
                                     embed.add_field(name="採集方法:", value=f"`{method}`", inline=False)
+                                    embed.add_field(
+                                        name="注意:",
+                                        value="この場所・方法の詳細情報が見つかりませんでした。",
+                                        inline=False
+                                    )
                                     
                         except Exception as e:
                             logger.error(f"採集場所詳細取得エラー: {e}")
                             # エラー時のフォールバック
+                            embed.title = "エラーが発生しました"
                             embed.add_field(name="採集場所:", value=f"`{location}`", inline=False)
                             embed.add_field(name="採集方法:", value=f"`{method}`", inline=False)
+                            embed.add_field(name="エラー:", value="詳細情報の取得中にエラーが発生しました。", inline=False)
                     
                     elif selected_value.startswith('npc_'):
                         # NPCの詳細
@@ -1990,7 +2107,10 @@ class NewRelatedItemSelect(discord.ui.Select):
                                 for i, exchange in enumerate(exchanges[:10]):
                                     req_mat = exchange.get('required_materials', '')
                                     if req_mat:
-                                        quest_list.append(f"• `{req_mat}`")
+                                        if len(quest_list) == 0:
+                                            quest_list.append(f"\u200B　• `{req_mat}`")
+                                        else:
+                                            quest_list.append(f"　• `{req_mat}`")
                                 if quest_list:
                                     embed.add_field(
                                         name="受注内容:",
@@ -2008,9 +2128,15 @@ class NewRelatedItemSelect(discord.ui.Select):
                                         # アイテム名から個数を分離
                                         if ':' in obtainable:
                                             item_name, quantity = obtainable.split(':', 1)
-                                            item_list.append(f"• `{item_name.strip()}×{quantity.strip()}`")
+                                            if len(item_list) == 0:
+                                                item_list.append(f"\u200B　• `{item_name.strip()}×{quantity.strip()}`")
+                                            else:
+                                                item_list.append(f"　• `{item_name.strip()}×{quantity.strip()}`")
                                         else:
-                                            item_list.append(f"• `{obtainable}`")
+                                            if len(item_list) == 0:
+                                                item_list.append(f"\u200B　• `{obtainable}`")
+                                            else:
+                                                item_list.append(f"　• `{obtainable}`")
                                 
                                 if item_list:
                                     embed.add_field(
@@ -2031,6 +2157,13 @@ class NewRelatedItemSelect(discord.ui.Select):
                         
                         if desc:
                             embed.add_field(name="備考", value=f"`{desc}`", inline=False)
+                        
+                        # 取引詳細ボタンの案内
+                        embed.add_field(
+                            name="\u200b",
+                            value="*※ 下のボタンで取引詳細を検索*",
+                            inline=False
+                        )
                     
                     elif selected_value.startswith('exchange_'):
                         # NPC交換の個別詳細
@@ -2044,19 +2177,84 @@ class NewRelatedItemSelect(discord.ui.Select):
                         
                         if business_type == 'クエスト':
                             embed.title = f"クエスト詳細"
+                            
+                            # 受注内容（カンマ区切りを箇条書きに）
                             if required:
-                                embed.add_field(name="受注内容", value=f"`{required}`", inline=False)
+                                if ',' in required:
+                                    # カンマ区切りの場合は箇条書きに
+                                    required_items = [item.strip() for item in required.split(',') if item.strip()]
+                                    formatted_items = []
+                                    for i, item in enumerate(required_items):
+                                        if ':' in item:
+                                            item_name, quantity = item.split(':', 1)
+                                            if i == 0:
+                                                formatted_items.append(f"\u200B　• `{item_name.strip()}×{quantity.strip()}`")
+                                            else:
+                                                formatted_items.append(f"　• `{item_name.strip()}×{quantity.strip()}`")
+                                        else:
+                                            if i == 0:
+                                                formatted_items.append(f"\u200B　• `{item}`")
+                                            else:
+                                                formatted_items.append(f"　• `{item}`")
+                                    embed.add_field(name="受注内容:", value="\n".join(formatted_items), inline=False)
+                                else:
+                                    # 単一アイテムの場合
+                                    if ':' in required:
+                                        item_name, quantity = required.split(':', 1)
+                                        formatted_required = f"{item_name.strip()}×{quantity.strip()}"
+                                    else:
+                                        formatted_required = required
+                                    embed.add_field(name="受注内容:", value=f"\u200B　• `{formatted_required}`", inline=False)
                             
                             # 報酬情報（入手アイテムも含める）
-                            rewards = []
+                            reward_sections = []
+                            
+                            # アイテム報酬
                             if obtainable:
-                                rewards.append(f"アイテム: {obtainable}")
+                                item_rewards = []
+                                
+                                # 複数アイテムのパース（エフォート・エビデンスLv1:1魔法石Lv1:20のような形式に対応）
+                                remaining = obtainable
+                                while remaining:
+                                    # コロンの位置を探す
+                                    colon_pos = remaining.find(':')
+                                    if colon_pos == -1:
+                                        # コロンがない場合、残りの文字列を単一アイテムとして処理
+                                        if remaining.strip():
+                                            item_rewards.append(f"　　• `{remaining.strip()}`")
+                                        break
+                                    
+                                    # アイテム名を取得
+                                    item_name = remaining[:colon_pos].strip()
+                                    
+                                    # 数量を取得（数字が続く限り）
+                                    qty_start = colon_pos + 1
+                                    qty_end = qty_start
+                                    while qty_end < len(remaining) and remaining[qty_end].isdigit():
+                                        qty_end += 1
+                                    
+                                    if qty_end > qty_start:  # 数量が見つかった場合
+                                        quantity = remaining[qty_start:qty_end]
+                                        item_rewards.append(f"　　• `{item_name}×{quantity}`")
+                                        remaining = remaining[qty_end:].strip()
+                                    else:
+                                        # 数量がない場合は残り全体を単一アイテムとして処理
+                                        item_rewards.append(f"　　• `{remaining.strip()}`")
+                                        break
+                                
+                                if item_rewards:
+                                    reward_sections.append(f"\u200B　• アイテム:\n" + "\n".join(item_rewards))
+                            
+                            # EXP報酬
                             if exp:
-                                rewards.append(f"EXP: {exp}")
+                                reward_sections.append(f"　• EXP:\n　　`{exp}`")
+                            
+                            # Gold報酬
                             if gold:
-                                rewards.append(f"Gold: {gold}")
-                            if rewards:
-                                embed.add_field(name="報酬", value="\n".join(f"• {r}" for r in rewards), inline=False)
+                                reward_sections.append(f"　• Gold:\n　　`{gold}`")
+                            
+                            if reward_sections:
+                                embed.add_field(name="報酬:", value="\n".join(reward_sections), inline=False)
                         else:
                             embed.title = f"{business_type}詳細"
                             if obtainable:
@@ -2066,19 +2264,25 @@ class NewRelatedItemSelect(discord.ui.Select):
                                     formatted_obtainable = f"{item_name.strip()}×{quantity.strip()}"
                                 else:
                                     formatted_obtainable = obtainable
-                                embed.add_field(name="入手アイテム", value=f"`{formatted_obtainable}`", inline=False)
+                                embed.add_field(name="入手アイテム:", value=f"\u200B　• `{formatted_obtainable}`", inline=False)
                             
                             if required:
                                 # 複数素材の場合は箇条書きに
                                 if ' + ' in required:
                                     required_items = required.split(' + ')
                                     formatted_items = []
-                                    for item in required_items:
+                                    for i, item in enumerate(required_items):
                                         if ':' in item:
                                             item_name, quantity = item.split(':', 1)
-                                            formatted_items.append(f"• `{item_name.strip()}×{quantity.strip()}`")
+                                            if i == 0:
+                                                formatted_items.append(f"\u200B　• `{item_name.strip()}×{quantity.strip()}`")
+                                            else:
+                                                formatted_items.append(f"　• `{item_name.strip()}×{quantity.strip()}`")
                                         else:
-                                            formatted_items.append(f"• `{item}`")
+                                            if i == 0:
+                                                formatted_items.append(f"\u200B　• `{item}`")
+                                            else:
+                                                formatted_items.append(f"　• `{item}`")
                                     embed.add_field(name="必要素材/価格", value="\n".join(formatted_items), inline=False)
                                 else:
                                     # 単一素材の場合
@@ -2087,9 +2291,26 @@ class NewRelatedItemSelect(discord.ui.Select):
                                         formatted_required = f"{item_name.strip()}×{quantity.strip()}"
                                     else:
                                         formatted_required = required
-                                    embed.add_field(name="必要素材/価格", value=f"`{formatted_required}`", inline=False)
+                                    embed.add_field(name="必要素材/価格:", value=f"\u200B　• `{formatted_required}`", inline=False)
                     
-                    await interaction.response.send_message(embed=embed, ephemeral=True)
+                    # gathering_の場合は素材詳細ボタン、npc_の場合は取引詳細ボタンを追加
+                    if selected_value.startswith('gathering_'):
+                        # gatheringアイテム用のviewを作成
+                        # item_typeを'materials'に設定して素材詳細ボタンを表示
+                        selected_item['item_type'] = 'materials'
+                        view = ItemDetailView(selected_item, str(interaction.user.id), self.embed_manager)
+                    elif selected_value.startswith('npc_'):
+                        # npc_アイテム用のviewを作成
+                        # item_typeは既に'npcs'に設定されているはず
+                        view = ItemDetailView(selected_item, str(interaction.user.id), self.embed_manager)
+                    else:
+                        # exchange_の場合はviewなし
+                        view = None
+                    
+                    if view:
+                        await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                    else:
+                        await interaction.response.send_message(embed=embed, ephemeral=True)
                 else:
                     # 通常のアイテム詳細表示
                     embed, view = await self.embed_manager.create_item_detail_embed(

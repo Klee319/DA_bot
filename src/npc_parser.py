@@ -82,7 +82,6 @@ class NPCExchangeParser:
             return []
             
         materials = []
-        current_materials = []
         
         # カンマで分割
         parts = str(materials_str).split(',')
@@ -96,19 +95,44 @@ class NPCExchangeParser:
             if re.match(r'^\d+G$', part):
                 materials.append(part)
             else:
-                # アイテム:数量 の形式を検出
-                item_pattern = r'([^:]+):(\d+)'
-                matches = re.findall(item_pattern, part)
+                # 段階的パース方式で複数のアイテム:数量を抽出
+                items = []
+                remaining = part
                 
-                if matches:
-                    # 複数のアイテム:数量が連続している場合
-                    material_list = []
-                    for item_name, quantity in matches:
-                        material_list.append(f"{item_name.strip()}:{quantity}")
-                    materials.append(' + '.join(material_list))
-                else:
-                    # パターンにマッチしない場合はそのまま
-                    materials.append(part)
+                while remaining:
+                    # コロンの位置を探す
+                    colon_pos = remaining.find(':')
+                    if colon_pos == -1:
+                        # コロンがない場合、残りがあればそのまま追加
+                        if remaining:
+                            items.append(remaining)
+                        break
+                        
+                    # アイテム名を取得
+                    item_name = remaining[:colon_pos]
+                    
+                    # 数量を取得（数字が続く限り）
+                    qty_start = colon_pos + 1
+                    qty_end = qty_start
+                    while qty_end < len(remaining) and remaining[qty_end].isdigit():
+                        qty_end += 1
+                        
+                    if qty_end > qty_start:  # 数量が見つかった場合
+                        quantity = remaining[qty_start:qty_end]
+                        items.append(f"{item_name.strip()}:{quantity}")
+                        remaining = remaining[qty_end:]
+                    else:
+                        # 数量がない場合は異常なフォーマット
+                        logger.warning(f"数量が見つからない異常なフォーマット: {part}")
+                        items.append(part)
+                        break
+                        
+                if items:
+                    # 複数アイテムの場合は + で連結
+                    if len(items) > 1:
+                        materials.append(' + '.join(items))
+                    else:
+                        materials.append(items[0])
                     
         return materials
     
