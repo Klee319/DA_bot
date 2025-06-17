@@ -1165,7 +1165,7 @@ class AcquisitionDetailsButton(discord.ui.Button):
             related_items = await view._get_related_items()
             
             embed = discord.Embed(
-                title=f"{view.item_data['formal_name']} の入手元詳細",
+                title=f"{view.item_data['formal_name']} の入手元一覧",
                 color=discord.Color.green()
             )
             
@@ -1527,10 +1527,14 @@ class AcquisitionDetailsButton(discord.ui.Button):
                         truncated_item_list = item_list[:24] if len(item_list) > 24 else item_list
                         
                         detailed_view = NewRelatedItemsView(related_items, view.embed_manager, truncated_options, truncated_item_list, view.item_data)
-                        embed.set_footer(text=f"アイテムを選択して詳細を表示（全{len(options)}件中24件を表示）")
+                        embed.set_footer(text=f"※下記から入手元詳細を確認（全{len(options)}件中24件を表示）")
                     else:
                         detailed_view = NewRelatedItemsView(related_items, view.embed_manager, options, item_list, view.item_data)
-                        embed.set_footer(text="アイテムを選択して詳細を表示")
+                        embed.add_field(
+                            name="\u200b",  # 空白フィールド名
+                            value="※下記から入手元詳細を確認",
+                            inline=False
+                        )
                     
                     await interaction.response.send_message(embed=embed, view=detailed_view, ephemeral=True)
                 else:

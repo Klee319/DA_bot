@@ -1877,3 +1877,5 @@ discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
 2025-06-17 23:19:33,314 - __main__ - INFO - [PID:1432] アイテム検索開始: 'クエストマスター' from klee.com
 2025-06-17 23:19:37,005 - embed_manager - ERROR - NPCプルダウン追加エラー: 'NoneType' object has no attribute 'strip'
 2025-06-17 23:19:47,776 - embed_manager - ERROR - NPCプルダウン追加エラー: 'NoneType' object has no attribute 'strip'
+2025-06-17 23:26:33,540 - __main__ - INFO - [PID:1432] アイテム検索開始: '平凡なツルハシ' from klee.com
+2025-06-17 23:26:38,068 - __main__ - INFO - [PID:1432] アイテム検索開始: 'ツルハシ' from klee.com
