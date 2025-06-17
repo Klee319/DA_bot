@@ -3,6 +3,7 @@ from discord.ext import commands
 import logging
 import aiohttp
 import asyncio
+import aiosqlite
 from typing import Dict, Any, List, Optional, Tuple
 from datetime import datetime
 
@@ -179,6 +180,22 @@ class EmbedManager:
                         value=f"\u200B　`{collection_method}`",
                         inline=False
                     )
+        elif item_type == 'npcs':
+            # NPCの場合
+            location = item_data.get('location')
+            business_type = item_data.get('business_type')
+            if location:
+                embed.add_field(
+                    name="場所:",
+                    value=f"\u200B　`{location}`",
+                    inline=False
+                )
+            if business_type:
+                embed.add_field(
+                    name="業種:",
+                    value=f"\u200B　`{business_type}`",
+                    inline=False
+                )
     
     async def _add_detailed_info_section(self, embed: discord.Embed, item_data: Dict[str, Any], item_type: str):
         """詳細情報セクションを追加"""
@@ -190,6 +207,8 @@ class EmbedManager:
             await self._add_material_details(embed, item_data)
         elif item_type == 'gatherings':
             await self._add_gathering_details(embed, item_data)
+        elif item_type == 'npcs':
+            await self._add_npc_details(embed, item_data)
     
     async def _add_mob_details(self, embed: discord.Embed, item_data: Dict[str, Any]):
         """モブの詳細情報を追加"""
@@ -488,6 +507,92 @@ class EmbedManager:
                 value=f"　`{description}`",
                 inline=False
             )
+    
+    async def _add_npc_details(self, embed: discord.Embed, item_data: Dict[str, Any]):
+        """NPCの詳細情報を追加"""
+        try:
+            from .npc_parser import NPCExchangeParser
+            
+            business_type = item_data.get('business_type', '')
+            obtainable_items = item_data.get('obtainable_items', '')
+            required_materials = item_data.get('required_materials', '')
+            exp_str = item_data.get('exp', '')
+            gold_str = item_data.get('gold', '')
+            
+            # 交換パターンをパース
+            exchanges = NPCExchangeParser.parse_exchange_items(
+                obtainable_items, required_materials, exp_str, gold_str
+            )
+            
+            if exchanges and any(ex.get('obtainable_item') or ex.get('required_materials') for ex in exchanges):
+                # 交換内容のリストを作成
+                exchange_list = []
+                
+                for i, exchange in enumerate(exchanges):
+                    obtainable = exchange.get('obtainable_item', '').strip()
+                    required = exchange.get('required_materials', '').strip()
+                    exp = exchange.get('exp')
+                    gold = exchange.get('gold')
+                    
+                    if not obtainable and not required:
+                        continue
+                    
+                    if business_type == 'クエスト':
+                        # クエストの場合は受注内容として表示
+                        if required:
+                            quest_item = f"**{required}**"
+                            if exp or gold:
+                                rewards = []
+                                if exp:
+                                    rewards.append(f"{exp} EXP")
+                                if gold:
+                                    rewards.append(f"{gold} G")
+                                quest_item += f" → {' + '.join(rewards)}"
+                            exchange_list.append(f"　• {quest_item}")
+                    else:
+                        # 購入・交換の場合は販売商品として表示
+                        if obtainable:
+                            if business_type == '購入' and required:
+                                exchange_list.append(f"　• **{obtainable}** → {required}")
+                            elif business_type == '交換' and required:
+                                exchange_list.append(f"　• **{obtainable}** ← {required}")
+                            else:
+                                exchange_list.append(f"　• **{obtainable}**")
+                
+                if exchange_list:
+                    # 1行目にゼロ幅スペースを挿入
+                    exchange_list[0] = "\u200B" + exchange_list[0]
+                    
+                    # フィールド名を業種に応じて設定
+                    if business_type == 'クエスト':
+                        field_name = "受注内容:"
+                    else:
+                        field_name = "販売商品:"
+                    
+                    embed.add_field(
+                        name=field_name,
+                        value="\n".join(exchange_list[:10]),  # 最大10件表示
+                        inline=False
+                    )
+                    
+                    # 交換パターンが複数ある場合は選択できることを示す
+                    if len(exchanges) > 1:
+                        embed.add_field(
+                            name="詳細:",
+                            value=f"\u200B　{len(exchanges)}種類の取引があります。下のボタンから選択して詳細を確認できます。",
+                            inline=False
+                        )
+        
+        except Exception as e:
+            logger.error(f"NPC詳細情報追加エラー: {e}")
+            # エラー時はシンプルな表示にフォールバック
+            obtainable_items = item_data.get('obtainable_items', '')
+            if obtainable_items:
+                embed.add_field(
+                    name="取扱商品:",
+                    value=f"\u200B　`{obtainable_items}`",
+                    inline=False
+                )
     
     def _get_type_display_name(self, item_type: str) -> str:
         """アイテムタイプの表示名を取得"""
@@ -802,8 +907,9 @@ class ItemDetailView(discord.ui.View):
             self.add_item(AcquisitionDetailsButton(item_type, acquisition_category))
             self.add_item(UsageDetailsButton(item_type))
         elif item_type == 'equipments':
-            # 装備: 必要素材(入手元)がある
+            # 装備: 必要素材(入手元)と利用先がある
             self.add_item(AcquisitionDetailsButton(item_type, acquisition_category))
+            self.add_item(UsageDetailsButton(item_type))
         elif item_type == 'mobs':
             # モブ: ドロップアイテム(利用先)がある
             self.add_item(UsageDetailsButton(item_type))
@@ -1209,6 +1315,8 @@ class UsageDetailsButton(discord.ui.Button):
     def __init__(self, item_type=''):
         if item_type == 'mobs':
             label = "ドロップ詳細"
+        elif item_type == 'npcs':
+            label = "取引詳細"
         else:
             label = "利用先詳細"
         super().__init__(label=label, style=discord.ButtonStyle.secondary)
@@ -1278,6 +1386,87 @@ class UsageDetailsButton(discord.ui.Button):
                         inline=False
                     )
             
+            elif item_type == 'npcs':
+                # NPCの取引詳細
+                try:
+                    from .npc_parser import NPCExchangeParser
+                    
+                    business_type = view.item_data.get('business_type', '')
+                    obtainable_items = view.item_data.get('obtainable_items', '')
+                    required_materials = view.item_data.get('required_materials', '')
+                    exp_str = view.item_data.get('exp', '')
+                    gold_str = view.item_data.get('gold', '')
+                    
+                    # 交換パターンをパース
+                    exchanges = NPCExchangeParser.parse_exchange_items(
+                        obtainable_items, required_materials, exp_str, gold_str
+                    )
+                    
+                    if exchanges:
+                        exchange_list = []
+                        for i, exchange in enumerate(exchanges):
+                            obtainable = exchange.get('obtainable_item', '').strip()
+                            required = exchange.get('required_materials', '').strip()
+                            exp = exchange.get('exp')
+                            gold = exchange.get('gold')
+                            
+                            if not obtainable and not required:
+                                continue
+                            
+                            # 取引の表示テキスト作成
+                            if business_type == 'クエスト':
+                                if required:
+                                    display_text = f"**{required}**"
+                                    if exp or gold:
+                                        rewards = []
+                                        if exp:
+                                            rewards.append(f"{exp} EXP")
+                                        if gold:
+                                            rewards.append(f"{gold} G")
+                                        display_text += f" → {' + '.join(rewards)}"
+                                    exchange_list.append(f"　• {display_text}")
+                            else:
+                                if obtainable:
+                                    if business_type == '購入' and required:
+                                        display_text = f"**{obtainable}** → {required}"
+                                    elif business_type == '交換' and required:
+                                        display_text = f"**{obtainable}** ← {required}"
+                                    else:
+                                        display_text = f"**{obtainable}**"
+                                    exchange_list.append(f"　• {display_text}")
+                            
+                            # 選択肢を追加
+                            label = obtainable if obtainable else required
+                            if label:
+                                options.append(discord.SelectOption(
+                                    label=f"{i+1}. {label[:20]}"[:25],
+                                    value=f"exchange_{option_index}",
+                                    description=f"{business_type} - 詳細"
+                                ))
+                                option_index += 1
+                        
+                        if exchange_list:
+                            exchange_list[0] = "\u200B" + exchange_list[0]
+                            
+                            if business_type == 'クエスト':
+                                field_name = "受注可能クエスト:"
+                            else:
+                                field_name = "取引内容:"
+                            
+                            embed.add_field(
+                                name=field_name,
+                                value="\n".join(exchange_list),
+                                inline=False
+                            )
+                
+                except Exception as e:
+                    logger.error(f"NPC取引詳細エラー: {e}")
+                    embed.add_field(
+                        name="取引内容:",
+                        value="\u200B　情報の取得に失敗しました",
+                        inline=False
+                    )
+            
             if not options:
                 embed.description = "利用先情報が見つかりませんでした"
                 await interaction.response.send_message(embed=embed, ephemeral=True)
@@ -1291,6 +1480,64 @@ class UsageDetailsButton(discord.ui.Button):
                 elif item_type == 'mobs':
                     # optionsと同じ数に制限
                     item_list.extend(related_items.get('dropped_items', [])[:5])
+                elif item_type == 'npcs':
+                    # NPCの場合は交換パターンをitem_listに追加
+                    try:
+                        from .npc_parser import NPCExchangeParser
+                        
+                        business_type = view.item_data.get('business_type', '')
+                        obtainable_items = view.item_data.get('obtainable_items', '')
+                        required_materials = view.item_data.get('required_materials', '')
+                        exp_str = view.item_data.get('exp', '')
+                        gold_str = view.item_data.get('gold', '')
+                        
+                        exchanges = NPCExchangeParser.parse_exchange_items(
+                            obtainable_items, required_materials, exp_str, gold_str
+                        )
+                        
+                        # 交換パターンを辞書形式でitem_listに追加
+                        for exchange in exchanges:
+                            if exchange.get('obtainable_item') or exchange.get('required_materials'):
+                                item_list.append({
+                                    'formal_name': exchange.get('obtainable_item', '') or exchange.get('required_materials', ''),
+                                    'item_type': 'exchange',
+                                    'exchange_data': exchange,
+                                    'business_type': business_type
+                                })
+                        
+                        # optionsと同じ数に制限
+                        item_list = item_list[:len(options)]
+                        
+                    except Exception as e:
+                        logger.error(f"NPCアイテムリスト作成エラー: {e}")
+                        item_list = []
+                elif item_type == 'equipments':
+                    # 装備の利用先
+                    if related_items.get('usage_destinations'):
+                        usage_list = []
+                        for item in related_items['usage_destinations'][:5]:
+                            usage_detail = item.get('relation_detail', '')
+                            if usage_detail and '必要数' in usage_detail:
+                                usage_list.append(f"　• `{item['formal_name']}` ({usage_detail})")
+                            else:
+                                usage_list.append(f"　• `{item['formal_name']}`")
+                            options.append(discord.SelectOption(
+                                label=item['formal_name'][:25],
+                                value=f"usage_{option_index}",
+                                description=f"{usage_detail if usage_detail else 'NPC'}"
+                            ))
+                            option_index += 1
+                        
+                        if usage_list:
+                            usage_list[0] = "\u200B" + usage_list[0]
+                            embed.add_field(
+                                name="利用先:",
+                                value="\n".join(usage_list),
+                                inline=False
+                            )
+                    
+                    # optionsと同じ数に制限
+                    item_list.extend(related_items.get('usage_destinations', [])[:5])
                 
                 detailed_view = NewRelatedItemsView(related_items, view.embed_manager, options, item_list)
                 embed.set_footer(text="アイテムを選択して詳細を表示")
@@ -1606,8 +1853,8 @@ class NewRelatedItemSelect(discord.ui.Select):
             if selected_value in self.item_mapping:
                 selected_item = self.item_mapping[selected_value]
                 
-                # gathering/npcの場合は簡易表示
-                if selected_value.startswith('gathering_') or selected_value.startswith('npc_'):
+                # gathering/npc/exchangeの場合は簡易表示
+                if selected_value.startswith('gathering_') or selected_value.startswith('npc_') or selected_value.startswith('exchange_'):
                     # gathering/npcは詳細表示ではなく情報表示
                     embed = discord.Embed(
                         title=f"詳細情報",
@@ -1713,6 +1960,47 @@ class NewRelatedItemSelect(discord.ui.Select):
                         if desc:
                             embed.add_field(name="備考", value=f"`{desc}`", inline=False)
                     
+                    elif selected_value.startswith('exchange_'):
+                        # NPC交換の個別詳細
+                        exchange_data = selected_item.get('exchange_data', {})
+                        business_type = selected_item.get('business_type', '')
+                        
+                        obtainable = exchange_data.get('obtainable_item', '')
+                        required = exchange_data.get('required_materials', '')
+                        exp = exchange_data.get('exp')
+                        gold = exchange_data.get('gold')
+                        
+                        if business_type == 'クエスト':
+                            embed.title = f"クエスト詳細"
+                            if required:
+                                embed.add_field(name="納品アイテム", value=f"`{required}`", inline=False)
+                            
+                            # 報酬情報
+                            rewards = []
+                            if exp:
+                                rewards.append(f"EXP: {exp}")
+                            if gold:
+                                rewards.append(f"Gold: {gold}")
+                            if rewards:
+                                embed.add_field(name="報酬", value="\n".join(f"• {r}" for r in rewards), inline=False)
+                        else:
+                            embed.title = f"{business_type}詳細"
+                            if obtainable:
+                                embed.add_field(name="入手アイテム", value=f"`{obtainable}`", inline=True)
+                            if required:
+                                embed.add_field(name="必要素材/価格", value=f"`{required}`", inline=True)
+                            
+                            # 取引内容のまとめ
+                            if obtainable and required:
+                                if business_type == '購入':
+                                    trade_text = f"**{obtainable}** を **{required}** で購入"
+                                elif business_type == '交換':
+                                    trade_text = f"**{required}** と **{obtainable}** を交換"
+                                else:
+                                    trade_text = f"**{obtainable}** ⇄ **{required}**"
+                                
+                                embed.add_field(name="取引内容", value=trade_text, inline=False)
+                    
                     await interaction.response.send_message(embed=embed, ephemeral=True)
                 else:
                     # 通常のアイテム詳細表示
@@ -1727,3 +2015,152 @@ class NewRelatedItemSelect(discord.ui.Select):
         except Exception as e:
             logger.error(f"関連アイテム選択エラー: {e}")
             await interaction.response.send_message("❌ アイテム詳細の取得中にエラーが発生しました", ephemeral=True)
+
+
+class LocationAcquisitionView(discord.ui.View):
+    def __init__(self, options, acquisition_method, location, embed_manager, search_engine):
+        super().__init__(timeout=300)
+        self.acquisition_method = acquisition_method
+        self.location = location
+        self.embed_manager = embed_manager
+        self.search_engine = search_engine
+        
+        # セレクトメニューを追加
+        select = LocationAcquisitionSelect(options, acquisition_method, location, embed_manager, search_engine)
+        self.add_item(select)
+
+
+class LocationAcquisitionSelect(discord.ui.Select):
+    def __init__(self, options, acquisition_method, location, embed_manager, search_engine):
+        super().__init__(
+            placeholder="選択してください...",
+            min_values=1,
+            max_values=1,
+            options=options
+        )
+        self.acquisition_method = acquisition_method
+        self.location = location
+        self.embed_manager = embed_manager
+        self.search_engine = search_engine
+    
+    async def callback(self, interaction: discord.Interaction):
+        try:
+            # 選択された値を分解
+            selected = self.values[0]
+            method, location = selected.split('_', 1)
+            
+            # 検索条件を決定
+            if self.acquisition_method:
+                # 入手手段から場所を選択した場合
+                await self.search_and_display(interaction, method, location)
+            else:
+                # 場所から入手手段を選択した場合
+                await self.search_and_display(interaction, method, location)
+                
+        except Exception as e:
+            logger.error(f"場所・入手手段選択エラー: {e}")
+            await interaction.response.send_message("❌ 検索中にエラーが発生しました", ephemeral=True)
+    
+    async def search_and_display(self, interaction, method, location):
+        """選択された条件で検索して結果を表示"""
+        try:
+            # データベースから直接検索
+            results = await self.search_by_method_and_location(method, location)
+            
+            if not results:
+                embed = discord.Embed(
+                    title="検索結果",
+                    description=f"**{location}** の **{method}** に該当するデータが見つかりませんでした",
+                    color=discord.Color.red()
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                return
+            
+            # 結果のタイプを判定
+            if method == 'クエスト' and len(results) == 1 and results[0].get('item_type') == 'npcs':
+                # クエストNPCの詳細表示
+                embed, view = await self.embed_manager.create_item_detail_embed(
+                    results[0], str(interaction.user.id)
+                )
+                await interaction.response.send_message(embed=embed, view=view)
+            elif len(results) == 1:
+                # 単一結果の詳細表示
+                embed, view = await self.embed_manager.create_item_detail_embed(
+                    results[0], str(interaction.user.id)
+                )
+                await interaction.response.send_message(embed=embed, view=view)
+            else:
+                # 複数結果のリスト表示
+                query = f"{location} {method}"
+                embed, view = await self.embed_manager.create_search_results_embed(
+                    results, query, page=0
+                )
+                await interaction.response.send_message(embed=embed, view=view)
+                
+        except Exception as e:
+            logger.error(f"検索結果表示エラー: {e}")
+            await interaction.response.send_message("❌ 結果表示中にエラーが発生しました", ephemeral=True)
+    
+    async def search_by_method_and_location(self, method, location):
+        """入手手段と場所で検索"""
+        try:
+            from database import DatabaseManager
+            db = DatabaseManager()
+            
+            async with aiosqlite.connect(db.db_path) as conn:
+                conn.row_factory = aiosqlite.Row
+                results = []
+                
+                if method == 'クエスト':
+                    # NPCテーブルからクエストマスターを検索
+                    cursor = await conn.execute(
+                        "SELECT *, 'npcs' as item_type, name as formal_name FROM npcs WHERE location = ? AND business_type = ?",
+                        (location, method)
+                    )
+                    rows = await cursor.fetchall()
+                    results.extend([dict(row) for row in rows])
+                    
+                elif method == '購入' or method == '交換':
+                    # NPCテーブルから購入・交換NPCを検索
+                    cursor = await conn.execute(
+                        "SELECT *, 'npcs' as item_type, name as formal_name FROM npcs WHERE location = ? AND business_type = ?",
+                        (location, method)
+                    )
+                    rows = await cursor.fetchall()
+                    results.extend([dict(row) for row in rows])
+                    
+                elif method == 'モブ':
+                    # mobsテーブルから該当エリアのモブを検索
+                    cursor = await conn.execute(
+                        "SELECT *, 'mobs' as item_type FROM mobs WHERE area LIKE ?",
+                        (f'%{location}%',)
+                    )
+                    rows = await cursor.fetchall()
+                    results.extend([dict(row) for row in rows])
+                    
+                elif method in ['採取', '採掘', '釣り']:
+                    # materialsテーブルから該当する素材を検索
+                    cursor = await conn.execute(
+                        "SELECT *, 'materials' as item_type FROM materials WHERE acquisition_category = ? AND acquisition_location LIKE ?",
+                        (method, f'%{location}%')
+                    )
+                    rows = await cursor.fetchall()
+                    results.extend([dict(row) for row in rows])
+                    
+                    # gatheringsテーブルからも検索（実装されている場合）
+                    try:
+                        cursor = await conn.execute(
+                            "SELECT *, 'gatherings' as item_type, location as formal_name FROM gatherings WHERE location LIKE ? AND collection_method = ?",
+                            (f'%{location}%', method)
+                        )
+                        rows = await cursor.fetchall()
+                        results.extend([dict(row) for row in rows])
+                    except:
+                        # gatheringsテーブルが存在しない場合はスキップ
+                        pass
+                
+                return results
+                
+        except Exception as e:
+            logger.error(f"場所・入手手段検索エラー: {e}")
+            return []
