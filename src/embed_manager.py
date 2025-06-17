@@ -2053,12 +2053,16 @@ class NewRelatedItemSelect(discord.ui.Select):
                         if desc:
                             embed.add_field(name="備考", value=f"`{desc}`", inline=False)
                         
-                        # 取引詳細ボタンの案内
+                        # 取引詳細の確認方法を追加
                         embed.add_field(
                             name="\u200b",
-                            value="*※ 下のボタンで取引詳細を検索*",
+                            value="※下記から取引詳細を確認",
                             inline=False
                         )
+                        
+                        # NPCのプルダウンを追加するためのViewを作成
+                        view = discord.ui.View(timeout=300)
+                        await self.embed_manager._add_npc_dropdown_to_view(view, selected_item)
                     
                     elif selected_value.startswith('exchange_'):
                         # NPC交換の個別詳細
@@ -2195,9 +2199,8 @@ class NewRelatedItemSelect(discord.ui.Select):
                         unique_materials = selected_item.get('unique_materials', [])
                         view = GatheringDetailView(selected_item, str(interaction.user.id), self.embed_manager, unique_materials)
                     elif selected_value.startswith('npc_'):
-                        # npc_アイテム用のviewを作成
-                        # item_typeは既に'npcs'に設定されているはず
-                        view = ItemDetailView(selected_item, str(interaction.user.id), self.embed_manager)
+                        # npc_アイテム用のviewは既に作成済み（_add_npc_dropdown_to_viewで追加）
+                        # viewは上で作成したものを使用
                     else:
                         # exchange_の場合はviewなし
                         view = None
@@ -2642,7 +2645,7 @@ class NPCExchangeSelect(discord.ui.Select):
 class NPCItemSearchButton(discord.ui.Button):
     """アイテム検索ボタン"""
     def __init__(self, item_name: str, label: str, embed_manager):
-        super().__init__(label=label, style=discord.ButtonStyle.primary)
+        super().__init__(label=label, style=discord.ButtonStyle.secondary)
         self.item_name = item_name
         self.embed_manager = embed_manager
     
