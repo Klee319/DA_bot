@@ -1910,22 +1910,68 @@ class NewRelatedItemSelect(discord.ui.Select):
                     )
                     
                     if selected_value.startswith('gathering_'):
-                        # 採集場所の詳細
+                        # 採集場所の詳細 - 場所から採集方法を選択した時と同じ形式で表示
                         location = selected_item.get('location', '不明')
                         method = selected_item.get('collection_method', '')
-                        materials = selected_item.get('obtained_materials', '')
-                        tools = selected_item.get('required_tools', '')
-                        desc = selected_item.get('description', '')
                         
-                        embed.add_field(name="採集場所", value=f"`{location}`", inline=False)
-                        embed.add_field(name="採集方法", value=f"`{method}`", inline=False)
-                        if tools:
-                            embed.add_field(name="必要ツール", value=f"`{tools}`", inline=False)
-                        if materials:
-                            mat_list = [f"• {m.strip()}" for m in materials.split(',')]
-                            embed.add_field(name="入手可能素材", value="\n".join(mat_list[:10]), inline=False)
-                        if desc:
-                            embed.add_field(name="備考", value=f"`{desc}`", inline=False)
+                        # 同じ場所・採集方法の全データを検索
+                        from database import DatabaseManager
+                        db = DatabaseManager()
+                        
+                        try:
+                            async with aiosqlite.connect(db.db_path) as conn:
+                                conn.row_factory = aiosqlite.Row
+                                
+                                # gatheringsテーブルから同じ場所・採集方法のデータを全て取得
+                                cursor = await conn.execute(
+                                    "SELECT * FROM gatherings WHERE location = ? AND collection_method = ?",
+                                    (location, method)
+                                )
+                                rows = await cursor.fetchall()
+                                gathering_data = [dict(row) for row in rows]
+                                
+                                if gathering_data:
+                                    # タイトルを設定
+                                    embed.title = f"**{location}** の **{method}** 情報"
+                                    
+                                    # 入手可能素材のリストを作成
+                                    all_materials = []
+                                    for data in gathering_data:
+                                        materials_str = data.get('obtained_materials', '')
+                                        if materials_str:
+                                            materials = [m.strip() for m in materials_str.split(',')]
+                                            all_materials.extend(materials)
+                                    
+                                    # 重複を除去してソート
+                                    unique_materials = sorted(list(set(all_materials)))
+                                    
+                                    if unique_materials:
+                                        materials_list = [f"• `{mat}`" for mat in unique_materials[:20]]
+                                        embed.add_field(
+                                            name="入手可能素材:",
+                                            value="\n".join(materials_list),
+                                            inline=False
+                                        )
+                                    
+                                    # 必要ツール
+                                    tools = gathering_data[0].get('required_tools', '')
+                                    if tools:
+                                        embed.add_field(name="必要ツール:", value=f"`{tools}`", inline=False)
+                                    
+                                    # 備考
+                                    desc = gathering_data[0].get('description', '')
+                                    if desc:
+                                        embed.add_field(name="備考:", value=f"`{desc}`", inline=False)
+                                else:
+                                    # フォールバック - 元のデータを使用
+                                    embed.add_field(name="採集場所", value=f"`{location}`", inline=False)
+                                    embed.add_field(name="採集方法", value=f"`{method}`", inline=False)
+                                    
+                        except Exception as e:
+                            logger.error(f"採集場所詳細取得エラー: {e}")
+                            # エラー時のフォールバック
+                            embed.add_field(name="採集場所", value=f"`{location}`", inline=False)
+                            embed.add_field(name="採集方法", value=f"`{method}`", inline=False)
                     
                     elif selected_value.startswith('npc_'):
                         # NPCの詳細
