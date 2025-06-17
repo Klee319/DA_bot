@@ -319,7 +319,7 @@ class EmbedManager:
         if description and str(description).strip():
             embed.add_field(
                 name="説明:",
-                value=f"　`{description}`",
+                value=f"\u200B　`{description}`",
                 inline=False
             )
         
@@ -404,7 +404,7 @@ class EmbedManager:
         if description and str(description).strip():
             embed.add_field(
                 name="説明:",
-                value=f"　`{description}`",
+                value=f"\u200B　`{description}`",
                 inline=False
             )
         
@@ -456,7 +456,7 @@ class EmbedManager:
         if description and str(description).strip():
             embed.add_field(
                 name="説明:",
-                value=f"　`{description}`",
+                value=f"\u200B　`{description}`",
                 inline=False
             )
         
@@ -490,7 +490,7 @@ class EmbedManager:
         if description and str(description).strip():
             embed.add_field(
                 name="説明:",
-                value=f"　`{description}`",
+                value=f"\u200B　`{description}`",
                 inline=False
             )
     
@@ -1131,6 +1131,7 @@ class ItemDetailView(discord.ui.View):
         if item_type == 'materials':
             # 素材: 利用先と入手元がある
             self.add_item(AcquisitionDetailsButton(item_type, acquisition_category))
+            self.add_item(UsageDetailsButton(item_type))
         elif item_type == 'equipments':
             # 装備: 必要素材ボタンは表示しない（プルダウンで対応）
             # モブ討伐装備の場合は入手モブ詳細ボタンを表示
@@ -1556,6 +1557,216 @@ class AcquisitionDetailsButton(discord.ui.Button):
             view._enable_all_buttons()
 
 
+class UsageDetailsButton(discord.ui.Button):
+    """利用先詳細ボタン"""
+    def __init__(self, item_type=''):
+        super().__init__(label="利用先詳細", style=discord.ButtonStyle.secondary)
+    
+    async def callback(self, interaction: discord.Interaction):
+        view = self.view
+        if view.processing:
+            await interaction.response.send_message("⏳ 処理中です。しばらくお待ちください...", ephemeral=True)
+            return
+            
+        view.processing = True
+        view._disable_all_buttons()
+        
+        try:
+            related_items = await view._get_related_items()
+            
+            embed = discord.Embed(
+                title=f"{view.item_data['formal_name']} の利用先一覧",
+                color=discord.Color.blue()
+            )
+            
+            options = []
+            option_index = 0
+            item_type = view.item_data.get('item_type', '')
+            
+            if item_type == 'materials':
+                # 素材の利用先
+                
+                # 1. 装備作成での利用
+                equipment_usage = related_items.get('equipment_usage', [])
+                if equipment_usage:
+                    field_items = []
+                    display_count = min(len(equipment_usage), 10)
+                    for i, item in enumerate(equipment_usage[:display_count]):
+                        display_name = item.get('formal_name', '不明')
+                        if i == 0:
+                            field_items.append(f"\u200B　• `{display_name}`")
+                        else:
+                            field_items.append(f"　• `{display_name}`")
+                        options.append(discord.SelectOption(
+                            label=display_name[:25],
+                            value=f"equipment_{option_index}",
+                            description="装備作成"
+                        ))
+                        option_index += 1
+                    
+                    if field_items:
+                        if len(equipment_usage) > display_count:
+                            field_items.append(f"...他{len(equipment_usage) - display_count}件")
+                        embed.add_field(
+                            name="装備作成:",
+                            value="\n".join(field_items),
+                            inline=False
+                        )
+                
+                # 2. NPC納品・交換での利用
+                npc_usage = []
+                for npc in related_items.get('acquisition_sources', []):
+                    if npc.get('relation_type') == 'npc_source' and npc.get('source_type') == 'required':
+                        npc_usage.append(npc)
+                
+                if npc_usage:
+                    npc_items = []
+                    for i, npc in enumerate(npc_usage[:10]):
+                        npc_name = npc.get('name', '不明')
+                        npc_location = npc.get('location', '')
+                        business_type = npc.get('business_type', 'その他')
+                        display_text = f"`{npc_name}`"
+                        if npc_location:
+                            display_text += f" ({npc_location})"
+                        
+                        if business_type == 'クエスト':
+                            display_text += f" - クエスト納品"
+                        elif business_type == '交換':
+                            display_text += f" - 交換素材"
+                        else:
+                            display_text += f" - {business_type}"
+                        
+                        if i == 0:
+                            npc_items.append(f"\u200B　• {display_text}")
+                        else:
+                            npc_items.append(f"　• {display_text}")
+                        options.append(discord.SelectOption(
+                            label=f"{npc_name} ({business_type})"[:25],
+                            value=f"npc_{option_index}",
+                            description=npc_location[:50] if npc_location else "NPC"
+                        ))
+                        option_index += 1
+                    
+                    if npc_items:
+                        if len(npc_usage) > 10:
+                            npc_items.append(f"...他{len(npc_usage) - 10}件")
+                        embed.add_field(
+                            name="NPC納品・交換:",
+                            value="\n".join(npc_items),
+                            inline=False
+                        )
+            
+            if not options:
+                embed.description = "利用先情報が見つかりませんでした"
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+            else:
+                if options:
+                    # Discord.pyの制限: SelectMenuは最大25個の選択肢
+                    if len(options) > 25:
+                        truncated_options = options[:25]
+                        embed.set_footer(text=f"全{len(options)}件中25件を表示")
+                        detailed_view = UsageDetailsView(related_items, view.embed_manager, truncated_options, view.item_data)
+                    else:
+                        detailed_view = UsageDetailsView(related_items, view.embed_manager, options, view.item_data)
+                    
+                    await interaction.response.send_message(embed=embed, view=detailed_view, ephemeral=True)
+                else:
+                    await interaction.response.send_message(embed=embed, ephemeral=True)
+            
+        except Exception as e:
+            logger.error(f"利用先詳細エラー: {e}")
+            await interaction.response.send_message("❌ 利用先詳細取得中にエラーが発生しました", ephemeral=True)
+        finally:
+            view.processing = False
+            view._enable_all_buttons()
+
+
+class UsageDetailsView(discord.ui.View):
+    """利用先詳細ビュー"""
+    def __init__(self, related_items: Dict[str, Any], embed_manager, options: List[discord.SelectOption], item_data: Dict[str, Any]):
+        super().__init__(timeout=300)
+        self.related_items = related_items
+        self.embed_manager = embed_manager
+        self.item_data = item_data
+        
+        # セレクトメニューを追加
+        if options:
+            select = UsageDetailsSelect(related_items, embed_manager, options, item_data)
+            self.add_item(select)
+
+
+class UsageDetailsSelect(discord.ui.Select):
+    """利用先詳細選択用のプルダウン"""
+    def __init__(self, related_items: Dict[str, Any], embed_manager, options: List[discord.SelectOption], item_data: Dict[str, Any]):
+        super().__init__(
+            placeholder="詳細を表示するアイテムを選択...",
+            min_values=1,
+            max_values=1,
+            options=options
+        )
+        self.related_items = related_items
+        self.embed_manager = embed_manager
+        self.item_data = item_data
+    
+    async def callback(self, interaction: discord.Interaction):
+        try:
+            selected_value = self.values[0]
+            
+            # equipment_の場合
+            if selected_value.startswith('equipment_'):
+                index = int(selected_value.split('_')[1])
+                equipment_usage = self.related_items.get('equipment_usage', [])
+                if index < len(equipment_usage):
+                    selected_item = equipment_usage[index]
+                    
+                    # 装備の詳細を表示
+                    embed, view = await self.embed_manager.create_item_detail_embed(
+                        selected_item, str(interaction.user.id)
+                    )
+                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                    
+            # npc_の場合
+            elif selected_value.startswith('npc_'):
+                index = int(selected_value.split('_')[1])
+                npc_usage = []
+                for npc in self.related_items.get('acquisition_sources', []):
+                    if npc.get('relation_type') == 'npc_source' and npc.get('source_type') == 'required':
+                        npc_usage.append(npc)
+                
+                if index < len(npc_usage):
+                    selected_npc = npc_usage[index]
+                    
+                    # NPCの詳細を表示
+                    embed = discord.Embed(
+                        title=f"{selected_npc['name']} の詳細情報",
+                        color=discord.Color.purple()
+                    )
+                    
+                    embed.add_field(name="NPC名:", value=f"\u200B　`{selected_npc['name']}`", inline=True)
+                    embed.add_field(name="場所:", value=f"\u200B　`{selected_npc.get('location', '不明')}`", inline=True)
+                    embed.add_field(name="業務:", value=f"\u200B　`{selected_npc.get('business_type', '不明')}`", inline=True)
+                    
+                    # 素材が使用される詳細を表示
+                    if selected_npc.get('business_type') == 'クエスト':
+                        embed.add_field(
+                            name="納品内容:",
+                            value=f"\u200B　• `{self.item_data['formal_name']}`が必要",
+                            inline=False
+                        )
+                    elif selected_npc.get('business_type') == '交換':
+                        embed.add_field(
+                            name="交換に必要:",
+                            value=f"\u200B　• `{self.item_data['formal_name']}`が必要",
+                            inline=False
+                        )
+                    
+                    await interaction.response.send_message(embed=embed, ephemeral=True)
+                    
+        except Exception as e:
+            logger.error(f"利用先詳細選択エラー: {e}")
+            await interaction.response.send_message("❌ アイテム詳細の表示中にエラーが発生しました", ephemeral=True)
+
+
 class SearchResultsView(discord.ui.View):
     def __init__(self, results: List[Dict[str, Any]], query: str, current_page: int, embed_manager):
         super().__init__(timeout=600)  # 10分に延長
@@ -1906,8 +2117,8 @@ class NewRelatedItemSelect(discord.ui.Select):
                                     # タイトルを設定（素材名を含む）
                                     if original_item_name:
                                         embed.title = f"**{original_item_name}** の採集情報"
-                                        embed.add_field(name="採集場所:", value=f"`{location}`", inline=True)
-                                        embed.add_field(name="採集方法:", value=f"`{method}`", inline=True)
+                                        embed.add_field(name="採集場所:", value=f"\u200B　`{location}`", inline=True)
+                                        embed.add_field(name="採集方法:", value=f"\u200B　`{method}`", inline=True)
                                         embed.add_field(name="\u200b", value="\u200b", inline=True)  # 空白フィールドで改行
                                     else:
                                         embed.title = f"**{location}** の **{method}** 情報"
@@ -1949,19 +2160,19 @@ class NewRelatedItemSelect(discord.ui.Select):
                                     # 必要ツール
                                     tools = gathering_data[0].get('required_tools', '')
                                     if tools:
-                                        embed.add_field(name="必要ツール:", value=f"`{tools}`", inline=False)
+                                        embed.add_field(name="必要ツール:", value=f"\u200B　`{tools}`", inline=False)
                                     
                                     # 備考
                                     desc = gathering_data[0].get('description', '')
                                     if desc:
-                                        embed.add_field(name="備考:", value=f"`{desc}`", inline=False)
+                                        embed.add_field(name="備考:", value=f"\u200B　`{desc}`", inline=False)
                                     
                                     # 素材詳細の説明文を削除（ボタンで対応済み）
                                 else:
                                     # データが見つからない場合
                                     embed.title = "採集情報が見つかりません"
-                                    embed.add_field(name="採集場所:", value=f"`{location}`", inline=False)
-                                    embed.add_field(name="採集方法:", value=f"`{method}`", inline=False)
+                                    embed.add_field(name="採集場所:", value=f"\u200B　`{location}`", inline=False)
+                                    embed.add_field(name="採集方法:", value=f"\u200B　`{method}`", inline=False)
                                     embed.add_field(
                                         name="注意:",
                                         value="この場所・方法の詳細情報が見つかりませんでした。",
@@ -1972,8 +2183,8 @@ class NewRelatedItemSelect(discord.ui.Select):
                             logger.error(f"採集場所詳細取得エラー: {e}")
                             # エラー時のフォールバック
                             embed.title = "エラーが発生しました"
-                            embed.add_field(name="採集場所:", value=f"`{location}`", inline=False)
-                            embed.add_field(name="採集方法:", value=f"`{method}`", inline=False)
+                            embed.add_field(name="採集場所:", value=f"\u200B　`{location}`", inline=False)
+                            embed.add_field(name="採集方法:", value=f"\u200B　`{method}`", inline=False)
                             embed.add_field(name="エラー:", value="詳細情報の取得中にエラーが発生しました。", inline=False)
                     
                     elif selected_value.startswith('npc_'):
@@ -1988,9 +2199,9 @@ class NewRelatedItemSelect(discord.ui.Select):
                         desc = selected_item.get('description', '')
                         
                         embed.title = f"{name} の詳細情報"
-                        embed.add_field(name="NPC名:", value=f"`{name}`", inline=True)
-                        embed.add_field(name="場所:", value=f"`{location}`", inline=True)
-                        embed.add_field(name="業務:", value=f"`{business_type}`", inline=True)
+                        embed.add_field(name="NPC名:", value=f"\u200B　`{name}`", inline=True)
+                        embed.add_field(name="場所:", value=f"\u200B　`{location}`", inline=True)
+                        embed.add_field(name="業務:", value=f"\u200B　`{business_type}`", inline=True)
                         
                         # 複数交換パターンの解析
                         if items and business_type in ['購入', '交換', 'クエスト']:
@@ -2054,7 +2265,7 @@ class NewRelatedItemSelect(discord.ui.Select):
                             embed.add_field(name="取扱アイテム", value="\n".join(item_list[:10]), inline=False)
                         
                         if desc:
-                            embed.add_field(name="備考", value=f"`{desc}`", inline=False)
+                            embed.add_field(name="備考", value=f"\u200B　`{desc}`", inline=False)
                         
                         # 取引詳細の説明文を削除（プルダウンで対応済み）
                         
@@ -2298,8 +2509,8 @@ class LocationAcquisitionSelect(discord.ui.Select):
                         color=discord.Color.orange()
                     )
                     
-                    embed.add_field(name="採集場所:", value=f"`{location}`", inline=True)
-                    embed.add_field(name="採集方法:", value=f"`{method}`", inline=True)
+                    embed.add_field(name="採集場所:", value=f"\u200B　`{location}`", inline=True)
+                    embed.add_field(name="採集方法:", value=f"\u200B　`{method}`", inline=True)
                     embed.add_field(name="\u200b", value="\u200b", inline=True)  # 空白フィールドで改行
                     
                     # 入手可能素材のリスト
@@ -2324,12 +2535,12 @@ class LocationAcquisitionSelect(discord.ui.Select):
                         # 必要ツール
                         tools = original_data[0].get('required_tools', '')
                         if tools:
-                            embed.add_field(name="必要ツール:", value=f"`{tools}`", inline=False)
+                            embed.add_field(name="必要ツール:", value=f"\u200B　`{tools}`", inline=False)
                         
                         # 備考
                         desc = original_data[0].get('description', '')
                         if desc:
-                            embed.add_field(name="備考:", value=f"`{desc}`", inline=False)
+                            embed.add_field(name="備考:", value=f"\u200B　`{desc}`", inline=False)
                     
                     # 素材詳細の説明文を削除（ボタンで対応済み）
                     
@@ -2566,13 +2777,13 @@ class NPCExchangeSelect(discord.ui.Select):
                 if required:
                     embed.add_field(
                         name="受注内容:",
-                        value=f"\u200B\u3000\u2022 `{required}`",
+                        value=f"\u200B　• `{required}`",
                         inline=False
                     )
                 if obtainable:
                     embed.add_field(
                         name="報酬:",
-                        value=f"\u200B\u3000\u2022 `{obtainable}`",
+                        value=f"\u200B　• `{obtainable}`",
                         inline=False
                     )
             else:
@@ -2586,14 +2797,14 @@ class NPCExchangeSelect(discord.ui.Select):
                     
                     embed.add_field(
                         name="入手アイテム:",
-                        value=f"\u200B\u3000\u2022 `{formatted_obtainable}`",
+                        value=f"\u200B　• `{formatted_obtainable}`",
                         inline=False
                     )
                 
                 if required and business_type == '交換':
                     embed.add_field(
                         name="必要素材:",
-                        value=f"\u200B\u3000\u2022 `{required}`",
+                        value=f"\u200B　• `{required}`",
                         inline=False
                     )
             

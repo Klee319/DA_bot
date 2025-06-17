@@ -1907,3 +1907,18 @@ discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
 2025-06-17 23:36:56,138 - __main__ - INFO - 接続サーバー数: 2
 2025-06-17 23:36:56,139 - __main__ - INFO - プレゼンス設定が完了しました
 2025-06-17 23:37:10,314 - __main__ - INFO - [PID:1860] アイテム検索開始: 'ツルハシ' from klee.com
+2025-06-17 23:41:12,423 - __main__ - INFO - [PID:1860] アイテム検索開始: '石' from klee.com
+2025-06-17 23:41:33,445 - npc_parser - WARNING - 数量が見つからない異常なフォーマット: 解凍:[圧縮]大樹の丸太:1
+2025-06-17 23:41:33,445 - npc_parser - WARNING - 数量が見つからない異常なフォーマット: 圧縮:大樹の丸太:64
+2025-06-17 23:41:46,103 - embed_manager - INFO - 採集情報表示 - 元アイテム名: 石, 場所: ルーチェア, 方法: 採掘
+2025-06-17 23:42:05,878 - discord.client - ERROR - Attempting a reconnect in 0.52s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-17 23:42:06,800 - discord.gateway - INFO - Shard ID None has successfully RESUMED session 9e1d11de96cc2d89a32fb64d9e63e686.
+2025-06-17 23:46:14,131 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-17 23:46:14,131 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-17 23:46:14,133 - __main__ - INFO - Botが正常に終了しました
