@@ -55,6 +55,13 @@ class EmbedManager:
             # インタラクティブなViewを作成
             view = ItemDetailView(item_data, user_id, self)
             
+            # NPCの場合は取引内容のプルダウンを追加
+            if item_type == 'npcs':
+                await self._add_npc_dropdown_to_view(view, item_data)
+            # モブの場合はドロップアイテムのプルダウンを追加
+            elif item_type == 'mobs':
+                await self._add_mob_dropdown_to_view(view, item_data)
+            
             return embed, view
             
         except Exception as e:
@@ -573,9 +580,9 @@ class EmbedManager:
                         inline=False
                     )
                     
-                    # 交換パターンがある場合は取引詳細ボタンで確認できることを示す
-                    if exchanges:
-                        embed.set_footer(text="※取引詳細ボタンから各取引を確認できます。")
+                    # 複数の交換パターンがある場合はフッターで示す
+                    if len(exchange_list) > 10:
+                        embed.set_footer(text=f"※他にも{len(exchange_list) - 10}件の取引があります。プルダウンメニューから確認できます。")
         
         except Exception as e:
             logger.error(f"NPC詳細情報追加エラー: {e}")
@@ -629,6 +636,117 @@ class EmbedManager:
                             value=f"\u200B　`{obtainable_items}`",
                             inline=False
                         )
+    
+    async def _add_npc_dropdown_to_view(self, view: discord.ui.View, item_data: Dict[str, Any]):
+        """取引詳細ボタンの代わりにプルダウンを追加"""
+        try:
+            from npc_parser import NPCExchangeParser
+            
+            business_type = item_data.get('business_type', '')
+            obtainable_items = item_data.get('obtainable_items', '')
+            required_materials = item_data.get('required_materials', '')
+            exp_str = item_data.get('exp', '')
+            gold_str = item_data.get('gold', '')
+            
+            # 交換パターンをパース
+            exchanges = NPCExchangeParser.parse_exchange_items(
+                obtainable_items, required_materials, exp_str, gold_str
+            )
+            
+            if exchanges and any(ex.get('obtainable_item') or ex.get('required_materials') for ex in exchanges):
+                # プルダウンの選択肢を作成
+                select_options = []
+                exchange_data = []
+                
+                for i, exchange in enumerate(exchanges[:25]):  # Discordの制限で最大25件
+                    obtainable = exchange.get('obtainable_item', '').strip()
+                    required = exchange.get('required_materials', '').strip()
+                    exp = exchange.get('exp')
+                    gold = exchange.get('gold')
+                    
+                    if not obtainable and not required:
+                        continue
+                    
+                    # 選択肢のラベルを作成
+                    if business_type == 'クエスト':
+                        label = required if required else "クエスト"
+                        description = "受注内容"
+                    else:
+                        label = obtainable if obtainable else required
+                        if business_type == '購入' and required:
+                            description = f"{required} で購入"
+                        elif business_type == '交換' and required:
+                            description = f"{required} と交換"
+                        else:
+                            description = business_type
+                    
+                    # アイテム名:数量の形式をアイテム名×数量に変換
+                    if ':' in label:
+                        item_name, quantity = label.split(':', 1)
+                        label = f"{item_name.strip()}×{quantity.strip()}"
+                    
+                    # 説明が長すぎる場合は省略
+                    if len(description) > 50:
+                        description = description[:47] + "..."
+                    
+                    select_options.append(discord.SelectOption(
+                        label=label[:100],  # ラベルの文字数制限
+                        value=f"npc_exchange_{i}",
+                        description=description
+                    ))
+                    
+                    # データを保存
+                    exchange_data.append(exchange)
+                
+                # 選択肢がある場合のみプルダウンを追加
+                if select_options:
+                    select = NPCExchangeSelect(select_options, exchange_data, item_data, self)
+                    view.add_item(select)
+        
+        except Exception as e:
+            logger.error(f"NPCプルダウン追加エラー: {e}")
+    
+    async def _add_mob_dropdown_to_view(self, view: discord.ui.View, item_data: Dict[str, Any]):
+        """ドロップ詳細ボタンの代わりにプルダウンを追加"""
+        try:
+            # 関連アイテムを取得
+            from search_engine import SearchEngine
+            from database import DatabaseManager
+            
+            db = DatabaseManager()
+            search_engine = SearchEngine(db, self.config)
+            related_items = await search_engine.search_related_items(item_data)
+            
+            # ドロップアイテムを取得
+            dropped_items = related_items.get('dropped_items', [])
+            
+            if dropped_items:
+                # プルダウンの選択肢を作成
+                select_options = []
+                
+                for i, item in enumerate(dropped_items[:25]):  # Discordの制限で最大25件
+                    item_name = item.get('formal_name', 'Unknown')
+                    item_type = item.get('item_type', '')
+                    
+                    # アイテムタイプの表示名
+                    type_display = {
+                        'equipments': '装備',
+                        'materials': '素材'
+                    }.get(item_type, item_type)
+                    
+                    select_options.append(discord.SelectOption(
+                        label=item_name[:100],  # ラベルの文字数制限
+                        value=f"drop_{i}",
+                        description=f"ドロップアイテム ({type_display})"
+                    ))
+                
+                # 選択肢がある場合のみプルダウンを追加
+                if select_options:
+                    select = MobDropSelect(select_options, dropped_items, self)
+                    view.add_item(select)
+        
+        except Exception as e:
+            logger.error(f"モブプルダウン追加エラー: {e}")
     
     def _get_type_display_name(self, item_type: str) -> str:
         """アイテムタイプの表示名を取得"""
@@ -995,16 +1113,11 @@ class ItemDetailView(discord.ui.View):
             self.add_item(AcquisitionDetailsButton(item_type, acquisition_category))
             self.add_item(UsageDetailsButton(item_type))
         elif item_type == 'mobs':
-            # モブ: ドロップアイテム(利用先)がある
-            self.add_item(UsageDetailsButton(item_type))
+            # モブ: ドロップ詳細ボタンは表示しない（プルダウンで対応）
+            pass
         elif item_type == 'npcs':
-            # NPC: 取引詳細がある
-            business_type = self.item_data.get('business_type', '')
-            # 複数の交換パターンがある場合のみボタンを表示
-            obtainable_items = self.item_data.get('obtainable_items', '')
-            required_materials = self.item_data.get('required_materials', '')
-            if obtainable_items or required_materials:
-                self.add_item(UsageDetailsButton(item_type))
+            # NPC: 取引詳細ボタンは表示しない（プルダウンで対応）
+            pass
     
     async def _get_related_items(self):
         """関連アイテムを取得"""
@@ -2433,11 +2546,49 @@ class LocationAcquisitionSelect(discord.ui.Select):
                 )
                 await interaction.response.send_message(embed=embed, view=view)
             elif len(results) == 1:
-                # 単一結果の詳細表示
-                embed, view = await self.embed_manager.create_item_detail_embed(
-                    results[0], str(interaction.user.id)
-                )
-                await interaction.response.send_message(embed=embed, view=view)
+                # gathering_locationタイプの場合は特別な表示
+                if results[0].get('item_type') == 'gathering_location':
+                    # 採集情報の表示
+                    embed = discord.Embed(
+                        title=f"**{location}** の **{method}** 情報",
+                        color=discord.Color.orange()
+                    )
+                    
+                    embed.add_field(name="採集場所:", value=f"`{location}`", inline=True)
+                    embed.add_field(name="採集方法:", value=f"`{method}`", inline=True)
+                    embed.add_field(name="\u200b", value="\u200b", inline=True)  # 空白フィールドで改行
+                    
+                    # 入手可能素材のリスト
+                    unique_materials = results[0].get('unique_materials', [])
+                    if unique_materials:
+                        materials_list = []
+                        for i, mat in enumerate(unique_materials[:20]):
+                            if i == 0:
+                                materials_list.append(f"\u200B\u3000\u2022 `{mat}`")
+                            else:
+                                materials_list.append(f"\u3000\u2022 `{mat}`")
+                        
+                        embed.add_field(
+                            name="入手可能素材:",
+                            value="\n".join(materials_list),
+                            inline=False
+                        )
+                    
+                    # Viewを作成（プルダウン付き）
+                    view = GatheringDetailView(
+                        results[0], 
+                        str(interaction.user.id), 
+                        self.embed_manager, 
+                        unique_materials
+                    )
+                    
+                    await interaction.response.send_message(embed=embed, view=view)
+                else:
+                    # 通常の詳細表示
+                    embed, view = await self.embed_manager.create_item_detail_embed(
+                        results[0], str(interaction.user.id)
+                    )
+                    await interaction.response.send_message(embed=embed, view=view)
             else:
                 # 複数結果のリスト表示
                 query = f"{location} {method}"
@@ -2488,25 +2639,47 @@ class LocationAcquisitionSelect(discord.ui.Select):
                     results.extend([dict(row) for row in rows])
                     
                 elif method in ['採取', '採掘', '釣り']:
-                    # materialsテーブルから該当する素材を検索（acquisition_methodで場所を検索）
+                    # gatheringsテーブルから採集情報を取得
+                    try:
+                        cursor = await conn.execute(
+                            "SELECT * FROM gatherings WHERE location = ? AND collection_method = ?",
+                            (location, method)
+                        )
+                        rows = await cursor.fetchall()
+                        gathering_data = [dict(row) for row in rows]
+                        
+                        if gathering_data:
+                            # gatheringsデータを採集情報用の特別な形式で返す
+                            # 採集情報は単一のembedで表示するため、1つのデータとして返す
+                            all_materials = []
+                            for data in gathering_data:
+                                materials_str = data.get('obtained_materials', '')
+                                if materials_str:
+                                    materials = [m.strip() for m in materials_str.split(',')]
+                                    all_materials.extend(materials)
+                            
+                            # 重複を除去してソート
+                            unique_materials = sorted(list(set(all_materials)))
+                            
+                            # gatheringsのデータを特別な形式で返す
+                            gathering_result = {
+                                'item_type': 'gathering_location',
+                                'location': location,
+                                'collection_method': method,
+                                'unique_materials': unique_materials,
+                                'formal_name': f'{location} - {method}'
+                            }
+                            return [gathering_result]
+                    except Exception as e:
+                        logger.debug(f"gatherings検索エラー: {e}")
+                    
+                    # フォールバック: materialsテーブルから検索
                     cursor = await conn.execute(
                         "SELECT *, 'materials' as item_type FROM materials WHERE acquisition_category = ? AND acquisition_method LIKE ?",
                         (method, f'%{location}%')
                     )
                     rows = await cursor.fetchall()
                     results.extend([dict(row) for row in rows])
-                    
-                    # gatheringsテーブルからも検索（実装されている場合）
-                    try:
-                        cursor = await conn.execute(
-                            "SELECT *, 'gatherings' as item_type, location as formal_name FROM gatherings WHERE location LIKE ? AND collection_method = ?",
-                            (f'%{location}%', method)
-                        )
-                        rows = await cursor.fetchall()
-                        results.extend([dict(row) for row in rows])
-                    except:
-                        # gatheringsテーブルが存在しない場合はスキップ
-                        pass
                 
                 return results
                 
@@ -2592,3 +2765,187 @@ class DropItemSelect(discord.ui.Select):
         except Exception as e:
             logger.error(f"ドロップアイテム選択エラー: {e}")
             await interaction.response.send_message("❌ アイテム詳細の取得中にエラーが発生しました", ephemeral=True)
+
+
+class NPCExchangeSelect(discord.ui.Select):
+    """取引詳細選択用のプルダウン"""
+    def __init__(self, options: List[discord.SelectOption], exchange_data: List[Dict[str, Any]], 
+                 npc_data: Dict[str, Any], embed_manager):
+        super().__init__(
+            placeholder="取引内容を選択...",
+            min_values=1,
+            max_values=1,
+            options=options,
+            custom_id="npc_exchange_select"
+        )
+        self.exchange_data = exchange_data
+        self.npc_data = npc_data
+        self.embed_manager = embed_manager
+    
+    async def callback(self, interaction: discord.Interaction):
+        try:
+            # 選択された値から交換データを取得
+            selected_value = self.values[0]
+            exchange_index = int(selected_value.split('_')[2])
+            exchange = self.exchange_data[exchange_index]
+            
+            # 詳細表示用のEmbedを作成
+            embed = discord.Embed(
+                title=f"{self.npc_data['formal_name']} - 取引詳細",
+                color=discord.Color.purple()
+            )
+            
+            business_type = self.npc_data.get('business_type', '')
+            obtainable = exchange.get('obtainable_item', '').strip()
+            required = exchange.get('required_materials', '').strip()
+            exp = exchange.get('exp')
+            gold = exchange.get('gold')
+            
+            # 業種に応じた表示
+            if business_type == 'クエスト':
+                if required:
+                    embed.add_field(
+                        name="受注内容:",
+                        value=f"\u200B\u3000\u2022 `{required}`",
+                        inline=False
+                    )
+                if obtainable:
+                    embed.add_field(
+                        name="報酬:",
+                        value=f"\u200B\u3000\u2022 `{obtainable}`",
+                        inline=False
+                    )
+            else:
+                if obtainable:
+                    # アイテム名:数量の形式をアイテム名×数量に変換
+                    if ':' in obtainable:
+                        item_name, quantity = obtainable.split(':', 1)
+                        formatted_obtainable = f"{item_name.strip()}×{quantity.strip()}"
+                    else:
+                        formatted_obtainable = obtainable
+                    
+                    embed.add_field(
+                        name="入手アイテム:",
+                        value=f"\u200B\u3000\u2022 `{formatted_obtainable}`",
+                        inline=False
+                    )
+                
+                if required and business_type == '交換':
+                    embed.add_field(
+                        name="必要素材:",
+                        value=f"\u200B\u3000\u2022 `{required}`",
+                        inline=False
+                    )
+            
+            # EXP・Gold情報
+            if exp or gold:
+                cost_info = []
+                if exp:
+                    cost_info.append(f"EXP: **{exp}**")
+                if gold:
+                    cost_info.append(f"Gold: **{gold}G**")
+                
+                embed.add_field(
+                    name="コスト:",
+                    value="\u3000" + " / ".join(cost_info),
+                    inline=False
+                )
+            
+            # アイテム検索用のボタンを追加
+            view = discord.ui.View(timeout=300)
+            
+            # 入手アイテムの検索ボタン
+            if obtainable:
+                item_name = obtainable.split(':')[0].strip() if ':' in obtainable else obtainable
+                search_button = NPCItemSearchButton(item_name, "入手アイテムを検索", self.embed_manager)
+                view.add_item(search_button)
+            
+            # 必要素材の検索ボタン（交換の場合のみ）
+            if required and business_type == '交換':
+                # 複数素材の場合は最初の素材を検索
+                material_name = required.split(',')[0].strip()
+                if ':' in material_name:
+                    material_name = material_name.split(':')[0].strip()
+                material_button = NPCItemSearchButton(material_name, "必要素材を検索", self.embed_manager)
+                view.add_item(material_button)
+            
+            await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+            
+        except Exception as e:
+            logger.error(f"NPC交換選択エラー: {e}")
+            await interaction.response.send_message("❌ 取引詳細の表示中にエラーが発生しました", ephemeral=True)
+
+
+class NPCItemSearchButton(discord.ui.Button):
+    """アイテム検索ボタン"""
+    def __init__(self, item_name: str, label: str, embed_manager):
+        super().__init__(label=label, style=discord.ButtonStyle.primary)
+        self.item_name = item_name
+        self.embed_manager = embed_manager
+    
+    async def callback(self, interaction: discord.Interaction):
+        try:
+            # アイテムを検索
+            from search_engine import SearchEngine
+            from database import DatabaseManager
+            
+            db = DatabaseManager()
+            search_engine = SearchEngine(db, self.embed_manager.config)
+            
+            results = await search_engine.search(self.item_name)
+            
+            if results:
+                if len(results) == 1:
+                    # 単一結果の場合は詳細表示
+                    embed, view = await self.embed_manager.create_item_detail_embed(
+                        results[0], str(interaction.user.id)
+                    )
+                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                else:
+                    # 複数結果の場合はリスト表示
+                    embed, view = await self.embed_manager.create_search_results_embed(
+                        results, self.item_name, page=0
+                    )
+                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+            else:
+                embed = discord.Embed(
+                    title="検索結果",
+                    description=f"「{self.item_name}」の詳細情報が見つかりませんでした",
+                    color=discord.Color.red()
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                
+        except Exception as e:
+            logger.error(f"アイテム検索エラー: {e}")
+            await interaction.response.send_message("❌ アイテム検索中にエラーが発生しました", ephemeral=True)
+
+
+class MobDropSelect(discord.ui.Select):
+    """ドロップアイテム選択用のプルダウン"""
+    def __init__(self, options: List[discord.SelectOption], dropped_items: List[Dict[str, Any]], embed_manager):
+        super().__init__(
+            placeholder="ドロップアイテムを選択...",
+            min_values=1,
+            max_values=1,
+            options=options,
+            custom_id="mob_drop_select"
+        )
+        self.dropped_items = dropped_items
+        self.embed_manager = embed_manager
+    
+    async def callback(self, interaction: discord.Interaction):
+        try:
+            # 選択された値からアイテムデータを取得
+            selected_value = self.values[0]
+            item_index = int(selected_value.split('_')[1])
+            item_data = self.dropped_items[item_index]
+            
+            # アイテム詳細を表示
+            embed, view = await self.embed_manager.create_item_detail_embed(
+                item_data, str(interaction.user.id)
+            )
+            await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+            
+        except Exception as e:
+            logger.error(f"ドロップアイテム選択エラー: {e}")
+            await interaction.response.send_message("❌ アイテム詳細の表示中にエラーが発生しました", ephemeral=True)
