@@ -491,7 +491,12 @@ class SearchEngine:
         scored_results = []
         
         for result in results:
-            key = (result['formal_name'], result['item_type'])
+            # NPCの場合は場所も含めて重複チェック
+            if result['item_type'] == 'npcs':
+                key = (result['formal_name'], result['item_type'], result.get('location', ''))
+            else:
+                key = (result['formal_name'], result['item_type'])
+            
             if key in seen:
                 continue
             seen.add(key)

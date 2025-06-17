@@ -749,11 +749,32 @@ class EmbedManager:
             end_idx = start_idx + page_size
             page_results = results[start_idx:end_idx]
             
+            # 同名NPCの検出
+            npc_names = {}
+            for item in results:
+                if item.get('item_type') == 'npcs':
+                    name = item.get('formal_name', '')
+                    if name not in npc_names:
+                        npc_names[name] = []
+                    npc_names[name].append(item)
+            
+            # 同名NPCがあるかチェック
+            has_duplicate_npcs = any(len(npcs) > 1 for npcs in npc_names.values())
+            
             embed = discord.Embed(
                 title=f"**検索結果: {query}**",
                 description=f"**{len(results)}件**の結果が見つかりました",
                 color=discord.Color.blue()
             )
+            
+            # 同名NPCがある場合の注意メッセージ
+            if has_duplicate_npcs:
+                duplicate_names = [name for name, npcs in npc_names.items() if len(npcs) > 1]
+                embed.add_field(
+                    name="⚠️ 同名のNPCが複数存在します",
+                    value=f"以下のNPCは複数の場所に存在します: **{', '.join(duplicate_names)}**\n場所と業種を確認してください。",
+                    inline=False
+                )
             
             # 箇条書き形式で一覧表示
             item_list = []
@@ -765,16 +786,32 @@ class EmbedManager:
                 # アイテム情報を表示（一般名称は表示しない）
                 item_info = f"• {i}. {formal_name} ({item_type})"
                 
-                # NPCの場合は場所と説明を表示
+                # NPCの場合は場所と説明を表示（改善版）
                 if item_type == 'npcs':
                     location = item.get('location', '')
+                    business_type = item.get('business_type', '')
                     description = item.get('description', '')
-                    if location:
-                        item_info += f" - {location}"
-                    if description:
-                        # 説明は20文字で省略
-                        desc_short = description[:20] + '...' if len(description) > 20 else description
-                        item_info += f" - {desc_short}"
+                    
+                    # 同名NPCがある場合は詳細表示
+                    if formal_name in npc_names and len(npc_names[formal_name]) > 1:
+                        item_info = f"• {i}. **{formal_name}**"
+                        if location:
+                            item_info += f"\n　　📍 場所: **{location}**"
+                        # 業種は重複NPCの場合は表示しない
+                        if description and description.strip():
+                            # 説明は30文字で省略
+                            desc_short = description[:30] + '...' if len(description) > 30 else description
+                            item_info += f"\n　　💬 {desc_short}"
+                    else:
+                        # 通常表示
+                        if location:
+                            item_info += f" - {location}"
+                        if business_type:
+                            item_info += f" ({business_type})"
+                        if description:
+                            # 説明は20文字で省略
+                            desc_short = description[:20] + '...' if len(description) > 20 else description
+                            item_info += f" - {desc_short}"
                 
                 # mobの場合は必要レベルも表示
                 elif item_type == 'mobs' and required_level:
@@ -2023,6 +2060,9 @@ class NewRelatedItemSelect(discord.ui.Select):
                                     # 重複を除去してソート
                                     unique_materials = sorted(list(set(all_materials)))
                                     
+                                    # 後でViewに渡すために保存
+                                    selected_item['unique_materials'] = unique_materials
+                                    
                                     if unique_materials:
                                         materials_list = []
                                         for i, mat in enumerate(unique_materials[:20]):
@@ -2296,9 +2336,9 @@ class NewRelatedItemSelect(discord.ui.Select):
                     # gathering_の場合は素材詳細ボタン、npc_の場合は取引詳細ボタンを追加
                     if selected_value.startswith('gathering_'):
                         # gatheringアイテム用のviewを作成
-                        # item_typeを'materials'に設定して素材詳細ボタンを表示
-                        selected_item['item_type'] = 'materials'
-                        view = ItemDetailView(selected_item, str(interaction.user.id), self.embed_manager)
+                        # unique_materialsをselected_itemから取得
+                        unique_materials = selected_item.get('unique_materials', [])
+                        view = GatheringDetailView(selected_item, str(interaction.user.id), self.embed_manager, unique_materials)
                     elif selected_value.startswith('npc_'):
                         # npc_アイテム用のviewを作成
                         # item_typeは既に'npcs'に設定されているはず
@@ -2473,3 +2513,82 @@ class LocationAcquisitionSelect(discord.ui.Select):
         except Exception as e:
             logger.error(f"場所・入手手段検索エラー: {e}")
             return []
+
+
+class GatheringDetailView(discord.ui.View):
+    """採集詳細画面用のView（ドロップアイテムのプルダウン付き）"""
+    def __init__(self, gathering_data: Dict[str, Any], user_id: str, embed_manager, materials: List[str]):
+        super().__init__(timeout=600)
+        self.gathering_data = gathering_data
+        self.user_id = user_id
+        self.embed_manager = embed_manager
+        self.materials = materials
+        
+        # ドロップアイテムのプルダウンを追加
+        if materials:
+            select_options = []
+            for i, material in enumerate(materials[:25]):  # Discord制限で最大25個
+                select_options.append(discord.SelectOption(
+                    label=material[:100],  # ラベルの文字数制限
+                    value=f"material_{i}",
+                    description="ドロップアイテム"
+                ))
+            
+            select = DropItemSelect(select_options, materials, embed_manager)
+            self.add_item(select)
+
+
+class DropItemSelect(discord.ui.Select):
+    """ドロップアイテム選択用のプルダウン"""
+    def __init__(self, options: List[discord.SelectOption], materials: List[str], embed_manager):
+        super().__init__(
+            placeholder="ドロップアイテムを選択...",
+            min_values=1,
+            max_values=1,
+            options=options,
+            custom_id="drop_item_select"
+        )
+        self.materials = materials
+        self.embed_manager = embed_manager
+    
+    async def callback(self, interaction: discord.Interaction):
+        try:
+            # 選択された値から素材名を取得
+            selected_value = self.values[0]
+            material_index = int(selected_value.split('_')[1])
+            material_name = self.materials[material_index]
+            
+            # 素材検索を実行
+            from search_engine import SearchEngine
+            from database import DatabaseManager
+            
+            db = DatabaseManager()
+            search_engine = SearchEngine(db, self.embed_manager.config)
+            
+            # 素材を検索
+            results = await search_engine.search(material_name)
+            
+            if results:
+                if len(results) == 1:
+                    # 単一結果の場合は詳細表示
+                    embed, view = await self.embed_manager.create_item_detail_embed(
+                        results[0], str(interaction.user.id)
+                    )
+                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                else:
+                    # 複数結果の場合はリスト表示
+                    embed, view = await self.embed_manager.create_search_results_embed(
+                        results, material_name, page=0
+                    )
+                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+            else:
+                embed = discord.Embed(
+                    title="検索結果",
+                    description=f"「{material_name}」の詳細情報が見つかりませんでした",
+                    color=discord.Color.red()
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                
+        except Exception as e:
+            logger.error(f"ドロップアイテム選択エラー: {e}")
+            await interaction.response.send_message("❌ アイテム詳細の取得中にエラーが発生しました", ephemeral=True)
