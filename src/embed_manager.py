@@ -61,6 +61,11 @@ class EmbedManager:
             # モブの場合はドロップアイテムのプルダウンを追加
             elif item_type == 'mobs':
                 await self._add_mob_dropdown_to_view(view, item_data)
+            # 装備の場合、必要素材がある場合はプルダウンを追加
+            elif item_type == 'equipments':
+                required_materials = item_data.get('required_materials')
+                if required_materials and str(required_materials).strip():
+                    await self._add_equipment_dropdown_to_view(view, item_data)
             
             return embed, view
             
@@ -418,7 +423,7 @@ class EmbedManager:
             if acquisition_category == 'モブ討伐':
                 button_message = "*※ 下のボタンで入手モブ詳細を検索*"
             else:
-                button_message = "*※ 下のボタンで必要素材詳細を検索*"
+                button_message = "※下記から必要素材詳細を確認"
             
             embed.add_field(
                 name="\u200b",  # 空白フィールド名
@@ -761,6 +766,47 @@ class EmbedManager:
         
         except Exception as e:
             logger.error(f"モブプルダウン追加エラー: {e}")
+    
+    async def _add_equipment_dropdown_to_view(self, view: discord.ui.View, item_data: Dict[str, Any]):
+        """必要素材プルダウンを追加"""
+        try:
+            required_materials = item_data.get('required_materials', '')
+            
+            if required_materials:
+                # 必要素材をパース
+                material_items = [item.strip() for item in str(required_materials).split(',') if item.strip()]
+                
+                if material_items:
+                    # プルダウンの選択肢を作成
+                    select_options = []
+                    materials_data = []
+                    
+                    for i, material in enumerate(material_items[:25]):  # Discordの制限で最大25件
+                        # :を×に置換
+                        if ':' in material:
+                            item_name, quantity = material.split(':', 1)
+                            display_name = f"{item_name.strip()}×{quantity.strip()}"
+                            material_name = item_name.strip()
+                        else:
+                            display_name = material
+                            material_name = material
+                        
+                        select_options.append(discord.SelectOption(
+                            label=display_name[:100],  # ラベルの文字数制限
+                            value=f"material_{i}",
+                            description="必要素材"
+                        ))
+                        
+                        # 素材名のみを保存（検索用）
+                        materials_data.append(material_name)
+                    
+                    # 選択肢がある場合のみプルダウンを追加
+                    if select_options:
+                        select = EquipmentMaterialSelect(select_options, materials_data, self)
+                        view.add_item(select)
+        
+        except Exception as e:
+            logger.error(f"装備プルダウン追加エラー: {e}")
     
     def _get_type_display_name(self, item_type: str) -> str:
         """アイテムタイプの表示名を取得"""
@@ -1122,8 +1168,10 @@ class ItemDetailView(discord.ui.View):
             # 素材: 利用先と入手元がある
             self.add_item(AcquisitionDetailsButton(item_type, acquisition_category))
         elif item_type == 'equipments':
-            # 装備: 必要素材(入手元)と利用先がある
-            self.add_item(AcquisitionDetailsButton(item_type, acquisition_category))
+            # 装備: 必要素材ボタンは表示しない（プルダウンで対応）
+            # モブ討伐装備の場合は入手モブ詳細ボタンを表示
+            if acquisition_category == 'モブ討伐':
+                self.add_item(AcquisitionDetailsButton(item_type, acquisition_category))
         elif item_type == 'mobs':
             # モブ: ドロップ詳細ボタンは表示しない（プルダウンで対応）
             pass
@@ -2715,3 +2763,58 @@ class MobDropSelect(discord.ui.Select):
         except Exception as e:
             logger.error(f"ドロップアイテム選択エラー: {e}")
             await interaction.response.send_message("❌ アイテム詳細の表示中にエラーが発生しました", ephemeral=True)
+
+
+class EquipmentMaterialSelect(discord.ui.Select):
+    """必要素材選択用のプルダウン"""
+    def __init__(self, options: List[discord.SelectOption], materials: List[str], embed_manager):
+        super().__init__(
+            placeholder="必要素材を選択...",
+            min_values=1,
+            max_values=1,
+            options=options,
+            custom_id="equipment_material_select"
+        )
+        self.materials = materials
+        self.embed_manager = embed_manager
+    
+    async def callback(self, interaction: discord.Interaction):
+        try:
+            # 選択された値から素材名を取得
+            selected_value = self.values[0]
+            material_index = int(selected_value.split('_')[1])
+            material_name = self.materials[material_index]
+            
+            # 素材を検索
+            from search_engine import SearchEngine
+            from database import DatabaseManager
+            
+            db = DatabaseManager()
+            search_engine = SearchEngine(db, self.embed_manager.config)
+            
+            results = await search_engine.search(material_name)
+            
+            if results:
+                if len(results) == 1:
+                    # 単一結果の場合は詳細表示
+                    embed, view = await self.embed_manager.create_item_detail_embed(
+                        results[0], str(interaction.user.id)
+                    )
+                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                else:
+                    # 複数結果の場合はリスト表示
+                    embed, view = await self.embed_manager.create_search_results_embed(
+                        results, material_name, page=0
+                    )
+                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+            else:
+                embed = discord.Embed(
+                    title="検索結果",
+                    description=f"「{material_name}」の詳細情報が見つかりませんでした",
+                    color=discord.Color.red()
+                )
+                await interaction.response.send_message(embed=embed, ephemeral=True)
+                
+        except Exception as e:
+            logger.error(f"必要素材選択エラー: {e}")
+            await interaction.response.send_message("❌ 素材詳細の表示中にエラーが発生しました", ephemeral=True)
