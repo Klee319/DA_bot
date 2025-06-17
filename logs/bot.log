@@ -1882,3 +1882,28 @@ discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
 2025-06-17 23:29:16,173 - __main__ - INFO - シャットダウンシグナルを受信しました
 2025-06-17 23:29:16,173 - __main__ - INFO - Botをシャットダウンしています...
 2025-06-17 23:29:16,174 - __main__ - INFO - Botが正常に終了しました
+2025-06-17 23:36:21,983 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-17 23:36:21,983 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-17 23:36:21,984 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-17 23:36:21,984 - discord.client - INFO - logging in using static token
+2025-06-17 23:36:22,678 - database - INFO - データベースの初期化が完了しました
+2025-06-17 23:36:23,030 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-17 23:36:23,030 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-17 23:36:23,542 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: d0e4df7fe2a5b1edeb12f139d0aecda7).
+2025-06-17 23:36:25,546 - __main__ - INFO - [PID:1831] Klee bot#1963 として接続しました
+2025-06-17 23:36:25,547 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-17 23:36:25,547 - __main__ - INFO - 接続サーバー数: 2
+2025-06-17 23:36:25,547 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-17 23:36:52,381 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-17 23:36:52,382 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-17 23:36:52,383 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-17 23:36:52,383 - discord.client - INFO - logging in using static token
+2025-06-17 23:36:53,366 - database - INFO - データベースの初期化が完了しました
+2025-06-17 23:36:53,662 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-17 23:36:53,662 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-17 23:36:54,110 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 9e1d11de96cc2d89a32fb64d9e63e686).
+2025-06-17 23:36:56,137 - __main__ - INFO - [PID:1860] Klee bot#1963 として接続しました
+2025-06-17 23:36:56,138 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-17 23:36:56,138 - __main__ - INFO - 接続サーバー数: 2
+2025-06-17 23:36:56,139 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-17 23:37:10,314 - __main__ - INFO - [PID:1860] アイテム検索開始: 'ツルハシ' from klee.com

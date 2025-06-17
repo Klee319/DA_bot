@@ -323,14 +323,7 @@ class EmbedManager:
                 inline=False
             )
         
-        # ドロップ品がある場合は※説明文を最下部に追加
-        drops = item_data.get('drops')
-        if drops and str(drops).strip():
-            embed.add_field(
-                name="\u200b",  # 空白フィールド名
-                value="*※ 下のボタンでドロップアイテム詳細を検索*",
-                inline=False
-            )
+        # ドロップ品がある場合は説明文を削除（プルダウンで対応済み）
     
     async def _add_equipment_details(self, embed: discord.Embed, item_data: Dict[str, Any]):
         """装備の詳細情報を追加"""
@@ -415,21 +408,7 @@ class EmbedManager:
                 inline=False
             )
         
-        # 必要素材がある場合は※説明文を最下部に追加
-        required_materials = item_data.get('required_materials')
-        if required_materials and str(required_materials).strip():
-            # 入手方法に応じてメッセージを変更
-            acquisition_category = item_data.get('acquisition_category', '')
-            if acquisition_category == 'モブ討伐':
-                button_message = "*※ 下のボタンで入手モブ詳細を検索*"
-            else:
-                button_message = "※下記から必要素材詳細を確認"
-            
-            embed.add_field(
-                name="\u200b",  # 空白フィールド名
-                value=button_message,
-                inline=False
-            )
+        # 必要素材の説明文を削除（プルダウンまたはボタンで対応済み）
     
     async def _add_material_details(self, embed: discord.Embed, item_data: Dict[str, Any]):
         """素材の詳細情報を追加"""
@@ -481,12 +460,7 @@ class EmbedManager:
                 inline=False
             )
         
-        # 素材の場合は常に※説明文を追加
-        embed.add_field(
-            name="\u200b",  # 空白フィールド名
-            value="*※ 下のボタンで素材詳細を検索*",
-            inline=False
-        )
+        # 素材の説明文を削除（ボタンで対応済み）
     
     async def _add_gathering_details(self, embed: discord.Embed, item_data: Dict[str, Any]):
         """採集の詳細情報を追加"""
@@ -587,14 +561,9 @@ class EmbedManager:
                     
                     # 複数の交換パターンがある場合はフッターで示す
                     if len(exchange_list) > 10:
-                        embed.set_footer(text=f"※他にも{len(exchange_list) - 10}件の取引があります。プルダウンメニューから確認できます。")
+                        embed.set_footer(text=f"他にも{len(exchange_list) - 10}件の取引があります。プルダウンメニューから確認できます。")
                     
-                    # 取引詳細の確認方法を追加
-                    embed.add_field(
-                        name="\u200b",  # 空白フィールド名
-                        value="※下記から取引詳細を確認",
-                        inline=False
-                    )
+                    # 取引詳細の説明文を削除（プルダウンで対応済み）
         
         except Exception as e:
             logger.error(f"NPC詳細情報追加エラー: {e}")
@@ -649,12 +618,7 @@ class EmbedManager:
                             inline=False
                         )
                 
-                # 取引詳細の確認方法を追加（エラー時も表示）
-                embed.add_field(
-                    name="\u200b",  # 空白フィールド名
-                    value="※下記から取引詳細を確認",
-                    inline=False
-                )
+                # 取引詳細の説明文を削除（プルダウンで対応済み）
     
     async def _add_npc_dropdown_to_view(self, view: discord.ui.View, item_data: Dict[str, Any]):
         """取引詳細ボタンの代わりにプルダウンを追加"""
@@ -1575,14 +1539,10 @@ class AcquisitionDetailsButton(discord.ui.Button):
                         truncated_item_list = item_list[:24] if len(item_list) > 24 else item_list
                         
                         detailed_view = NewRelatedItemsView(related_items, view.embed_manager, truncated_options, truncated_item_list, view.item_data)
-                        embed.set_footer(text=f"※下記から入手元詳細を確認（全{len(options)}件中24件を表示）")
+                        embed.set_footer(text=f"全{len(options)}件中24件を表示")
                     else:
                         detailed_view = NewRelatedItemsView(related_items, view.embed_manager, options, item_list, view.item_data)
-                        embed.add_field(
-                            name="\u200b",  # 空白フィールド名
-                            value="※下記から入手元詳細を確認",
-                            inline=False
-                        )
+                        # 入手元詳細の説明文を削除（プルダウンで対応済み）
                     
                     await interaction.response.send_message(embed=embed, view=detailed_view, ephemeral=True)
                 else:
@@ -1996,12 +1956,7 @@ class NewRelatedItemSelect(discord.ui.Select):
                                     if desc:
                                         embed.add_field(name="備考:", value=f"`{desc}`", inline=False)
                                     
-                                    # 素材詳細ボタンの案内
-                                    embed.add_field(
-                                        name="\u200b",
-                                        value="*※ 下のボタンで素材詳細を検索*",
-                                        inline=False
-                                    )
+                                    # 素材詳細の説明文を削除（ボタンで対応済み）
                                 else:
                                     # データが見つからない場合
                                     embed.title = "採集情報が見つかりません"
@@ -2101,12 +2056,7 @@ class NewRelatedItemSelect(discord.ui.Select):
                         if desc:
                             embed.add_field(name="備考", value=f"`{desc}`", inline=False)
                         
-                        # 取引詳細の確認方法を追加
-                        embed.add_field(
-                            name="\u200b",
-                            value="※下記から取引詳細を確認",
-                            inline=False
-                        )
+                        # 取引詳細の説明文を削除（プルダウンで対応済み）
                         
                         # NPCのプルダウンを追加するためのViewを作成
                         view = discord.ui.View(timeout=300)
@@ -2249,6 +2199,7 @@ class NewRelatedItemSelect(discord.ui.Select):
                     elif selected_value.startswith('npc_'):
                         # npc_アイテム用のviewは既に作成済み（_add_npc_dropdown_to_viewで追加）
                         # viewは上で作成したものを使用
+                        pass  # viewは既に上のコードで作成済み
                     else:
                         # exchange_の場合はviewなし
                         view = None
@@ -2380,12 +2331,7 @@ class LocationAcquisitionSelect(discord.ui.Select):
                         if desc:
                             embed.add_field(name="備考:", value=f"`{desc}`", inline=False)
                     
-                    # 素材詳細ボタンの案内
-                    embed.add_field(
-                        name="\u200b",
-                        value="*※ 下のボタンで素材詳細を検索*",
-                        inline=False
-                    )
+                    # 素材詳細の説明文を削除（ボタンで対応済み）
                     
                     # Viewを作成（プルダウン付き）
                     view = GatheringDetailView(
