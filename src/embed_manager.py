@@ -542,14 +542,14 @@ class EmbedManager:
                         if required:
                             exchange_list.append(f"{required}")
                     else:
-                        # 購入・交換の場合は販売商品として表示
+                        # 購入・交換の場合は販売商品として表示（入手アイテムのみ）
                         if obtainable:
-                            if business_type == '購入' and required:
-                                exchange_list.append(f"**{obtainable}** → {required}")
-                            elif business_type == '交換' and required:
-                                exchange_list.append(f"**{obtainable}** ← {required}")
+                            # アイテム名:数量の形式をアイテム名×数量に変換
+                            if ':' in obtainable:
+                                item_name, quantity = obtainable.split(':', 1)
+                                exchange_list.append(f"{item_name.strip()}×{quantity.strip()}")
                             else:
-                                exchange_list.append(f"**{obtainable}**")
+                                exchange_list.append(obtainable)
                 
                 if exchange_list:
                     # フィールド名を業種に応じて設定
@@ -594,7 +594,14 @@ class EmbedManager:
                     # カンマ区切りを箇条書きに変換
                     items = [item.strip() for item in obtainable_items.split(',') if item.strip()]
                     if items:
-                        formatted_items = [f"• `{item}`" for item in items[:10]]
+                        # アイテム名:数量の形式をアイテム名×数量に変換
+                        formatted_items = []
+                        for item in items[:10]:
+                            if ':' in item:
+                                item_name, quantity = item.split(':', 1)
+                                formatted_items.append(f"• `{item_name.strip()}×{quantity.strip()}`")
+                            else:
+                                formatted_items.append(f"• `{item}`")
                         embed.add_field(
                             name="取扱商品:" if business_type != 'クエスト' else "受注内容:",
                             value="\n".join(formatted_items),
@@ -2029,20 +2036,34 @@ class NewRelatedItemSelect(discord.ui.Select):
                         else:
                             embed.title = f"{business_type}詳細"
                             if obtainable:
-                                embed.add_field(name="入手アイテム", value=f"`{obtainable}`", inline=True)
-                            if required:
-                                embed.add_field(name="必要素材/価格", value=f"`{required}`", inline=True)
-                            
-                            # 取引内容のまとめ
-                            if obtainable and required:
-                                if business_type == '購入':
-                                    trade_text = f"**{obtainable}** を **{required}** で購入"
-                                elif business_type == '交換':
-                                    trade_text = f"**{required}** と **{obtainable}** を交換"
+                                # アイテム名:数量の形式をアイテム名×数量に変換
+                                if ':' in obtainable:
+                                    item_name, quantity = obtainable.split(':', 1)
+                                    formatted_obtainable = f"{item_name.strip()}×{quantity.strip()}"
                                 else:
-                                    trade_text = f"**{obtainable}** ⇄ **{required}**"
-                                
-                                embed.add_field(name="取引内容", value=trade_text, inline=False)
+                                    formatted_obtainable = obtainable
+                                embed.add_field(name="入手アイテム", value=f"`{formatted_obtainable}`", inline=False)
+                            
+                            if required:
+                                # 複数素材の場合は箇条書きに
+                                if ' + ' in required:
+                                    required_items = required.split(' + ')
+                                    formatted_items = []
+                                    for item in required_items:
+                                        if ':' in item:
+                                            item_name, quantity = item.split(':', 1)
+                                            formatted_items.append(f"• `{item_name.strip()}×{quantity.strip()}`")
+                                        else:
+                                            formatted_items.append(f"• `{item}`")
+                                    embed.add_field(name="必要素材/価格", value="\n".join(formatted_items), inline=False)
+                                else:
+                                    # 単一素材の場合
+                                    if ':' in required:
+                                        item_name, quantity = required.split(':', 1)
+                                        formatted_required = f"{item_name.strip()}×{quantity.strip()}"
+                                    else:
+                                        formatted_required = required
+                                    embed.add_field(name="必要素材/価格", value=f"`{formatted_required}`", inline=False)
                     
                     await interaction.response.send_message(embed=embed, ephemeral=True)
                 else:
