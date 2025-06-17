@@ -1278,7 +1278,11 @@ class AcquisitionDetailsButton(discord.ui.Button):
                     if item_type == 'materials':
                         # gathering locationsを先に追加（順序を保持）
                         if related_items.get('gathering_locations'):
-                            item_list.extend(related_items['gathering_locations'][:5])
+                            item_list.extend(related_items['gathering_locations'][:10])
+                        else:
+                            # gathering_sourcesから追加
+                            gathering_sources = [s for s in related_items.get('acquisition_sources', []) if s.get('relation_type') == 'gathering_location']
+                            item_list.extend(gathering_sources[:10])
                         
                         # mob sources
                         mob_sources = [s for s in related_items.get('acquisition_sources', []) if s.get('relation_type') == 'drop_from_mob']
@@ -2010,10 +2014,12 @@ class NewRelatedItemSelect(discord.ui.Select):
                         if business_type == 'クエスト':
                             embed.title = f"クエスト詳細"
                             if required:
-                                embed.add_field(name="納品アイテム", value=f"`{required}`", inline=False)
+                                embed.add_field(name="受注内容", value=f"`{required}`", inline=False)
                             
-                            # 報酬情報
+                            # 報酬情報（入手アイテムも含める）
                             rewards = []
+                            if obtainable:
+                                rewards.append(f"アイテム: {obtainable}")
                             if exp:
                                 rewards.append(f"EXP: {exp}")
                             if gold:
