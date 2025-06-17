@@ -996,7 +996,7 @@ class AcquisitionDetailsButton(discord.ui.Button):
                     for i, item in enumerate(mob_sources[:display_count]):
                         # mobの場合はformal_nameがある
                         display_name = item.get('formal_name', '不明')
-                        field_items.append(f"　• **{display_name}**")
+                        field_items.append(f"• `{display_name}`")
                         options.append(discord.SelectOption(
                             label=display_name[:25],
                             value=f"source_{option_index}",
@@ -1004,14 +1004,12 @@ class AcquisitionDetailsButton(discord.ui.Button):
                         ))
                         option_index += 1
                     
-                    # 1行目にゼロ幅スペースを挿入
+                    # 残りがある場合は表示
                     if field_items:
-                        field_items[0] = "\u200B" + field_items[0]
-                        # 残りがある場合は表示
                         if len(mob_sources) > display_count:
-                            field_items.append(f"　...他{len(mob_sources) - display_count}体")
+                            field_items.append(f"...他{len(mob_sources) - display_count}体")
                         embed.add_field(
-                            name="**入手元 (討伐):**",
+                            name="入手元 (討伐):",
                             value="\n".join(field_items),
                             inline=False
                         )
@@ -1024,10 +1022,10 @@ class AcquisitionDetailsButton(discord.ui.Button):
                     for i, location in enumerate(gathering_sources[:display_count]):
                         location_name = location.get('location', '不明')
                         collection_method = location.get('collection_method', '')
-                        display_text = f"**{location_name}**"
+                        display_text = f"`{location_name}`"
                         if collection_method:
                             display_text += f" ({collection_method})"
-                        gathering_items.append(f"　• {display_text}")
+                        gathering_items.append(f"• {display_text}")
                         options.append(discord.SelectOption(
                             label=f"{location_name} - {collection_method}"[:25],
                             value=f"gathering_{option_index}",
@@ -1035,11 +1033,10 @@ class AcquisitionDetailsButton(discord.ui.Button):
                         ))
                         option_index += 1
                     if gathering_items:
-                        gathering_items[0] = "\u200B" + gathering_items[0]
                         if len(gathering_sources) > display_count:
-                            gathering_items.append(f"　...他{len(gathering_sources) - display_count}箇所")
+                            gathering_items.append(f"...他{len(gathering_sources) - display_count}箇所")
                         embed.add_field(
-                            name="**採集場所:**",
+                            name="採集場所:",
                             value="\n".join(gathering_items),
                             inline=False
                         )
@@ -1080,7 +1077,7 @@ class AcquisitionDetailsButton(discord.ui.Button):
                             npc_name = npc.get('name', '不明')
                             npc_location = npc.get('location', '')
                             business_type = npc.get('business_type', 'その他')
-                            display_text = f"**{npc_name}**"
+                            display_text = f"`{npc_name}`"
                             if npc_location:
                                 display_text += f" ({npc_location})"
                             display_text += f" - {business_type}"
@@ -1104,9 +1101,9 @@ class AcquisitionDetailsButton(discord.ui.Button):
                                 
                                 if len(item_exchanges) > 1:
                                     # 複数の交換パターンがある場合
-                                    display_text += f"\n　　※ {len(item_exchanges)}種類の入手方法があります"
+                                    display_text += f"\n  ※ {len(item_exchanges)}種類の入手方法があります"
                             
-                            npc_items.append(f"　• {display_text}")
+                            npc_items.append(f"• {display_text}")
                             options.append(discord.SelectOption(
                                 label=f"{npc_name} ({business_type})"[:25],
                                 value=f"npc_{option_index}",
@@ -1114,9 +1111,8 @@ class AcquisitionDetailsButton(discord.ui.Button):
                             ))
                             option_index += 1
                         if npc_items:
-                            npc_items[0] = "\u200B" + npc_items[0]
                             embed.add_field(
-                                name="**NPC交換・購入:**",
+                                name="NPC交換・購入:",
                                 value="\n".join(npc_items),
                                 inline=False
                             )
@@ -1128,7 +1124,7 @@ class AcquisitionDetailsButton(discord.ui.Button):
                             npc_name = npc.get('name', '不明')
                             npc_location = npc.get('location', '')
                             business_type = npc.get('business_type', 'その他')
-                            display_text = f"**{npc_name}**"
+                            display_text = f"`{npc_name}`"
                             if npc_location:
                                 display_text += f" ({npc_location})"
                             
@@ -1139,7 +1135,7 @@ class AcquisitionDetailsButton(discord.ui.Button):
                             else:
                                 display_text += f" - {business_type}"
                             
-                            required_items.append(f"　• {display_text}")
+                            required_items.append(f"• {display_text}")
                             options.append(discord.SelectOption(
                                 label=f"{npc_name} (納品/使用)"[:25],
                                 value=f"npc_{option_index}",
@@ -1147,9 +1143,8 @@ class AcquisitionDetailsButton(discord.ui.Button):
                             ))
                             option_index += 1
                         if required_items:
-                            required_items[0] = "\u200B" + required_items[0]
                             embed.add_field(
-                                name="**納品先・使用先:**",
+                                name="納品先・使用先:",
                                 value="\n".join(required_items),
                                 inline=False
                             )
@@ -1164,11 +1159,11 @@ class AcquisitionDetailsButton(discord.ui.Button):
                         
                         # method_textが有効な場合のみ表示
                         if method_text and method_text != 'None':
-                            display_text = f"　**{method_text}**"
+                            display_text = f"`{method_text}`"
                             if location_text and location_text != 'None':
-                                display_text += f"\n　• 場所: `{location_text}`"
+                                display_text += f"\n• 場所: `{location_text}`"
                             embed.add_field(
-                                name="**その他の入手方法:**",
+                                name="その他の入手方法:",
                                 value=display_text,
                                 inline=False
                             )
@@ -1207,7 +1202,7 @@ class AcquisitionDetailsButton(discord.ui.Button):
                         drop_list = []
                         for item in mob_sources[:5]:
                             display_name = item.get('formal_name', '不明')
-                            drop_list.append(f"　• `{display_name}`")
+                            drop_list.append(f"• `{display_name}`")
                             options.append(discord.SelectOption(
                                 label=display_name[:25],
                                 value=f"source_{option_index}",
@@ -1215,7 +1210,6 @@ class AcquisitionDetailsButton(discord.ui.Button):
                             ))
                             option_index += 1
                         if drop_list:
-                            drop_list[0] = "\u200B" + drop_list[0]
                             embed.add_field(
                                 name="入手元 (討伐):",
                                 value="\n".join(drop_list),
@@ -1231,7 +1225,7 @@ class AcquisitionDetailsButton(discord.ui.Button):
                             display_text = f"`{location_name}`"
                             if method:
                                 display_text += f" - {method}"
-                            gathering_list.append(f"　• {display_text}")
+                            gathering_list.append(f"• {display_text}")
                             options.append(discord.SelectOption(
                                 label=f"{location_name} - {method}"[:25],
                                 value=f"gathering_{option_index}",
@@ -1239,7 +1233,6 @@ class AcquisitionDetailsButton(discord.ui.Button):
                             ))
                             option_index += 1
                         if gathering_list:
-                            gathering_list[0] = "\u200B" + gathering_list[0]
                             embed.add_field(
                                 name="採集場所:",
                                 value="\n".join(gathering_list),
@@ -1258,7 +1251,7 @@ class AcquisitionDetailsButton(discord.ui.Button):
                                 display_text += f" @ {npc_location}"
                             if business_type:
                                 display_text += f" ({business_type})"
-                            npc_list.append(f"　• {display_text}")
+                            npc_list.append(f"• {display_text}")
                             options.append(discord.SelectOption(
                                 label=f"{npc_name} ({business_type})"[:25],
                                 value=f"npc_{option_index}",
@@ -1266,7 +1259,6 @@ class AcquisitionDetailsButton(discord.ui.Button):
                             ))
                             option_index += 1
                         if npc_list:
-                            npc_list[0] = "\u200B" + npc_list[0]
                             embed.add_field(
                                 name="NPC:",
                                 value="\n".join(npc_list),
@@ -1393,17 +1385,15 @@ class UsageDetailsButton(discord.ui.Button):
                     for item in related_items['usage_destinations'][:5]:
                         usage_detail = item.get('relation_detail', '')
                         if usage_detail and '必要数' in usage_detail:
-                            usage_list.append(f"　• `{item['formal_name']}` ({usage_detail})")
+                            usage_list.append(f"• `{item['formal_name']}` ({usage_detail})")
                         else:
-                            usage_list.append(f"　• `{item['formal_name']}`")
+                            usage_list.append(f"• `{item['formal_name']}`")
                         options.append(discord.SelectOption(
                             label=item['formal_name'][:25],
                             value=f"usage_{option_index}",
                             description=f"{usage_detail if usage_detail else '必要素材'}"
                         ))
                         option_index += 1
-                    # 1行目にゼロ幅スペースを挿入
-                    usage_list[0] = "\u200B" + usage_list[0]
                     embed.add_field(
                         name="利用先:",
                         value="\n".join(usage_list),
@@ -1415,15 +1405,13 @@ class UsageDetailsButton(discord.ui.Button):
                 if related_items.get('dropped_items'):
                     drop_list = []
                     for item in related_items['dropped_items'][:5]:
-                        drop_list.append(f"　• `{item['formal_name']}`")
+                        drop_list.append(f"• `{item['formal_name']}`")
                         options.append(discord.SelectOption(
                             label=item['formal_name'][:25],
                             value=f"drop_{option_index}",
                             description="ドロップアイテム"
                         ))
                         option_index += 1
-                    # 1行目にゼロ幅スペースを挿入
-                    drop_list[0] = "\u200B" + drop_list[0]
                     embed.add_field(
                         name="ドロップアイテム:",
                         value="\n".join(drop_list),
@@ -1964,14 +1952,14 @@ class NewRelatedItemSelect(discord.ui.Select):
                                         embed.add_field(name="備考:", value=f"`{desc}`", inline=False)
                                 else:
                                     # フォールバック - 元のデータを使用
-                                    embed.add_field(name="採集場所", value=f"`{location}`", inline=False)
-                                    embed.add_field(name="採集方法", value=f"`{method}`", inline=False)
+                                    embed.add_field(name="採集場所:", value=f"`{location}`", inline=False)
+                                    embed.add_field(name="採集方法:", value=f"`{method}`", inline=False)
                                     
                         except Exception as e:
                             logger.error(f"採集場所詳細取得エラー: {e}")
                             # エラー時のフォールバック
-                            embed.add_field(name="採集場所", value=f"`{location}`", inline=False)
-                            embed.add_field(name="採集方法", value=f"`{method}`", inline=False)
+                            embed.add_field(name="採集場所:", value=f"`{location}`", inline=False)
+                            embed.add_field(name="採集方法:", value=f"`{method}`", inline=False)
                     
                     elif selected_value.startswith('npc_'):
                         # NPCの詳細
@@ -1985,9 +1973,9 @@ class NewRelatedItemSelect(discord.ui.Select):
                         desc = selected_item.get('description', '')
                         
                         embed.title = f"{name} の詳細情報"
-                        embed.add_field(name="NPC名", value=f"`{name}`", inline=True)
-                        embed.add_field(name="場所", value=f"`{location}`", inline=True)
-                        embed.add_field(name="業務", value=f"`{business_type}`", inline=True)
+                        embed.add_field(name="NPC名:", value=f"`{name}`", inline=True)
+                        embed.add_field(name="場所:", value=f"`{location}`", inline=True)
+                        embed.add_field(name="業務:", value=f"`{business_type}`", inline=True)
                         
                         # 複数交換パターンの解析
                         if items and business_type in ['購入', '交換', 'クエスト']:
@@ -2002,10 +1990,10 @@ class NewRelatedItemSelect(discord.ui.Select):
                                 for i, exchange in enumerate(exchanges[:10]):
                                     req_mat = exchange.get('required_materials', '')
                                     if req_mat:
-                                        quest_list.append(f"• {req_mat}")
+                                        quest_list.append(f"• `{req_mat}`")
                                 if quest_list:
                                     embed.add_field(
-                                        name="**受注内容:**",
+                                        name="受注内容:",
                                         value="\n".join(quest_list),
                                         inline=False
                                     )
@@ -2020,13 +2008,13 @@ class NewRelatedItemSelect(discord.ui.Select):
                                         # アイテム名から個数を分離
                                         if ':' in obtainable:
                                             item_name, quantity = obtainable.split(':', 1)
-                                            item_list.append(f"• {item_name.strip()}×{quantity.strip()}")
+                                            item_list.append(f"• `{item_name.strip()}×{quantity.strip()}`")
                                         else:
-                                            item_list.append(f"• {obtainable}")
+                                            item_list.append(f"• `{obtainable}`")
                                 
                                 if item_list:
                                     embed.add_field(
-                                        name="**販売商品:**",
+                                        name="販売商品:",
                                         value="\n".join(item_list[:10]),
                                         inline=False
                                     )
@@ -2038,7 +2026,7 @@ class NewRelatedItemSelect(discord.ui.Select):
                                         )
                         elif items:
                             # 旧形式のフォールバック
-                            item_list = [f"• {i.strip()}" for i in items.split(',')]
+                            item_list = [f"• `{i.strip()}`" for i in items.split(',')]
                             embed.add_field(name="取扱アイテム", value="\n".join(item_list[:10]), inline=False)
                         
                         if desc:

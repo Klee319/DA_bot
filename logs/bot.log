@@ -1414,3 +1414,201 @@ discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
 2025-06-16 23:08:08,476 - csv_manager - INFO - npcデータを106件処理しました
 2025-06-16 23:08:20,862 - __main__ - INFO - [PID:4208] アイテム検索開始: 'セシド' from klee.com
 2025-06-16 23:08:49,856 - __main__ - INFO - [PID:4208] アイテム検索開始: 'クエスト' from klee.com
+2025-06-16 23:09:23,888 - __main__ - INFO - [PID:4208] アイテム検索開始: 'レポロ村・入り口' from klee.com
+2025-06-16 23:09:23,979 - search_engine - ERROR - 検索候補取得エラー: no such column: formal_name
+2025-06-16 23:09:29,165 - __main__ - INFO - [PID:4208] アイテム検索開始: '薬草' from klee.com
+2025-06-16 23:10:03,338 - __main__ - INFO - [PID:4208] アイテム検索開始: '[圧縮]木の枝' from klee.com
+2025-06-16 23:10:03,427 - search_engine - ERROR - 検索候補取得エラー: no such column: formal_name
+2025-06-16 23:10:09,617 - __main__ - INFO - [PID:4208] アイテム検索開始: '木の枝' from klee.com
+2025-06-16 23:10:11,904 - embed_manager - ERROR - 入手元詳細エラー: No module named 'src'
+2025-06-16 23:10:24,374 - embed_manager - WARNING - Item list length mismatch: options=5, items=16
+2025-06-16 23:10:29,254 - embed_manager - ERROR - 入手元詳細エラー: No module named 'src'
+2025-06-16 23:11:15,452 - __main__ - INFO - [PID:4208] アイテム検索開始: 'ボアの' from klee.com
+2025-06-16 23:11:20,024 - embed_manager - ERROR - 入手元詳細エラー: No module named 'src'
+2025-06-16 23:40:09,959 - discord.gateway - INFO - Shard ID None has successfully RESUMED session 01463e600e7bb98694e1e4b0f4ff5458.
+2025-06-17 02:35:43,893 - discord.gateway - INFO - Shard ID None has successfully RESUMED session 01463e600e7bb98694e1e4b0f4ff5458.
+2025-06-17 02:53:23,628 - discord.client - ERROR - Attempting a reconnect in 1.03s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-17 02:53:25,062 - discord.gateway - INFO - Shard ID None has successfully RESUMED session 01463e600e7bb98694e1e4b0f4ff5458.
+2025-06-17 04:16:00,265 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-17 04:16:00,266 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-17 04:16:00,267 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-17 04:16:00,267 - discord.client - INFO - logging in using static token
+2025-06-17 04:16:01,057 - database - INFO - データベースの初期化が完了しました
+2025-06-17 04:16:01,421 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-17 04:16:01,421 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-17 04:16:01,987 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 3d2b6cafe8db094174a3eb8455f45716).
+2025-06-17 04:16:04,001 - __main__ - INFO - [PID:6842] Klee bot#1963 として接続しました
+2025-06-17 04:16:04,002 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-17 04:16:04,002 - __main__ - INFO - 接続サーバー数: 2
+2025-06-17 04:16:04,002 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-17 04:16:36,208 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-17 04:16:36,210 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-17 04:16:36,215 - __main__ - INFO - Botが正常に終了しました
+2025-06-17 04:16:46,901 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-17 04:16:46,901 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-17 04:16:46,902 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-17 04:16:46,902 - discord.client - INFO - logging in using static token
+2025-06-17 04:16:47,605 - database - INFO - データベースの初期化が完了しました
+2025-06-17 04:16:48,164 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-17 04:16:48,166 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-17 04:16:48,607 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 73bb7b88720fc1c03a70edc1b9afde63).
+2025-06-17 04:16:50,611 - __main__ - INFO - [PID:6907] Klee bot#1963 として接続しました
+2025-06-17 04:16:50,612 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-17 04:16:50,612 - __main__ - INFO - 接続サーバー数: 2
+2025-06-17 04:16:50,613 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-17 04:17:01,537 - __main__ - INFO - [PID:6907] アイテム検索開始: '「クエスト・購入・交換・モブ・採取・採掘・釣り」には次の場所が設定されているはずである「レポロ・マクルダ・ルーチェア・ソルソロ・サプネラ・セシド」
+そこで場所の名前、または、入手手段のいずれか（前者の「」内）がチャットに投稿された時不足しているもう片方の情報を質問し（ジャンルを選んでください/町を選んでください）プルダウンメニューで選択させるようにしたい。
+せんたくされたらその条件を満たしているrowの情報又はさらにリストを返すようにする。
+例：
+クエスト=>レポロ=>クエストマスターレポロの情報
+モブ=>セシド=>セシドモブのリスト=>モブの情報' from klee.com
+2025-06-17 04:17:01,752 - search_engine - ERROR - 検索候補取得エラー: no such column: formal_name
+2025-06-17 04:17:08,732 - __main__ - INFO - [PID:6907] アイテム検索開始: 'セシド' from klee.com
+2025-06-17 04:17:08,734 - __main__ - ERROR - アイテム検索エラー: name 'LocationAcquisitionView' is not defined
+2025-06-17 04:17:47,617 - __main__ - INFO - [PID:6907] アイテム検索開始: 'クエスト' from klee.com
+2025-06-17 04:17:47,618 - __main__ - ERROR - アイテム検索エラー: name 'LocationAcquisitionView' is not defined
+2025-06-17 04:17:53,234 - __main__ - INFO - [PID:6907] アイテム検索開始: '石' from klee.com
+2025-06-17 04:27:07,135 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-17 04:27:07,138 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-17 04:27:07,142 - __main__ - INFO - Botが正常に終了しました
+2025-06-17 04:27:45,254 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-17 04:27:45,254 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-17 04:27:45,256 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-17 04:27:45,256 - discord.client - INFO - logging in using static token
+2025-06-17 04:27:45,980 - database - INFO - データベースの初期化が完了しました
+2025-06-17 04:27:46,328 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-17 04:27:46,329 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-17 04:27:46,807 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: e94675454950119c8b8c9f25a9fcd108).
+2025-06-17 04:27:48,814 - __main__ - INFO - [PID:7263] Klee bot#1963 として接続しました
+2025-06-17 04:27:48,815 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-17 04:27:48,815 - __main__ - INFO - 接続サーバー数: 2
+2025-06-17 04:27:48,816 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-17 04:29:34,186 - __main__ - INFO - [PID:7263] アイテム検索開始: 'セシド' from klee.com
+2025-06-17 04:29:38,742 - embed_manager - ERROR - 場所・入手手段検索エラー: name 'aiosqlite' is not defined
+2025-06-17 04:31:12,806 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-17 04:31:12,807 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-17 04:31:12,810 - __main__ - INFO - Botが正常に終了しました
+2025-06-17 04:34:21,146 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-17 04:34:21,146 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-17 04:34:21,147 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-17 04:34:21,148 - discord.client - INFO - logging in using static token
+2025-06-17 04:34:21,858 - database - INFO - データベースの初期化が完了しました
+2025-06-17 04:34:22,427 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-17 04:34:22,427 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-17 04:34:22,896 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: bfbe2803c8ae4e51698a4525f879bf47).
+2025-06-17 04:34:24,900 - __main__ - INFO - [PID:7478] Klee bot#1963 として接続しました
+2025-06-17 04:34:24,900 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-17 04:34:24,900 - __main__ - INFO - 接続サーバー数: 2
+2025-06-17 04:34:24,901 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-17 04:34:31,180 - __main__ - INFO - [PID:7478] アイテム検索開始: 'クエスト' from klee.com
+2025-06-17 04:34:34,694 - embed_manager - ERROR - NPC詳細情報追加エラー: attempted relative import with no known parent package
+2025-06-17 04:34:50,066 - embed_manager - ERROR - NPC詳細情報追加エラー: attempted relative import with no known parent package
+2025-06-17 04:36:21,987 - __main__ - INFO - [PID:7478] アイテム検索開始: '採取' from klee.com
+2025-06-17 04:36:23,905 - embed_manager - ERROR - 場所・入手手段検索エラー: no such column: acquisition_location
+2025-06-17 04:36:26,226 - embed_manager - ERROR - 場所・入手手段検索エラー: no such column: acquisition_location
+2025-06-17 04:36:33,329 - __main__ - INFO - [PID:7478] アイテム検索開始: 'セシド' from klee.com
+2025-06-17 04:38:48,350 - __main__ - INFO - [PID:7478] アイテム検索開始: '石' from klee.com
+2025-06-17 04:38:52,912 - embed_manager - ERROR - 入手元詳細エラー: attempted relative import with no known parent package
+2025-06-17 04:39:36,724 - embed_manager - ERROR - 入手元詳細エラー: attempted relative import with no known parent package
+2025-06-17 04:39:46,516 - embed_manager - ERROR - 入手元詳細エラー: attempted relative import with no known parent package
+2025-06-17 04:42:37,674 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-17 04:42:37,674 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-17 04:42:37,676 - __main__ - INFO - Botが正常に終了しました
+2025-06-17 04:45:57,218 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-17 04:45:57,219 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-17 04:45:57,220 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-17 04:45:57,220 - discord.client - INFO - logging in using static token
+2025-06-17 04:45:57,882 - database - INFO - データベースの初期化が完了しました
+2025-06-17 04:45:58,218 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-17 04:45:58,218 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-17 04:45:58,708 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: b2482d72a99e6eca1b911b011f0023fc).
+2025-06-17 04:46:00,719 - __main__ - INFO - [PID:7721] Klee bot#1963 として接続しました
+2025-06-17 04:46:00,719 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-17 04:46:00,719 - __main__ - INFO - 接続サーバー数: 2
+2025-06-17 04:46:00,719 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-17 04:46:08,413 - __main__ - INFO - [PID:7721] アイテム検索開始: 'クエスト' from klee.com
+2025-06-17 04:46:10,345 - npc_parser - WARNING - 数値変換エラー: 1380G
+2025-06-17 04:46:10,346 - npc_parser - WARNING - 数値変換エラー: 1280G
+2025-06-17 04:46:10,348 - npc_parser - WARNING - 数値変換エラー: 1980G
+2025-06-17 04:46:10,350 - npc_parser - WARNING - 数値変換エラー: 2170G
+2025-06-17 04:46:10,351 - npc_parser - WARNING - 数値変換エラー: 2170G
+2025-06-17 04:46:10,351 - npc_parser - WARNING - 数値変換エラー: 6800G
+2025-06-17 04:46:10,352 - npc_parser - WARNING - 数値変換エラー: 1360G
+2025-06-17 04:46:10,352 - npc_parser - WARNING - 数値変換エラー: 1480G
+2025-06-17 04:49:50,872 - __main__ - INFO - [PID:7721] アイテム検索開始: '石' from klee.com
+2025-06-17 04:49:55,616 - embed_manager - WARNING - Item list length mismatch: options=11, items=28
+2025-06-17 04:51:54,071 - __main__ - INFO - [PID:7721] アイテム検索開始: '採掘' from klee.com
+2025-06-17 04:51:55,996 - embed_manager - ERROR - 場所・入手手段検索エラー: no such column: acquisition_location
+2025-06-17 04:58:20,944 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-17 04:58:20,945 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-17 04:58:20,946 - __main__ - INFO - Botが正常に終了しました
+2025-06-17 04:58:42,121 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-17 04:58:42,121 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-17 04:58:42,123 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-17 04:58:42,123 - discord.client - INFO - logging in using static token
+2025-06-17 04:58:42,726 - database - INFO - データベースの初期化が完了しました
+2025-06-17 04:58:43,126 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-17 04:58:43,127 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-17 04:58:43,599 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: fa1139bfce90a15ed74cf47c3add3498).
+2025-06-17 04:58:45,623 - __main__ - INFO - [PID:8062] Klee bot#1963 として接続しました
+2025-06-17 04:58:45,624 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-17 04:58:45,624 - __main__ - INFO - 接続サーバー数: 2
+2025-06-17 04:58:45,625 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-17 04:58:53,848 - __main__ - INFO - [PID:8062] アイテム検索開始: '石' from klee.com
+2025-06-17 04:58:58,452 - embed_manager - WARNING - Item list length mismatch: options=11, items=28
+2025-06-17 04:59:12,093 - __main__ - INFO - [PID:8062] アイテム検索開始: '採掘' from klee.com
+2025-06-17 04:59:37,096 - __main__ - INFO - [PID:8062] アイテム検索開始: 'クエスト' from klee.com
+2025-06-17 05:13:50,860 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-17 05:13:50,860 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-17 05:13:50,861 - __main__ - INFO - Botが正常に終了しました
+2025-06-17 05:14:19,452 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-17 05:14:19,452 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-17 05:14:19,453 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-17 05:14:19,454 - discord.client - INFO - logging in using static token
+2025-06-17 05:14:20,255 - database - INFO - データベースの初期化が完了しました
+2025-06-17 05:14:20,684 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-17 05:14:20,684 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-17 05:14:21,151 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 0b942d97881d23cf3d29f1ec72484354).
+2025-06-17 05:14:23,156 - __main__ - INFO - [PID:8336] Klee bot#1963 として接続しました
+2025-06-17 05:14:23,158 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-17 05:14:23,160 - __main__ - INFO - 接続サーバー数: 2
+2025-06-17 05:14:23,162 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-17 05:14:26,916 - __main__ - INFO - [PID:8336] アイテム検索開始: '石' from klee.com
+2025-06-17 05:14:32,306 - embed_manager - WARNING - Item list length mismatch: options=11, items=8
+2025-06-17 05:14:44,124 - __main__ - INFO - [PID:8336] アイテム検索開始: 'クエスト' from klee.com
+2025-06-17 05:17:33,596 - __main__ - INFO - [PID:8336] アイテム検索開始: 'カイト' from klee.com
+2025-06-17 05:21:56,288 - __main__ - INFO - [PID:8336] アイテム検索開始: '交換・購入のNPCのembedにおいて取引内容には入手アイテムのみを記載せよ。必要素材は取引詳細で確認できるようにする。
+また交換・購入のNPCのembed・プルダウンの表記を下記のように修正せよ。
+例：
+• **ボアの皮:64** ← [圧縮]ボアの皮:1
+=>• ボアの皮×64＜＝個数を×で表記し太字と交換元アイテムの表記を削除。
+
+交換詳細のembedに関しても上記例と同様に個数は×で表し、複数素材の場合は箇条書きにせよ
+また取引内容のセクションは不要。代わりに入手アイテムと必要素材/価格のセクションが改行されるようにせよ' from klee.com
+2025-06-17 07:21:15,588 - discord.gateway - INFO - Shard ID None has successfully RESUMED session 0b942d97881d23cf3d29f1ec72484354.
+2025-06-17 09:44:12,743 - discord.gateway - INFO - Shard ID None has successfully RESUMED session 0b942d97881d23cf3d29f1ec72484354.
+2025-06-17 09:50:23,822 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-17 09:50:23,823 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-17 09:50:23,824 - __main__ - INFO - Botが正常に終了しました
+2025-06-17 09:50:28,062 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-17 09:50:28,062 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-17 09:50:28,063 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-17 09:50:28,063 - discord.client - INFO - logging in using static token
+2025-06-17 09:50:30,087 - database - INFO - データベースの初期化が完了しました
+2025-06-17 09:50:30,632 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-17 09:50:30,632 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-17 09:50:31,151 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: e16b3fc7af2360b9c23563a0f18ab7d4).
+2025-06-17 09:50:33,156 - __main__ - INFO - [PID:10364] Klee bot#1963 として接続しました
+2025-06-17 09:50:33,157 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-17 09:50:33,157 - __main__ - INFO - 接続サーバー数: 2
+2025-06-17 09:50:33,158 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-17 09:55:07,457 - __main__ - INFO - [PID:10364] アイテム検索開始: '石s' from klee.com
+2025-06-17 09:55:10,959 - __main__ - INFO - [PID:10364] アイテム検索開始: '石' from klee.com
+2025-06-17 09:57:38,722 - __main__ - INFO - [PID:10364] アイテム検索開始: 'レポロ' from klee.com
+2025-06-17 09:58:10,048 - __main__ - INFO - [PID:10364] アイテム検索開始: 'レポロ　採取' from klee.com
