@@ -511,7 +511,7 @@ class EmbedManager:
     async def _add_npc_details(self, embed: discord.Embed, item_data: Dict[str, Any]):
         """NPCの詳細情報を追加"""
         try:
-            from .npc_parser import NPCExchangeParser
+            from npc_parser import NPCExchangeParser
             
             business_type = item_data.get('business_type', '')
             obtainable_items = item_data.get('obtainable_items', '')
@@ -586,13 +586,37 @@ class EmbedManager:
         except Exception as e:
             logger.error(f"NPC詳細情報追加エラー: {e}")
             # エラー時はシンプルな表示にフォールバック
-            obtainable_items = item_data.get('obtainable_items', '')
-            if obtainable_items:
-                embed.add_field(
-                    name="取扱商品:",
-                    value=f"\u200B　`{obtainable_items}`",
-                    inline=False
-                )
+            business_type = item_data.get('business_type', '')
+            if business_type == 'クエスト':
+                required_materials = item_data.get('required_materials', '')
+                if required_materials:
+                    # カンマ区切りを箇条書きに変換
+                    items = [item.strip() for item in required_materials.split(',') if item.strip()]
+                    if items:
+                        items_list = [f"\u200B　• {item}" for item in items]
+                        embed.add_field(
+                            name="受注内容:",
+                            value="\n".join(items_list[:10]),  # 最大10件表示
+                            inline=False
+                        )
+            else:
+                obtainable_items = item_data.get('obtainable_items', '')
+                if obtainable_items:
+                    # カンマ区切りを箇条書きに変換
+                    items = [item.strip() for item in obtainable_items.split(',') if item.strip()]
+                    if items:
+                        items_list = [f"\u200B　• {item}" for item in items]
+                        embed.add_field(
+                            name="取扱商品:" if business_type != 'クエスト' else "受注内容:",
+                            value="\n".join(items_list[:10]),  # 最大10件表示
+                            inline=False
+                        )
+                    else:
+                        embed.add_field(
+                            name="取扱商品:" if business_type != 'クエスト' else "受注内容:",
+                            value=f"\u200B　`{obtainable_items}`",
+                            inline=False
+                        )
     
     def _get_type_display_name(self, item_type: str) -> str:
         """アイテムタイプの表示名を取得"""
@@ -1060,7 +1084,7 @@ class AcquisitionDetailsButton(discord.ui.Button):
                             # NPCが複数の交換パターンを持つ場合の処理
                             obtainable_items = npc.get('obtainable_items', '')
                             if business_type in ['交換', '購入', 'クエスト'] and obtainable_items:
-                                from .npc_parser import NPCExchangeParser
+                                from npc_parser import NPCExchangeParser
                                 exchanges = NPCExchangeParser.parse_exchange_items(
                                     obtainable_items,
                                     npc.get('required_materials', ''),
@@ -1389,7 +1413,7 @@ class UsageDetailsButton(discord.ui.Button):
             elif item_type == 'npcs':
                 # NPCの取引詳細
                 try:
-                    from .npc_parser import NPCExchangeParser
+                    from npc_parser import NPCExchangeParser
                     
                     business_type = view.item_data.get('business_type', '')
                     obtainable_items = view.item_data.get('obtainable_items', '')
@@ -1483,7 +1507,7 @@ class UsageDetailsButton(discord.ui.Button):
                 elif item_type == 'npcs':
                     # NPCの場合は交換パターンをitem_listに追加
                     try:
-                        from .npc_parser import NPCExchangeParser
+                        from npc_parser import NPCExchangeParser
                         
                         business_type = view.item_data.get('business_type', '')
                         obtainable_items = view.item_data.get('obtainable_items', '')
@@ -1897,7 +1921,7 @@ class NewRelatedItemSelect(discord.ui.Select):
                         
                         # 複数交換パターンの解析
                         if items and business_type in ['購入', '交換', 'クエスト']:
-                            from .npc_parser import NPCExchangeParser
+                            from npc_parser import NPCExchangeParser
                             exchanges = NPCExchangeParser.parse_exchange_items(
                                 items, materials, exp_str, gold_str
                             )
