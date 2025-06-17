@@ -1859,3 +1859,21 @@ discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
 2025-06-17 22:16:08,661 - __main__ - INFO - シャットダウンシグナルを受信しました
 2025-06-17 22:16:08,662 - __main__ - INFO - Botをシャットダウンしています...
 2025-06-17 22:16:08,663 - __main__ - INFO - Botが正常に終了しました
+2025-06-17 23:15:29,758 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-17 23:15:29,758 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-17 23:15:29,760 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-17 23:15:29,760 - discord.client - INFO - logging in using static token
+2025-06-17 23:15:30,508 - database - INFO - データベースの初期化が完了しました
+2025-06-17 23:15:30,933 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-17 23:15:30,933 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-17 23:15:31,462 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 28af1f84cdb4166a95a2e71c11e4ca3b).
+2025-06-17 23:15:33,504 - __main__ - INFO - [PID:1432] Klee bot#1963 として接続しました
+2025-06-17 23:15:33,504 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-17 23:15:33,505 - __main__ - INFO - 接続サーバー数: 2
+2025-06-17 23:15:33,505 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-17 23:15:40,193 - __main__ - INFO - [PID:1432] アイテム検索開始: 'ツルハシ' from klee.com
+2025-06-17 23:16:46,225 - __main__ - INFO - [PID:1432] アイテム検索開始: '豚' from klee.com
+2025-06-17 23:18:16,787 - __main__ - INFO - [PID:1432] アイテム検索開始: 'カイト' from klee.com
+2025-06-17 23:19:33,314 - __main__ - INFO - [PID:1432] アイテム検索開始: 'クエストマスター' from klee.com
+2025-06-17 23:19:37,005 - embed_manager - ERROR - NPCプルダウン追加エラー: 'NoneType' object has no attribute 'strip'
+2025-06-17 23:19:47,776 - embed_manager - ERROR - NPCプルダウン追加エラー: 'NoneType' object has no attribute 'strip'

@@ -583,6 +583,13 @@ class EmbedManager:
                     # 複数の交換パターンがある場合はフッターで示す
                     if len(exchange_list) > 10:
                         embed.set_footer(text=f"※他にも{len(exchange_list) - 10}件の取引があります。プルダウンメニューから確認できます。")
+                    
+                    # 取引詳細の確認方法を追加
+                    embed.add_field(
+                        name="\u200b",  # 空白フィールド名
+                        value="※下記から取引詳細を確認",
+                        inline=False
+                    )
         
         except Exception as e:
             logger.error(f"NPC詳細情報追加エラー: {e}")
@@ -636,6 +643,13 @@ class EmbedManager:
                             value=f"\u200B　`{obtainable_items}`",
                             inline=False
                         )
+                
+                # 取引詳細の確認方法を追加（エラー時も表示）
+                embed.add_field(
+                    name="\u200b",  # 空白フィールド名
+                    value="※下記から取引詳細を確認",
+                    inline=False
+                )
     
     async def _add_npc_dropdown_to_view(self, view: discord.ui.View, item_data: Dict[str, Any]):
         """取引詳細ボタンの代わりにプルダウンを追加"""
