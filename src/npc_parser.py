@@ -139,7 +139,7 @@ class NPCExchangeParser:
     
     @staticmethod
     def _parse_numeric_values(values_str: str) -> List[int]:
-        """数値リストをパース（カンマ区切り）"""
+        """数値リストをパース（カンマ区切り、G付き値対応）"""
         if not values_str:
             return []
             
@@ -149,6 +149,9 @@ class NPCExchangeParser:
             value = value.strip()
             if value:
                 try:
+                    # G付きの値（例: 1380G）を処理
+                    if value.endswith('G'):
+                        value = value[:-1]
                     numeric_values.append(int(value))
                 except ValueError:
                     logger.warning(f"数値変換エラー: {value}")

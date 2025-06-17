@@ -538,50 +538,36 @@ class EmbedManager:
                         continue
                     
                     if business_type == 'クエスト':
-                        # クエストの場合は受注内容として表示
+                        # クエストの場合は受注内容として表示（EXP/Gold表記は除外）
                         if required:
-                            quest_item = f"**{required}**"
-                            if exp or gold:
-                                rewards = []
-                                if exp:
-                                    rewards.append(f"{exp} EXP")
-                                if gold:
-                                    rewards.append(f"{gold} G")
-                                quest_item += f" → {' + '.join(rewards)}"
-                            exchange_list.append(f"　• {quest_item}")
+                            exchange_list.append(f"{required}")
                     else:
                         # 購入・交換の場合は販売商品として表示
                         if obtainable:
                             if business_type == '購入' and required:
-                                exchange_list.append(f"　• **{obtainable}** → {required}")
+                                exchange_list.append(f"**{obtainable}** → {required}")
                             elif business_type == '交換' and required:
-                                exchange_list.append(f"　• **{obtainable}** ← {required}")
+                                exchange_list.append(f"**{obtainable}** ← {required}")
                             else:
-                                exchange_list.append(f"　• **{obtainable}**")
+                                exchange_list.append(f"**{obtainable}**")
                 
                 if exchange_list:
-                    # 1行目にゼロ幅スペースを挿入
-                    exchange_list[0] = "\u200B" + exchange_list[0]
-                    
                     # フィールド名を業種に応じて設定
                     if business_type == 'クエスト':
                         field_name = "受注内容:"
                     else:
                         field_name = "販売商品:"
                     
+                    # コードブロックで表示
                     embed.add_field(
                         name=field_name,
-                        value="\n".join(exchange_list[:10]),  # 最大10件表示
+                        value=f"```\n{chr(10).join(exchange_list[:10])}\n```",  # 最大10件表示
                         inline=False
                     )
                     
                     # 交換パターンが複数ある場合は選択できることを示す
                     if len(exchanges) > 1:
-                        embed.add_field(
-                            name="詳細:",
-                            value=f"\u200B　{len(exchanges)}種類の取引があります。下のボタンから選択して詳細を確認できます。",
-                            inline=False
-                        )
+                        embed.set_footer(text="※下のボタンから選択して詳細を確認できます。")
         
         except Exception as e:
             logger.error(f"NPC詳細情報追加エラー: {e}")
@@ -593,10 +579,9 @@ class EmbedManager:
                     # カンマ区切りを箇条書きに変換
                     items = [item.strip() for item in required_materials.split(',') if item.strip()]
                     if items:
-                        items_list = [f"\u200B　• {item}" for item in items]
                         embed.add_field(
                             name="受注内容:",
-                            value="\n".join(items_list[:10]),  # 最大10件表示
+                            value=f"```\n{chr(10).join(items[:10])}\n```",  # 最大10件表示
                             inline=False
                         )
             else:
@@ -605,10 +590,9 @@ class EmbedManager:
                     # カンマ区切りを箇条書きに変換
                     items = [item.strip() for item in obtainable_items.split(',') if item.strip()]
                     if items:
-                        items_list = [f"\u200B　• {item}" for item in items]
                         embed.add_field(
                             name="取扱商品:" if business_type != 'クエスト' else "受注内容:",
-                            value="\n".join(items_list[:10]),  # 最大10件表示
+                            value=f"```\n{chr(10).join(items[:10])}\n```",  # 最大10件表示
                             inline=False
                         )
                     else:
@@ -937,6 +921,14 @@ class ItemDetailView(discord.ui.View):
         elif item_type == 'mobs':
             # モブ: ドロップアイテム(利用先)がある
             self.add_item(UsageDetailsButton(item_type))
+        elif item_type == 'npcs':
+            # NPC: 取引詳細がある
+            business_type = self.item_data.get('business_type', '')
+            # 複数の交換パターンがある場合のみボタンを表示
+            obtainable_items = self.item_data.get('obtainable_items', '')
+            required_materials = self.item_data.get('required_materials', '')
+            if obtainable_items or required_materials:
+                self.add_item(UsageDetailsButton(item_type))
     
     async def _get_related_items(self):
         """関連アイテムを取得"""
@@ -2163,9 +2155,9 @@ class LocationAcquisitionSelect(discord.ui.Select):
                     results.extend([dict(row) for row in rows])
                     
                 elif method in ['採取', '採掘', '釣り']:
-                    # materialsテーブルから該当する素材を検索
+                    # materialsテーブルから該当する素材を検索（acquisition_methodで場所を検索）
                     cursor = await conn.execute(
-                        "SELECT *, 'materials' as item_type FROM materials WHERE acquisition_category = ? AND acquisition_location LIKE ?",
+                        "SELECT *, 'materials' as item_type FROM materials WHERE acquisition_category = ? AND acquisition_method LIKE ?",
                         (method, f'%{location}%')
                     )
                     rows = await cursor.fetchall()
