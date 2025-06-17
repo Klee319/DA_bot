@@ -558,10 +558,13 @@ class EmbedManager:
                     else:
                         field_name = "販売商品:"
                     
-                    # コードブロックで表示
+                    # 各行をコードブロックで表示
+                    formatted_list = []
+                    for item in exchange_list[:10]:  # 最大10件表示
+                        formatted_list.append(f"• `{item}`")
                     embed.add_field(
                         name=field_name,
-                        value=f"```\n{chr(10).join(exchange_list[:10])}\n```",  # 最大10件表示
+                        value="\n".join(formatted_list),
                         inline=False
                     )
                     
@@ -579,9 +582,10 @@ class EmbedManager:
                     # カンマ区切りを箇条書きに変換
                     items = [item.strip() for item in required_materials.split(',') if item.strip()]
                     if items:
+                        formatted_items = [f"• `{item}`" for item in items[:10]]
                         embed.add_field(
                             name="受注内容:",
-                            value=f"```\n{chr(10).join(items[:10])}\n```",  # 最大10件表示
+                            value="\n".join(formatted_items),
                             inline=False
                         )
             else:
@@ -590,9 +594,10 @@ class EmbedManager:
                     # カンマ区切りを箇条書きに変換
                     items = [item.strip() for item in obtainable_items.split(',') if item.strip()]
                     if items:
+                        formatted_items = [f"• `{item}`" for item in items[:10]]
                         embed.add_field(
                             name="取扱商品:" if business_type != 'クエスト' else "受注内容:",
-                            value=f"```\n{chr(10).join(items[:10])}\n```",  # 最大10件表示
+                            value="\n".join(formatted_items),
                             inline=False
                         )
                     else:
@@ -1271,17 +1276,21 @@ class AcquisitionDetailsButton(discord.ui.Button):
                     
                     # materialsの場合
                     if item_type == 'materials':
+                        # gathering locationsを先に追加（順序を保持）
+                        if related_items.get('gathering_locations'):
+                            item_list.extend(related_items['gathering_locations'][:5])
+                        
                         # mob sources
                         mob_sources = [s for s in related_items.get('acquisition_sources', []) if s.get('relation_type') == 'drop_from_mob']
-                        item_list.extend(mob_sources)
+                        item_list.extend(mob_sources[:5])
                         
-                        # gathering sources
-                        gathering_sources = [s for s in related_items.get('acquisition_sources', []) if s.get('relation_type') == 'gathering_location']
-                        item_list.extend(gathering_sources)
+                        # npc sources（入手元のみ）
+                        npc_sources = [s for s in related_items.get('acquisition_sources', []) if s.get('relation_type') == 'npc_source' and s.get('source_type') == 'obtainable']
+                        item_list.extend(npc_sources[:5])
                         
-                        # npc sources
-                        npc_sources = [s for s in related_items.get('acquisition_sources', []) if s.get('relation_type') == 'npc_source']
-                        item_list.extend(npc_sources)
+                        # npc sources（納品先）
+                        npc_required = [s for s in related_items.get('acquisition_sources', []) if s.get('relation_type') == 'npc_source' and s.get('source_type') == 'required']
+                        item_list.extend(npc_required[:5])
                     
                     # equipmentsの場合
                     elif item_type == 'equipments':
@@ -1349,8 +1358,16 @@ class UsageDetailsButton(discord.ui.Button):
         try:
             related_items = await view._get_related_items()
             
+            item_type = view.item_data.get('item_type', '')
+            
+            # タイトルをアイテムタイプに応じて設定
+            if item_type == 'npcs':
+                title = f"{view.item_data['formal_name']} の取引詳細"
+            else:
+                title = f"{view.item_data['formal_name']} の利用先詳細"
+            
             embed = discord.Embed(
-                title=f"{view.item_data['formal_name']} の利用先詳細",
+                title=title,
                 color=discord.Color.orange()
             )
             
@@ -1429,18 +1446,10 @@ class UsageDetailsButton(discord.ui.Button):
                             if not obtainable and not required:
                                 continue
                             
-                            # 取引の表示テキスト作成
+                            # 取引の表示テキスト作成（EXP/Gold除外）
                             if business_type == 'クエスト':
                                 if required:
-                                    display_text = f"**{required}**"
-                                    if exp or gold:
-                                        rewards = []
-                                        if exp:
-                                            rewards.append(f"{exp} EXP")
-                                        if gold:
-                                            rewards.append(f"{gold} G")
-                                        display_text += f" → {' + '.join(rewards)}"
-                                    exchange_list.append(f"　• {display_text}")
+                                    exchange_list.append(f"`{required}`")
                             else:
                                 if obtainable:
                                     if business_type == '購入' and required:
@@ -1449,20 +1458,32 @@ class UsageDetailsButton(discord.ui.Button):
                                         display_text = f"**{obtainable}** ← {required}"
                                     else:
                                         display_text = f"**{obtainable}**"
-                                    exchange_list.append(f"　• {display_text}")
+                                    exchange_list.append(f"`{display_text}`")
                             
-                            # 選択肢を追加
-                            label = obtainable if obtainable else required
+                            # 選択肢を追加（embedと同じ内容）
+                            if business_type == 'クエスト':
+                                label = required if required else "クエスト"
+                                description = "受注内容"
+                            else:
+                                label = obtainable if obtainable else required
+                                if business_type == '購入' and required:
+                                    description = f"価格: {required[:20]}"
+                                elif business_type == '交換' and required:
+                                    description = f"必要: {required[:20]}"
+                                else:
+                                    description = business_type
+                            
                             if label:
                                 options.append(discord.SelectOption(
                                     label=f"{i+1}. {label[:20]}"[:25],
                                     value=f"exchange_{option_index}",
-                                    description=f"{business_type} - 詳細"
+                                    description=description[:50]
                                 ))
                                 option_index += 1
                         
                         if exchange_list:
-                            exchange_list[0] = "\u200B" + exchange_list[0]
+                            # 各行を箇条書きに変更
+                            formatted_exchange_list = [f"• {item}" for item in exchange_list]
                             
                             if business_type == 'クエスト':
                                 field_name = "受注可能クエスト:"
@@ -1471,7 +1492,7 @@ class UsageDetailsButton(discord.ui.Button):
                             
                             embed.add_field(
                                 name=field_name,
-                                value="\n".join(exchange_list),
+                                value="\n".join(formatted_exchange_list),
                                 inline=False
                             )
                 
