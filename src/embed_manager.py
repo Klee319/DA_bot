@@ -568,9 +568,9 @@ class EmbedManager:
                         inline=False
                     )
                     
-                    # 交換パターンが複数ある場合は選択できることを示す
-                    if len(exchanges) > 1:
-                        embed.set_footer(text="※下のボタンから選択して詳細を確認できます。")
+                    # 交換パターンがある場合は取引詳細ボタンで確認できることを示す
+                    if exchanges:
+                        embed.set_footer(text="※取引詳細ボタンから各取引を確認できます。")
         
         except Exception as e:
             logger.error(f"NPC詳細情報追加エラー: {e}")
@@ -2009,11 +2009,6 @@ class NewRelatedItemSelect(discord.ui.Select):
                                         value="\n".join(quest_list),
                                         inline=False
                                     )
-                                    embed.add_field(
-                                        name="\u200b",
-                                        value="*※ 下のボタンでクエスト詳細を検索*",
-                                        inline=False
-                                    )
                             else:
                                 # 購入・交換の販売商品一覧
                                 item_list = []
@@ -2041,11 +2036,6 @@ class NewRelatedItemSelect(discord.ui.Select):
                                             value=f"...他{len(item_list) - 10}種類",
                                             inline=False
                                         )
-                                    embed.add_field(
-                                        name="\u200b",
-                                        value="*※ 下のボタンで取引詳細を検索*",
-                                        inline=False
-                                    )
                         elif items:
                             # 旧形式のフォールバック
                             item_list = [f"• {i.strip()}" for i in items.split(',')]
