@@ -570,8 +570,19 @@ class SearchEngine:
                     eq['relation_detail'] = await self._extract_material_usage(eq.get('required_materials', ''), item_name)
                     related_items['usage_destinations'].append(eq)
                 
-                # 2. NPCテーブルの必要素材に含まれるもの（NPCテーブル実装後）
-                # TODO: NPCテーブル実装後に追加
+                # 2. NPCテーブルの必要素材に含まれるもの（利用先として）
+                npc_using = await self._search_npcs_using_material(item_name)
+                for npc in npc_using:
+                    npc['relation_type'] = 'material_for_npc'
+                    npc['relation_detail'] = await self._extract_npc_material_usage(npc.get('required_materials', ''), item_name)
+                    related_items['usage_destinations'].append(npc)
+                
+                # 3. NPCテーブルの入手可能アイテムに含まれるもの
+                npc_providing = await self._search_npcs_providing_material(item_name)
+                for npc in npc_providing:
+                    npc['relation_type'] = 'npc_source'
+                    npc['source_type'] = 'obtainable'  # 入手可能
+                    related_items['acquisition_sources'].append(npc)
                 
                 # 入手元の包括的検索
                 await self._search_material_acquisition_sources(item_name, item_data, related_items)
@@ -580,6 +591,7 @@ class SearchEngine:
                 # equipment名の場合
                 related_items['materials'] = []  # 必要素材
                 related_items['acquisition_sources'] = []  # 入手元
+                related_items['usage_destinations'] = []  # 利用先
                 
                 # 必要素材の検索
                 if item_data.get('required_materials'):
@@ -601,8 +613,19 @@ class SearchEngine:
                         mob['relation_type'] = 'drop_from_mob'
                         related_items['acquisition_sources'].append(mob)
                 elif acquisition_category == 'NPC':
-                    # NPCテーブル実装後に対応
-                    pass
+                    # NPCから入手可能なequipment
+                    npc_providing = await self._search_npcs_providing_material(item_name)
+                    for npc in npc_providing:
+                        npc['relation_type'] = 'npc_source'
+                        npc['source_type'] = 'obtainable'
+                        related_items['acquisition_sources'].append(npc)
+                
+                # 利用先の検索（NPCの必要素材に含まれるequipment）
+                npc_using = await self._search_npcs_using_material(item_name)
+                for npc in npc_using:
+                    npc['relation_type'] = 'material_for_npc'
+                    npc['relation_detail'] = await self._extract_npc_material_usage(npc.get('required_materials', ''), item_name)
+                    related_items['usage_destinations'].append(npc)
             
             elif item_type == 'mobs':
                 # mob名の場合
@@ -1099,10 +1122,10 @@ class SearchEngine:
                 db.row_factory = aiosqlite.Row
                 suggestions = set()
                 
-                # 全てのテーブルを検索対象に含める
-                tables = ['equipments', 'materials', 'mobs', 'gatherings', 'npcs']
+                # formal_nameとcommon_nameを持つテーブル
+                tables_with_formal_name = ['equipments', 'materials', 'mobs']
                 
-                for table in tables:
+                for table in tables_with_formal_name:
                     # 正式名称から候補を取得
                     cursor = await db.execute(
                         f"SELECT formal_name FROM {table} WHERE LOWER(formal_name) LIKE ? LIMIT ?",
@@ -1119,8 +1142,163 @@ class SearchEngine:
                     rows = await cursor.fetchall()
                     suggestions.update([row['common_name'] for row in rows])
                 
+                # gatheringsテーブルのlocationから候補を取得
+                cursor = await db.execute(
+                    "SELECT location FROM gatherings WHERE LOWER(location) LIKE ? LIMIT ?",
+                    (f'{partial_query.lower()}%', limit)
+                )
+                rows = await cursor.fetchall()
+                suggestions.update([row['location'] for row in rows])
+                
+                # npcsテーブルのnameから候補を取得
+                cursor = await db.execute(
+                    "SELECT name FROM npcs WHERE LOWER(name) LIKE ? LIMIT ?",
+                    (f'{partial_query.lower()}%', limit)
+                )
+                rows = await cursor.fetchall()
+                suggestions.update([row['name'] for row in rows])
+                
                 return sorted(list(suggestions))[:limit]
                 
         except Exception as e:
             logger.error(f"検索候補取得エラー: {e}")
             return []
+    
+    async def _search_npcs_using_material(self, material_name: str) -> List[Dict[str, Any]]:
+        """指定した素材を必要とするNPCを検索"""
+        try:
+            async with aiosqlite.connect(self.db_manager.db_path) as db:
+                db.row_factory = aiosqlite.Row
+                results = []
+                
+                # required_materialsカラムに含まれるNPCを検索
+                cursor = await db.execute(
+                    "SELECT * FROM npcs WHERE required_materials LIKE ?",
+                    (f'%{material_name}%',)
+                )
+                rows = await cursor.fetchall()
+                
+                for row in rows:
+                    row_dict = dict(row)
+                    # 素材リストを解析して実際に含まれているか確認
+                    if self._check_material_in_npc_requirements(row_dict.get('required_materials', ''), material_name):
+                        row_dict['formal_name'] = row_dict.get('name', '')
+                        row_dict['item_type'] = 'npcs'
+                        results.append(row_dict)
+                
+                return results
+                
+        except Exception as e:
+            logger.error(f"NPCs using material検索エラー: {e}")
+            return []
+    
+    async def _search_npcs_providing_material(self, material_name: str) -> List[Dict[str, Any]]:
+        """指定した素材/装備を提供するNPCを検索"""
+        try:
+            async with aiosqlite.connect(self.db_manager.db_path) as db:
+                db.row_factory = aiosqlite.Row
+                results = []
+                
+                # obtainable_itemsカラムに含まれるNPCを検索
+                cursor = await db.execute(
+                    "SELECT * FROM npcs WHERE obtainable_items LIKE ?",
+                    (f'%{material_name}%',)
+                )
+                rows = await cursor.fetchall()
+                
+                for row in rows:
+                    row_dict = dict(row)
+                    # アイテムリストを解析して実際に含まれているか確認
+                    if self._check_material_in_npc_obtainable(row_dict.get('obtainable_items', ''), material_name):
+                        row_dict['formal_name'] = row_dict.get('name', '')
+                        row_dict['item_type'] = 'npcs'
+                        results.append(row_dict)
+                
+                return results
+                
+        except Exception as e:
+            logger.error(f"NPCs providing material検索エラー: {e}")
+            return []
+    
+    def _check_material_in_npc_requirements(self, requirements_str: str, target_material: str) -> bool:
+        """NPC必要素材に指定した素材が含まれているかチェック"""
+        try:
+            if not requirements_str:
+                return False
+            
+            # カンマ区切りで分割
+            materials = requirements_str.split(',')
+            
+            for material in materials:
+                material = material.strip()
+                # 「素材名:数量」形式の場合は素材名のみ抽出
+                if ':' in material:
+                    material_name = material.split(':')[0].strip()
+                else:
+                    material_name = material
+                
+                # 完全一致または部分一致でチェック
+                if material_name == target_material or target_material in material_name:
+                    return True
+            
+            return False
+            
+        except Exception as e:
+            logger.warning(f"NPC必要素材チェックエラー: {e}")
+            return False
+    
+    def _check_material_in_npc_obtainable(self, obtainable_str: str, target_material: str) -> bool:
+        """NPC入手可能アイテムに指定したアイテムが含まれているかチェック"""
+        try:
+            if not obtainable_str:
+                return False
+            
+            # カンマ区切りで分割
+            items = obtainable_str.split(',')
+            
+            for item in items:
+                item = item.strip()
+                # 「アイテム名:数量」形式の場合はアイテム名のみ抽出
+                if ':' in item:
+                    item_name = item.split(':')[0].strip()
+                else:
+                    item_name = item
+                
+                # 完全一致または部分一致でチェック
+                if item_name == target_material or target_material in item_name:
+                    return True
+            
+            return False
+            
+        except Exception as e:
+            logger.warning(f"NPC入手可能アイテムチェックエラー: {e}")
+            return False
+    
+    async def _extract_npc_material_usage(self, requirements_str: str, target_material: str) -> str:
+        """NPC必要素材から指定した素材の使用詳細を抽出"""
+        try:
+            if not requirements_str:
+                return ""
+            
+            # カンマ区切りで分割
+            materials = requirements_str.split(',')
+            
+            for material in materials:
+                material = material.strip()
+                # 「素材名:数量」形式をチェック
+                if ':' in material:
+                    material_name, quantity = material.split(':', 1)
+                    material_name = material_name.strip()
+                    quantity = quantity.strip()
+                    
+                    if material_name == target_material or target_material in material_name:
+                        return f"必要数: {quantity}"
+                else:
+                    if material == target_material or target_material in material:
+                        return "必要素材"
+            
+            return ""
+            
+        except Exception as e:
+            logger.warning(f"NPC素材使用詳細抽出エラー: {e}")
+            return ""

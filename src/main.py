@@ -12,7 +12,7 @@ from typing import Optional, List, Dict, Any
 
 from database import DatabaseManager
 from search_engine import SearchEngine
-from embed_manager import EmbedManager
+from embed_manager import EmbedManager, LocationAcquisitionView
 from csv_manager import CSVManager
 
 # 環境変数を読み込み
@@ -168,6 +168,18 @@ class ItemReferenceBot(commands.Bot):
             import os
             logger.info(f"[PID:{os.getpid()}] アイテム検索開始: '{query}' from {message.author}")
             
+            # 入手手段と場所の定義
+            acquisition_methods = ['クエスト', '購入', '交換', 'モブ', '採取', '採掘', '釣り']
+            locations = ['レポロ', 'マクルダ', 'ルーチェア', 'ソルソロ', 'サプネラ', 'セシド']
+            
+            # 入力が入手手段または場所に一致するかチェック
+            if query in acquisition_methods:
+                await self.handle_acquisition_method_query(message, query, locations)
+                return
+            elif query in locations:
+                await self.handle_location_query(message, query, acquisition_methods)
+                return
+            
             # 複数アイテム検索をサポート（最大3つ）
             queries = [q.strip() for q in query.split() if q.strip()]
             queries = queries[:self.config['features']['max_search_items']]
@@ -266,6 +278,48 @@ class ItemReferenceBot(commands.Bot):
         else:
             logger.error(f"コマンドエラー: {error}")
             await ctx.reply("コマンド実行中にエラーが発生しました")
+    
+    async def handle_acquisition_method_query(self, message, acquisition_method, locations):
+        """入手手段が入力された時の処理"""
+        embed = discord.Embed(
+            title=f"**{acquisition_method}** の場所を選択してください",
+            description="下のメニューから町を選んでください",
+            color=discord.Color.blue()
+        )
+        
+        # 選択肢を作成
+        options = []
+        for location in locations:
+            options.append(discord.SelectOption(
+                label=location,
+                value=f"{acquisition_method}_{location}",
+                description=f"{location}の{acquisition_method}"
+            ))
+        
+        # Viewを作成
+        view = LocationAcquisitionView(options, acquisition_method, None, self.embed_manager, self.search_engine)
+        await message.reply(embed=embed, view=view)
+    
+    async def handle_location_query(self, message, location, acquisition_methods):
+        """場所が入力された時の処理"""
+        embed = discord.Embed(
+            title=f"**{location}** の入手手段を選択してください",
+            description="下のメニューからジャンルを選んでください",
+            color=discord.Color.green()
+        )
+        
+        # 選択肢を作成
+        options = []
+        for method in acquisition_methods:
+            options.append(discord.SelectOption(
+                label=method,
+                value=f"{method}_{location}",
+                description=f"{location}の{method}"
+            ))
+        
+        # Viewを作成
+        view = LocationAcquisitionView(options, None, location, self.embed_manager, self.search_engine)
+        await message.reply(embed=embed, view=view)
 
 # コマンドクラス
 class ItemCommands(commands.Cog):
@@ -468,6 +522,8 @@ async def shutdown_bot():
         logger.info("Botをシャットダウンしています...")
         await bot_instance.close()
         logger.info("Botが正常に終了しました")
+
+
 
 async def main():
     """メイン実行関数"""
