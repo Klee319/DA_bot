@@ -150,6 +150,21 @@ class ItemReferenceBot(commands.Bot):
                 await self.invoke(ctx)
             # コマンドでない場合のみアイテム検索を実行
             elif not message.content.startswith(self.command_prefix):
+                # チャンネル制限チェック（ホワイトリスト制）
+                allowed_channels = self.config['permissions']['allowed_channels']
+                
+                # 許可チャンネルリストが空の場合は、BOTが動作しない
+                if not allowed_channels:
+                    # 管理者権限を持つユーザーには案内メッセージを表示
+                    user_roles = [role.id for role in message.author.roles] if hasattr(message.author, 'roles') and message.author.roles else []
+                    if self.is_admin(message.author.id, user_roles):
+                        await message.reply("⚠️ BOT利用可能チャンネルが設定されていません。\n`/add_allowed_channel` コマンドでチャンネルを追加してください。")
+                    return
+                
+                # 現在のチャンネルが許可リストに含まれているかチェック
+                if message.channel.id not in allowed_channels:
+                    return
+                
                 await self.handle_item_search(message)
                 
         finally:
@@ -438,6 +453,249 @@ class AdminCommands(commands.Cog):
         except Exception as e:
             logger.error(f"統計表示エラー: {e}")
             await interaction.followup.send("統計表示中にエラーが発生しました")
+    
+    @app_commands.command(name='add_admin_role', description='管理者ロールを追加')
+    @app_commands.describe(role='追加する管理者ロール')
+    async def add_admin_role(self, interaction: discord.Interaction, role: discord.Role):
+        """管理者ロールを追加"""
+        if not self.bot.is_admin_interaction(interaction):
+            await interaction.response.send_message("このコマンドは管理者のみ実行可能です", ephemeral=True)
+            return
+        
+        try:
+            # 現在の管理者ロールリストを取得
+            admin_roles = self.bot.config['permissions']['admin_roles']
+            
+            # 既に登録されているかチェック
+            if role.id in admin_roles:
+                await interaction.response.send_message(f"❌ ロール **{role.name}** は既に管理者ロールとして登録されています", ephemeral=True)
+                return
+            
+            # ロールを追加
+            admin_roles.append(role.id)
+            self.bot.config['permissions']['admin_roles'] = admin_roles
+            
+            # 設定ファイルを更新
+            with open('config.json', 'w', encoding='utf-8') as f:
+                json.dump(self.bot.config, f, ensure_ascii=False, indent=2)
+            
+            # 環境変数も更新（必要な場合）
+            if os.getenv('ADMIN_ROLE_IDS'):
+                current_roles = os.getenv('ADMIN_ROLE_IDS').split(',')
+                if str(role.id) not in current_roles:
+                    current_roles.append(str(role.id))
+                    os.environ['ADMIN_ROLE_IDS'] = ','.join(current_roles)
+            
+            await interaction.response.send_message(f"✅ ロール **{role.name}** を管理者ロールに追加しました", ephemeral=True)
+            
+            # ログチャンネルに通知
+            if self.bot.config['permissions']['log_channel_id']:
+                log_channel = self.bot.get_channel(self.bot.config['permissions']['log_channel_id'])
+                if log_channel:
+                    embed = discord.Embed(
+                        title="管理者ロール追加",
+                        description=f"{interaction.user.mention} が **{role.name}** を管理者ロールに追加しました",
+                        color=discord.Color.green(),
+                        timestamp=discord.utils.utcnow()
+                    )
+                    await log_channel.send(embed=embed)
+                    
+        except Exception as e:
+            logger.error(f"管理者ロール追加エラー: {e}")
+            await interaction.response.send_message("❌ 管理者ロールの追加中にエラーが発生しました", ephemeral=True)
+    
+    @app_commands.command(name='add_allowed_channel', description='BOTが利用可能なチャンネルを追加')
+    @app_commands.describe(channel='追加するチャンネル')
+    async def add_allowed_channel(self, interaction: discord.Interaction, channel: discord.TextChannel):
+        """利用可能チャンネルを追加"""
+        if not self.bot.is_admin_interaction(interaction):
+            await interaction.response.send_message("このコマンドは管理者のみ実行可能です", ephemeral=True)
+            return
+        
+        try:
+            # 現在の許可チャンネルリストを取得
+            allowed_channels = self.bot.config['permissions']['allowed_channels']
+            
+            # 既に登録されているかチェック
+            if channel.id in allowed_channels:
+                await interaction.response.send_message(f"❌ チャンネル **{channel.name}** は既に利用可能チャンネルとして登録されています", ephemeral=True)
+                return
+            
+            # チャンネルを追加
+            allowed_channels.append(channel.id)
+            self.bot.config['permissions']['allowed_channels'] = allowed_channels
+            
+            # 設定ファイルを更新
+            with open('config.json', 'w', encoding='utf-8') as f:
+                json.dump(self.bot.config, f, ensure_ascii=False, indent=2)
+            
+            await interaction.response.send_message(f"✅ チャンネル **{channel.name}** をBOT利用可能チャンネルに追加しました", ephemeral=True)
+            
+            # ログチャンネルに通知
+            if self.bot.config['permissions']['log_channel_id']:
+                log_channel = self.bot.get_channel(self.bot.config['permissions']['log_channel_id'])
+                if log_channel:
+                    embed = discord.Embed(
+                        title="利用可能チャンネル追加",
+                        description=f"{interaction.user.mention} が {channel.mention} を利用可能チャンネルに追加しました",
+                        color=discord.Color.green(),
+                        timestamp=discord.utils.utcnow()
+                    )
+                    await log_channel.send(embed=embed)
+                    
+        except Exception as e:
+            logger.error(f"利用可能チャンネル追加エラー: {e}")
+            await interaction.response.send_message("❌ 利用可能チャンネルの追加中にエラーが発生しました", ephemeral=True)
+    
+    @app_commands.command(name='remove_admin_role', description='管理者ロールを削除')
+    @app_commands.describe(role='削除する管理者ロール')
+    async def remove_admin_role(self, interaction: discord.Interaction, role: discord.Role):
+        """管理者ロールを削除"""
+        if not self.bot.is_admin_interaction(interaction):
+            await interaction.response.send_message("このコマンドは管理者のみ実行可能です", ephemeral=True)
+            return
+        
+        try:
+            # 現在の管理者ロールリストを取得
+            admin_roles = self.bot.config['permissions']['admin_roles']
+            
+            # 登録されているかチェック
+            if role.id not in admin_roles:
+                await interaction.response.send_message(f"❌ ロール **{role.name}** は管理者ロールとして登録されていません", ephemeral=True)
+                return
+            
+            # ロールを削除
+            admin_roles.remove(role.id)
+            self.bot.config['permissions']['admin_roles'] = admin_roles
+            
+            # 設定ファイルを更新
+            with open('config.json', 'w', encoding='utf-8') as f:
+                json.dump(self.bot.config, f, ensure_ascii=False, indent=2)
+            
+            await interaction.response.send_message(f"✅ ロール **{role.name}** を管理者ロールから削除しました", ephemeral=True)
+            
+            # ログチャンネルに通知
+            if self.bot.config['permissions']['log_channel_id']:
+                log_channel = self.bot.get_channel(self.bot.config['permissions']['log_channel_id'])
+                if log_channel:
+                    embed = discord.Embed(
+                        title="管理者ロール削除",
+                        description=f"{interaction.user.mention} が **{role.name}** を管理者ロールから削除しました",
+                        color=discord.Color.orange(),
+                        timestamp=discord.utils.utcnow()
+                    )
+                    await log_channel.send(embed=embed)
+                    
+        except Exception as e:
+            logger.error(f"管理者ロール削除エラー: {e}")
+            await interaction.response.send_message("❌ 管理者ロールの削除中にエラーが発生しました", ephemeral=True)
+    
+    @app_commands.command(name='remove_allowed_channel', description='BOT利用可能チャンネルを削除')
+    @app_commands.describe(channel='削除するチャンネル')
+    async def remove_allowed_channel(self, interaction: discord.Interaction, channel: discord.TextChannel):
+        """利用可能チャンネルを削除"""
+        if not self.bot.is_admin_interaction(interaction):
+            await interaction.response.send_message("このコマンドは管理者のみ実行可能です", ephemeral=True)
+            return
+        
+        try:
+            # 現在の許可チャンネルリストを取得
+            allowed_channels = self.bot.config['permissions']['allowed_channels']
+            
+            # 登録されているかチェック
+            if channel.id not in allowed_channels:
+                await interaction.response.send_message(f"❌ チャンネル **{channel.name}** は利用可能チャンネルとして登録されていません", ephemeral=True)
+                return
+            
+            # チャンネルを削除
+            allowed_channels.remove(channel.id)
+            self.bot.config['permissions']['allowed_channels'] = allowed_channels
+            
+            # 設定ファイルを更新
+            with open('config.json', 'w', encoding='utf-8') as f:
+                json.dump(self.bot.config, f, ensure_ascii=False, indent=2)
+            
+            await interaction.response.send_message(f"✅ チャンネル **{channel.name}** をBOT利用可能チャンネルから削除しました", ephemeral=True)
+            
+            # ログチャンネルに通知
+            if self.bot.config['permissions']['log_channel_id']:
+                log_channel = self.bot.get_channel(self.bot.config['permissions']['log_channel_id'])
+                if log_channel:
+                    embed = discord.Embed(
+                        title="利用可能チャンネル削除",
+                        description=f"{interaction.user.mention} が {channel.mention} を利用可能チャンネルから削除しました",
+                        color=discord.Color.orange(),
+                        timestamp=discord.utils.utcnow()
+                    )
+                    await log_channel.send(embed=embed)
+                    
+        except Exception as e:
+            logger.error(f"利用可能チャンネル削除エラー: {e}")
+            await interaction.response.send_message("❌ 利用可能チャンネルの削除中にエラーが発生しました", ephemeral=True)
+    
+    @app_commands.command(name='list_permissions', description='現在の権限設定を表示')
+    async def list_permissions(self, interaction: discord.Interaction):
+        """現在の権限設定を表示"""
+        if not self.bot.is_admin_interaction(interaction):
+            await interaction.response.send_message("このコマンドは管理者のみ実行可能です", ephemeral=True)
+            return
+        
+        try:
+            embed = discord.Embed(
+                title="権限設定一覧",
+                color=discord.Color.blue(),
+                timestamp=discord.utils.utcnow()
+            )
+            
+            # 管理者ロール
+            admin_roles = self.bot.config['permissions']['admin_roles']
+            if admin_roles:
+                role_mentions = []
+                for role_id in admin_roles:
+                    role = interaction.guild.get_role(role_id)
+                    if role:
+                        role_mentions.append(role.mention)
+                    else:
+                        role_mentions.append(f"削除されたロール (ID: {role_id})")
+                embed.add_field(
+                    name="管理者ロール",
+                    value="\n".join(role_mentions),
+                    inline=False
+                )
+            else:
+                embed.add_field(
+                    name="管理者ロール",
+                    value="設定なし",
+                    inline=False
+                )
+            
+            # 利用可能チャンネル
+            allowed_channels = self.bot.config['permissions']['allowed_channels']
+            if allowed_channels:
+                channel_mentions = []
+                for channel_id in allowed_channels:
+                    channel = self.bot.get_channel(channel_id)
+                    if channel:
+                        channel_mentions.append(channel.mention)
+                    else:
+                        channel_mentions.append(f"削除されたチャンネル (ID: {channel_id})")
+                embed.add_field(
+                    name="BOT利用可能チャンネル",
+                    value="\n".join(channel_mentions),
+                    inline=False
+                )
+            else:
+                embed.add_field(
+                    name="BOT利用可能チャンネル",
+                    value="設定なし（BOTは動作しません）",
+                    inline=False
+                )
+            
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+            
+        except Exception as e:
+            logger.error(f"権限設定表示エラー: {e}")
+            await interaction.response.send_message("❌ 権限設定の表示中にエラーが発生しました", ephemeral=True)
     
     @commands.command(name='upload_csv')
     async def upload_csv_command(self, ctx, csv_type: str = None):

@@ -2004,3 +2004,20 @@ discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
 2025-06-18 00:33:35,369 - __main__ - INFO - プレゼンス設定が完了しました
 2025-06-18 00:33:59,095 - __main__ - INFO - [PID:2477] アイテム検索開始: '蒼水晶の古代杖' from klee.com
 2025-06-18 00:35:49,136 - __main__ - INFO - [PID:2477] アイテム検索開始: '石' from klee.com
+2025-06-18 00:42:29,374 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-18 00:42:29,374 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-18 00:42:29,375 - __main__ - INFO - Botが正常に終了しました
+2025-06-18 00:42:43,035 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-18 00:42:43,036 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-18 00:42:43,037 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-18 00:42:43,037 - discord.client - INFO - logging in using static token
+2025-06-18 00:42:43,690 - database - INFO - データベースの初期化が完了しました
+2025-06-18 00:42:44,040 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-18 00:42:44,040 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-18 00:42:44,501 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: dfd713e2ff74aa2b5effce5d4b042f82).
+2025-06-18 00:42:46,510 - __main__ - INFO - [PID:2553] Klee bot#1963 として接続しました
+2025-06-18 00:42:46,510 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-18 00:42:46,511 - __main__ - INFO - 接続サーバー数: 2
+2025-06-18 00:42:46,512 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-18 00:43:06,552 - __main__ - INFO - [PID:2553] アイテム検索開始: '蒼水晶の古代杖' from klee.com
+2025-06-18 00:47:24,650 - __main__ - INFO - [PID:2553] アイテム検索開始: '石' from klee.com

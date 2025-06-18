@@ -65,6 +65,7 @@
   "permissions": {
     "admin_users": [],
     "admin_roles": [],
+    "allowed_channels": [],
     "log_channel_id": null
   },
   "features": {

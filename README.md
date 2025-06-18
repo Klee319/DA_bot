@@ -70,12 +70,22 @@ python src/main.py
 ```
 
 ### スラッシュコマンド
-- `/upload_csv` - CSVファイルでデータ更新（管理者のみ）
-- `/stats` - 検索統計を表示（管理者のみ）
+
+#### 管理者用コマンド
+- `/upload_csv` - CSVファイルでデータ更新
+- `/stats` - 検索統計を表示
+- `/add_admin_role` - 管理者ロールを追加
+- `/remove_admin_role` - 管理者ロールを削除
+- `/add_allowed_channel` - BOT利用可能チャンネルを追加
+- `/remove_allowed_channel` - BOT利用可能チャンネルを削除
+- `/list_permissions` - 現在の権限設定を表示
 
 ### 通常コマンド
 - `!favorites` / `!fav` - お気に入り一覧
 - `!history` - 検索履歴
+
+### チャンネル制限について
+このBOTはホワイトリスト制で動作します。BOTを使用するには、管理者が `/add_allowed_channel` コマンドで利用可能なチャンネルを明示的に追加する必要があります。
 
 ## データベース構造
 
