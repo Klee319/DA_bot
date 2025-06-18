@@ -1135,8 +1135,15 @@ class ItemDetailView(discord.ui.View):
         elif item_type == 'equipments':
             # 装備: 必要素材ボタンは表示しない（プルダウンで対応）
             # モブ討伐またはNPCの場合は入手元詳細ボタンを表示
-            if acquisition_category in ['モブ討伐', 'NPC']:
-                self.add_item(AcquisitionDetailsButton(item_type, acquisition_category))
+            # カンマ区切りで複数カテゴリがある場合も考慮
+            if acquisition_category:
+                categories = [cat.strip() for cat in acquisition_category.split(',')]
+                # モブ討伐を含む場合
+                if any('モブ討伐' in cat for cat in categories):
+                    self.add_item(AcquisitionDetailsButton(item_type, 'モブ討伐'))
+                # NPCを含む場合（モブ討伐とは別のボタン）
+                if any('NPC' in cat for cat in categories):
+                    self.add_item(AcquisitionDetailsButton(item_type, 'NPC'))
         elif item_type == 'mobs':
             # モブ: ドロップ詳細ボタンは表示しない（プルダウンで対応）
             pass

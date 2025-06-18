@@ -1966,3 +1966,27 @@ discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
 2025-06-18 00:22:03,452 - __main__ - INFO - [PID:2298] アイテム検索開始: '時空を護りし剣' from klee.com
 2025-06-18 00:23:12,807 - __main__ - INFO - [PID:2298] アイテム検索開始: '指輪' from klee.com
 2025-06-18 00:23:52,841 - __main__ - INFO - [PID:2298] アイテム検索開始: '古代' from klee.com
+2025-06-18 00:29:19,519 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-18 00:29:19,519 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-18 00:29:19,523 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-18 00:29:19,531 - discord.client - INFO - logging in using static token
+2025-06-18 00:29:20,292 - database - INFO - データベースの初期化が完了しました
+2025-06-18 00:29:20,761 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-18 00:29:20,762 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-18 00:29:21,494 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 38bc0d8334e1b1e1cf76bb9e2ffd1a2c).
+2025-06-18 00:29:23,502 - __main__ - INFO - [PID:2390] Klee bot#1963 として接続しました
+2025-06-18 00:29:23,503 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-18 00:29:23,503 - __main__ - INFO - 接続サーバー数: 2
+2025-06-18 00:29:23,504 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-18 00:29:30,651 - __main__ - INFO - [PID:2390] アイテム検索開始: '時空を護りし剣' from klee.com
+2025-06-18 00:29:50,429 - database - INFO - データベースをバックアップしました: ./backups//backup_20250618_002950.db
+2025-06-18 00:29:50,429 - __main__ - INFO - バックアップを作成: ./backups//backup_20250618_002950.db
+2025-06-18 00:29:51,147 - csv_manager - INFO - CSVから読み込んだカラム: ['名前', '配置場所', '対応業務', '入手アイテム', '必要素材', 'EXP', 'GOLD', '一言', '画像リンク']
+2025-06-18 00:29:51,149 - csv_manager - INFO - Original columns: ['名前', '配置場所', '対応業務', '入手アイテム', '必要素材', 'EXP', 'GOLD', '一言', '画像リンク']
+2025-06-18 00:29:51,149 - csv_manager - INFO - Mapping for npc: {'名前': 'name', '配置場所': 'location', '対応業務': 'business_type', '入手アイテム': 'obtainable_items', '必要素材': 'required_materials', 'EXP': 'exp', 'GOLD': 'gold', '一言': 'description', '画像パス': 'image_path'}
+2025-06-18 00:29:51,149 - csv_manager - WARNING - マッピングされていないカラム: ['画像リンク']
+2025-06-18 00:29:51,151 - csv_manager - INFO - マッピングされていないカラムを削除しました: ['画像リンク']
+2025-06-18 00:29:51,152 - csv_manager - INFO - Renamed columns: ['name', 'location', 'business_type', 'obtainable_items', 'required_materials', 'exp', 'gold', 'description']
+2025-06-18 00:29:51,155 - csv_manager - INFO - 空のname行を削除後のレコード数: 106
+2025-06-18 00:29:51,175 - csv_manager - INFO - npcデータを106件処理しました
+2025-06-18 00:30:04,674 - __main__ - INFO - [PID:2390] アイテム検索開始: '古代杖' from klee.com

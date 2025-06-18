@@ -611,19 +611,26 @@ class SearchEngine:
                 # 入手元の検索
                 acquisition_category = item_data.get('acquisition_category', '')
                 
-                if acquisition_category in ['討伐', 'モブ討伐']:
-                    # このequipmentをドロップするmob
-                    dropped_by = await self._search_mobs_dropping_item(item_name)
-                    for mob in dropped_by:
-                        mob['relation_type'] = 'drop_from_mob'
-                        related_items['acquisition_sources'].append(mob)
-                elif acquisition_category == 'NPC':
-                    # NPCから入手可能なequipment
-                    npc_providing = await self._search_npcs_providing_material(item_name)
-                    for npc in npc_providing:
-                        npc['relation_type'] = 'npc_source'
-                        npc['source_type'] = 'obtainable'
-                        related_items['acquisition_sources'].append(npc)
+                # カンマ区切りで複数カテゴリがある場合を考慮
+                if acquisition_category:
+                    categories = [cat.strip() for cat in acquisition_category.split(',')]
+                    
+                    # モブ討伐を含む場合
+                    if any(cat in ['討伐', 'モブ討伐'] or 'モブ討伐' in cat for cat in categories):
+                        # このequipmentをドロップするmob
+                        dropped_by = await self._search_mobs_dropping_item(item_name)
+                        for mob in dropped_by:
+                            mob['relation_type'] = 'drop_from_mob'
+                            related_items['acquisition_sources'].append(mob)
+                    
+                    # NPCを含む場合
+                    if any(cat == 'NPC' or 'NPC' in cat for cat in categories):
+                        # NPCから入手可能なequipment
+                        npc_providing = await self._search_npcs_providing_material(item_name)
+                        for npc in npc_providing:
+                            npc['relation_type'] = 'npc_source'
+                            npc['source_type'] = 'obtainable'
+                            related_items['acquisition_sources'].append(npc)
                 
                 # 利用先の検索（NPCの必要素材に含まれるequipment）
                 npc_using = await self._search_npcs_using_material(item_name)
