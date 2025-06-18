@@ -1138,12 +1138,9 @@ class ItemDetailView(discord.ui.View):
             # カンマ区切りで複数カテゴリがある場合も考慮
             if acquisition_category:
                 categories = [cat.strip() for cat in acquisition_category.split(',')]
-                # モブ討伐を含む場合
-                if any('モブ討伐' in cat for cat in categories):
-                    self.add_item(AcquisitionDetailsButton(item_type, 'モブ討伐'))
-                # NPCを含む場合（モブ討伐とは別のボタン）
-                if any('NPC' in cat for cat in categories):
-                    self.add_item(AcquisitionDetailsButton(item_type, 'NPC'))
+                # モブ討伐またはNPCを含む場合、入手元詳細ボタンを1つ表示
+                if any('モブ討伐' in cat or 'NPC' in cat for cat in categories):
+                    self.add_item(AcquisitionDetailsButton(item_type, acquisition_category))
         elif item_type == 'mobs':
             # モブ: ドロップ詳細ボタンは表示しない（プルダウンで対応）
             pass
@@ -1163,13 +1160,11 @@ class ItemDetailView(discord.ui.View):
 
 class AcquisitionDetailsButton(discord.ui.Button):
     def __init__(self, item_type='', acquisition_category=''):
-        if item_type == 'equipments':
-            if acquisition_category == 'モブ討伐':
-                label = "入手モブ詳細"
-            elif acquisition_category == 'NPC':
-                label = "入手NPC詳細"
-            else:
-                label = "必要素材詳細"
+        # 複数のカテゴリがある場合でも常に「入手元詳細」を表示
+        if item_type == 'equipments' and acquisition_category and ('モブ討伐' in acquisition_category or 'NPC' in acquisition_category):
+            label = "入手元詳細"
+        elif item_type == 'equipments':
+            label = "必要素材詳細"
         else:
             label = "入手元詳細"
         super().__init__(label=label, style=discord.ButtonStyle.secondary)
