@@ -1242,8 +1242,12 @@ class SearchEngine:
                 else:
                     material_name = material
                 
+                # RankXX や LvXX を除去
+                material_name_cleaned = self._remove_rank_and_level(material_name)
+                target_material_cleaned = self._remove_rank_and_level(target_material)
+                
                 # 完全一致または部分一致でチェック
-                if material_name == target_material or target_material in material_name:
+                if material_name_cleaned == target_material_cleaned or target_material_cleaned in material_name_cleaned:
                     return True
             
             return False
@@ -1269,8 +1273,12 @@ class SearchEngine:
                 else:
                     item_name = item
                 
+                # RankXX や LvXX を除去
+                item_name_cleaned = self._remove_rank_and_level(item_name)
+                target_material_cleaned = self._remove_rank_and_level(target_material)
+                
                 # 完全一致または部分一致でチェック
-                if item_name == target_material or target_material in item_name:
+                if item_name_cleaned == target_material_cleaned or target_material_cleaned in item_name_cleaned:
                     return True
             
             return False
@@ -1278,6 +1286,21 @@ class SearchEngine:
         except Exception as e:
             logger.warning(f"NPC入手可能アイテムチェックエラー: {e}")
             return False
+    
+    def _remove_rank_and_level(self, item_name: str) -> str:
+        """アイテム名からRankXXやLvXXを除去"""
+        import re
+        
+        # Rankの除去（数値またはF〜SSSのアルファベット）
+        # Rank1, RankS, RankSS, RankSSS などにマッチ
+        item_name = re.sub(r'\s*Rank\s*(?:\d+|[F-S]{1,3})\s*', '', item_name, flags=re.IGNORECASE)
+        
+        # Lvの除去（数値またはF〜SSSのアルファベット）
+        # Lv1, Lv.1, LvS, Lv.SS などにマッチ
+        item_name = re.sub(r'\s*Lv\.?\s*(?:\d+|[F-S]{1,3})\s*', '', item_name, flags=re.IGNORECASE)
+        
+        # 前後の空白を削除
+        return item_name.strip()
     
     async def _extract_npc_material_usage(self, requirements_str: str, target_material: str) -> str:
         """NPC必要素材から指定した素材の使用詳細を抽出"""
