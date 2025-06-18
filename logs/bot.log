@@ -1922,3 +1922,18 @@ discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
 2025-06-17 23:46:14,131 - __main__ - INFO - シャットダウンシグナルを受信しました
 2025-06-17 23:46:14,131 - __main__ - INFO - Botをシャットダウンしています...
 2025-06-17 23:46:14,133 - __main__ - INFO - Botが正常に終了しました
+2025-06-18 00:03:33,418 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-18 00:03:33,418 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-18 00:03:33,419 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-18 00:03:33,419 - discord.client - INFO - logging in using static token
+2025-06-18 00:03:34,240 - database - INFO - データベースの初期化が完了しました
+2025-06-18 00:03:34,591 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-18 00:03:34,592 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-18 00:03:35,181 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: fa0107cd5709e076a62597cb154a22d4).
+2025-06-18 00:03:37,191 - __main__ - INFO - [PID:2133] Klee bot#1963 として接続しました
+2025-06-18 00:03:37,191 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-18 00:03:37,192 - __main__ - INFO - 接続サーバー数: 2
+2025-06-18 00:03:37,192 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-18 00:04:34,524 - __main__ - INFO - [PID:2133] アイテム検索開始: '石' from klee.com
+2025-06-18 00:06:44,315 - __main__ - INFO - [PID:2133] アイテム検索開始: '豚' from klee.com
+2025-06-18 00:06:58,997 - __main__ - INFO - [PID:2133] アイテム検索開始: '時空' from klee.com

@@ -1587,7 +1587,8 @@ class UsageDetailsButton(discord.ui.Button):
                 # 素材の利用先
                 
                 # 1. 装備作成での利用
-                equipment_usage = related_items.get('equipment_usage', [])
+                usage_destinations = related_items.get('usage_destinations', [])
+                equipment_usage = [item for item in usage_destinations if item.get('relation_type') == 'material_for_equipment']
                 if equipment_usage:
                     field_items = []
                     display_count = min(len(equipment_usage), 10)
@@ -1614,10 +1615,7 @@ class UsageDetailsButton(discord.ui.Button):
                         )
                 
                 # 2. NPC納品・交換での利用
-                npc_usage = []
-                for npc in related_items.get('acquisition_sources', []):
-                    if npc.get('relation_type') == 'npc_source' and npc.get('source_type') == 'required':
-                        npc_usage.append(npc)
+                npc_usage = [item for item in usage_destinations if item.get('relation_type') == 'material_for_npc']
                 
                 if npc_usage:
                     npc_items = []
@@ -1715,7 +1713,8 @@ class UsageDetailsSelect(discord.ui.Select):
             # equipment_の場合
             if selected_value.startswith('equipment_'):
                 index = int(selected_value.split('_')[1])
-                equipment_usage = self.related_items.get('equipment_usage', [])
+                usage_destinations = self.related_items.get('usage_destinations', [])
+                equipment_usage = [item for item in usage_destinations if item.get('relation_type') == 'material_for_equipment']
                 if index < len(equipment_usage):
                     selected_item = equipment_usage[index]
                     
@@ -1728,10 +1727,8 @@ class UsageDetailsSelect(discord.ui.Select):
             # npc_の場合
             elif selected_value.startswith('npc_'):
                 index = int(selected_value.split('_')[1])
-                npc_usage = []
-                for npc in self.related_items.get('acquisition_sources', []):
-                    if npc.get('relation_type') == 'npc_source' and npc.get('source_type') == 'required':
-                        npc_usage.append(npc)
+                usage_destinations = self.related_items.get('usage_destinations', [])
+                npc_usage = [item for item in usage_destinations if item.get('relation_type') == 'material_for_npc']
                 
                 if index < len(npc_usage):
                     selected_npc = npc_usage[index]
