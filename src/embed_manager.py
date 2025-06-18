@@ -1134,8 +1134,8 @@ class ItemDetailView(discord.ui.View):
             self.add_item(UsageDetailsButton(item_type))
         elif item_type == 'equipments':
             # 装備: 必要素材ボタンは表示しない（プルダウンで対応）
-            # モブ討伐装備の場合は入手モブ詳細ボタンを表示
-            if acquisition_category == 'モブ討伐':
+            # モブ討伐またはNPCの場合は入手元詳細ボタンを表示
+            if acquisition_category in ['モブ討伐', 'NPC']:
                 self.add_item(AcquisitionDetailsButton(item_type, acquisition_category))
         elif item_type == 'mobs':
             # モブ: ドロップ詳細ボタンは表示しない（プルダウンで対応）
@@ -1159,6 +1159,8 @@ class AcquisitionDetailsButton(discord.ui.Button):
         if item_type == 'equipments':
             if acquisition_category == 'モブ討伐':
                 label = "入手モブ詳細"
+            elif acquisition_category == 'NPC':
+                label = "入手NPC詳細"
             else:
                 label = "必要素材詳細"
         else:
@@ -1413,9 +1415,12 @@ class AcquisitionDetailsButton(discord.ui.Button):
                     # Mobドロップ
                     if mob_sources:
                         drop_list = []
-                        for item in mob_sources[:5]:
+                        for i, item in enumerate(mob_sources[:5]):
                             display_name = item.get('formal_name', '不明')
-                            drop_list.append(f"• `{display_name}`")
+                            if i == 0:
+                                drop_list.append(f"\u200B　• `{display_name}`")
+                            else:
+                                drop_list.append(f"　• `{display_name}`")
                             options.append(discord.SelectOption(
                                 label=display_name[:25],
                                 value=f"source_{option_index}",
@@ -1432,13 +1437,16 @@ class AcquisitionDetailsButton(discord.ui.Button):
                     # 採集場所
                     if gathering_sources:
                         gathering_list = []
-                        for location in gathering_sources[:5]:
+                        for i, location in enumerate(gathering_sources[:5]):
                             location_name = location.get('location', '不明')
                             method = location.get('collection_method', '')
                             display_text = f"`{location_name}`"
                             if method:
                                 display_text += f" - {method}"
-                            gathering_list.append(f"• {display_text}")
+                            if i == 0:
+                                gathering_list.append(f"\u200B　• {display_text}")
+                            else:
+                                gathering_list.append(f"　• {display_text}")
                             options.append(discord.SelectOption(
                                 label=f"{location_name} - {method}"[:25],
                                 value=f"gathering_{option_index}",
@@ -1455,7 +1463,7 @@ class AcquisitionDetailsButton(discord.ui.Button):
                     # NPC
                     if npc_sources:
                         npc_list = []
-                        for npc in npc_sources[:5]:
+                        for i, npc in enumerate(npc_sources[:5]):
                             npc_name = npc.get('name', '不明')
                             npc_location = npc.get('location', '')
                             business_type = npc.get('business_type', '')
@@ -1464,7 +1472,10 @@ class AcquisitionDetailsButton(discord.ui.Button):
                                 display_text += f" @ {npc_location}"
                             if business_type:
                                 display_text += f" ({business_type})"
-                            npc_list.append(f"• {display_text}")
+                            if i == 0:
+                                npc_list.append(f"\u200B　• {display_text}")
+                            else:
+                                npc_list.append(f"　• {display_text}")
                             options.append(discord.SelectOption(
                                 label=f"{npc_name} ({business_type})"[:25],
                                 value=f"npc_{option_index}",

@@ -1937,3 +1937,32 @@ discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
 2025-06-18 00:04:34,524 - __main__ - INFO - [PID:2133] アイテム検索開始: '石' from klee.com
 2025-06-18 00:06:44,315 - __main__ - INFO - [PID:2133] アイテム検索開始: '豚' from klee.com
 2025-06-18 00:06:58,997 - __main__ - INFO - [PID:2133] アイテム検索開始: '時空' from klee.com
+2025-06-18 00:20:04,818 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-18 00:20:04,819 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-18 00:20:04,820 - __main__ - INFO - Botが正常に終了しました
+2025-06-18 00:20:46,936 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-18 00:20:46,936 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-18 00:20:46,938 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-18 00:20:46,938 - discord.client - INFO - logging in using static token
+2025-06-18 00:20:47,628 - database - INFO - データベースの初期化が完了しました
+2025-06-18 00:20:48,087 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-18 00:20:48,087 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-18 00:20:48,751 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 0a3ca68d7f849896956633028ae25ef4).
+2025-06-18 00:20:50,776 - __main__ - INFO - [PID:2298] Klee bot#1963 として接続しました
+2025-06-18 00:20:50,776 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-18 00:20:50,777 - __main__ - INFO - 接続サーバー数: 2
+2025-06-18 00:20:50,778 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-18 00:21:10,670 - __main__ - INFO - [PID:2298] アイテム検索開始: '時空を護りし剣' from klee.com
+2025-06-18 00:21:55,427 - database - INFO - データベースをバックアップしました: ./backups//backup_20250618_002155.db
+2025-06-18 00:21:55,427 - __main__ - INFO - バックアップを作成: ./backups//backup_20250618_002155.db
+2025-06-18 00:21:55,923 - csv_manager - INFO - CSVから読み込んだカラム: ['名前', '配置場所', '対応業務', '入手アイテム', '必要素材', 'EXP', 'GOLD', '一言', '画像リンク']
+2025-06-18 00:21:55,925 - csv_manager - INFO - Original columns: ['名前', '配置場所', '対応業務', '入手アイテム', '必要素材', 'EXP', 'GOLD', '一言', '画像リンク']
+2025-06-18 00:21:55,926 - csv_manager - INFO - Mapping for npc: {'名前': 'name', '配置場所': 'location', '対応業務': 'business_type', '入手アイテム': 'obtainable_items', '必要素材': 'required_materials', 'EXP': 'exp', 'GOLD': 'gold', '一言': 'description', '画像パス': 'image_path'}
+2025-06-18 00:21:55,926 - csv_manager - WARNING - マッピングされていないカラム: ['画像リンク']
+2025-06-18 00:21:55,927 - csv_manager - INFO - マッピングされていないカラムを削除しました: ['画像リンク']
+2025-06-18 00:21:55,927 - csv_manager - INFO - Renamed columns: ['name', 'location', 'business_type', 'obtainable_items', 'required_materials', 'exp', 'gold', 'description']
+2025-06-18 00:21:55,931 - csv_manager - INFO - 空のname行を削除後のレコード数: 106
+2025-06-18 00:21:55,953 - csv_manager - INFO - npcデータを106件処理しました
+2025-06-18 00:22:03,452 - __main__ - INFO - [PID:2298] アイテム検索開始: '時空を護りし剣' from klee.com
+2025-06-18 00:23:12,807 - __main__ - INFO - [PID:2298] アイテム検索開始: '指輪' from klee.com
+2025-06-18 00:23:52,841 - __main__ - INFO - [PID:2298] アイテム検索開始: '古代' from klee.com
