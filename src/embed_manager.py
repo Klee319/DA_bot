@@ -856,7 +856,7 @@ class EmbedManager:
                     name = name.strip()
                     quantity = quantity.strip()
                     # Discord Button形式でのリンクは後でViewで実装
-                    formatted_items.append(f"**{name}**: {quantity}")
+                    formatted_items.append(f"**{name}**×{quantity}")
                 else:
                     formatted_items.append(f"**{item}**")
             
@@ -1391,9 +1391,9 @@ class AcquisitionDetailsButton(discord.ui.Button):
                     material_list = []
                     for item in related_items['materials'][:5]:
                         quantity = item.get('required_quantity', '1')
-                        material_list.append(f"　• `{item['formal_name']} x{quantity}`")
+                        material_list.append(f"　• `{item['formal_name']}×{quantity}`")
                         options.append(discord.SelectOption(
-                            label=f"{item['formal_name']} x{quantity}",
+                            label=f"{item['formal_name']}×{quantity}",
                             value=f"material_{option_index}",
                             description="必要素材"
                         ))
