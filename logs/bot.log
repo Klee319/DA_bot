@@ -2031,3 +2031,694 @@ discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
 2025-06-18 01:02:42,461 - __main__ - INFO - [PID:2553] アイテム検索開始: '石' from klee.com
 2025-06-18 01:02:47,187 - npc_parser - WARNING - 数量が見つからない異常なフォーマット: 圧縮:大樹の丸太:64
 2025-06-18 01:02:50,224 - embed_manager - INFO - 採集情報表示 - 元アイテム名: 石, 場所: ルーチェア, 方法: 採掘
+2025-06-18 15:03:53,209 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-18 15:03:53,209 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-18 15:03:53,212 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-18 15:03:53,212 - discord.client - INFO - logging in using static token
+2025-06-18 15:03:53,883 - database - INFO - データベースの初期化が完了しました
+2025-06-18 15:03:54,546 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-18 15:03:54,546 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-18 15:03:55,079 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-18 15:03:55,081 - __main__ - INFO - Botが正常に終了しました
+2025-06-18 15:03:55,081 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-2' coro=<Client.start() done, defined at /usr/local/lib/python3.9/dist-packages/discord/client.py:756> exception=PrivilegedIntentsRequired("Shard ID None is requesting privileged intents that have not been explicitly enabled in the developer portal. It is recommended to go to https://discord.com/developers/applications/ and explicitly enable the privileged intents within your application's page. If this is not possible, then consider disabling the privileged intents instead.")>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 778, in start
+    await self.connect(reconnect=reconnect)
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 704, in connect
+    raise PrivilegedIntentsRequired(exc.shard_id) from None
+discord.errors.PrivilegedIntentsRequired: Shard ID None is requesting privileged intents that have not been explicitly enabled in the developer portal. It is recommended to go to https://discord.com/developers/applications/ and explicitly enable the privileged intents within your application's page. If this is not possible, then consider disabling the privileged intents instead.
+2025-06-18 15:05:51,722 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-18 15:05:51,722 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-18 15:05:51,724 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-18 15:05:51,724 - discord.client - INFO - logging in using static token
+2025-06-18 15:05:52,461 - database - INFO - データベースの初期化が完了しました
+2025-06-18 15:05:52,917 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-18 15:05:52,918 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-18 15:05:53,388 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: f0033c43eb6796487d849441edc1d07a).
+2025-06-18 15:05:55,391 - __main__ - INFO - [PID:3006] DA_dictionary#9184 として接続しました
+2025-06-18 15:05:55,391 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-18 15:05:55,392 - __main__ - INFO - 接続サーバー数: 0
+2025-06-18 15:05:55,392 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-18 15:17:19,460 - __main__ - INFO - [PID:3006] アイテム検索開始: '石' from sabubakudan
+2025-06-18 15:27:11,122 - __main__ - INFO - [PID:3006] アイテム検索開始: '魂' from nekimari
+2025-06-18 15:27:47,267 - __main__ - INFO - [PID:3006] アイテム検索開始: 'セシドエッグ' from nekimari
+2025-06-18 15:27:52,790 - __main__ - INFO - [PID:3006] アイテム検索開始: 'セシド' from nekimari
+2025-06-18 15:28:38,852 - __main__ - INFO - [PID:3006] アイテム検索開始: '花' from nekimari
+2025-06-18 15:30:02,303 - __main__ - INFO - [PID:3006] アイテム検索開始: 'ソルソロ' from nekimari
+2025-06-18 15:30:48,149 - __main__ - INFO - [PID:3006] アイテム検索開始: '古英雄の魂' from nekimari
+2025-06-18 15:32:32,445 - __main__ - INFO - [PID:3006] アイテム検索開始: 'ゼクロ' from nekimari
+2025-06-18 15:34:06,508 - __main__ - INFO - [PID:3006] アイテム検索開始: '時空' from nekimari
+2025-06-18 15:35:23,066 - __main__ - INFO - [PID:3006] アイテム検索開始: '魂' from klee.com
+2025-06-18 15:35:46,524 - __main__ - INFO - [PID:3006] アイテム検索開始: '不思議な森' from klee.com
+2025-06-18 15:36:09,555 - __main__ - INFO - [PID:3006] アイテム検索開始: 'メル' from nekimari
+2025-06-18 15:36:36,038 - __main__ - INFO - [PID:3006] アイテム検索開始: 'ラルー' from klee.com
+2025-06-18 15:37:01,875 - __main__ - INFO - [PID:3006] アイテム検索開始: '霊廟' from klee.com
+2025-06-18 15:37:36,659 - __main__ - INFO - [PID:3006] アイテム検索開始: 'サルファーインゴット' from klee.com
+2025-06-18 15:39:16,204 - embed_manager - ERROR - NPCプルダウン追加エラー: 'NoneType' object has no attribute 'strip'
+2025-06-18 15:39:26,128 - embed_manager - ERROR - NPCプルダウン追加エラー: 'NoneType' object has no attribute 'strip'
+2025-06-18 15:39:47,115 - __main__ - INFO - [PID:3006] アイテム検索開始: 'メル' from nekimari
+2025-06-18 15:40:36,321 - __main__ - INFO - [PID:3006] アイテム検索開始: 'タルソ' from nekimari
+2025-06-18 15:42:43,961 - __main__ - INFO - [PID:3006] アイテム検索開始: 'トト' from nekimari
+2025-06-18 15:44:58,299 - __main__ - INFO - [PID:3006] アイテム検索開始: '件' from klee.com
+2025-06-18 15:45:00,936 - __main__ - INFO - [PID:3006] アイテム検索開始: 'けん' from klee.com
+2025-06-18 15:46:57,308 - __main__ - INFO - [PID:3006] アイテム検索開始: 'ボア' from nekimari
+2025-06-18 15:47:31,991 - __main__ - INFO - [PID:3006] アイテム検索開始: '破片' from nekimari
+2025-06-18 15:48:26,175 - __main__ - INFO - [PID:3006] アイテム検索開始: '破片' from nekimari
+2025-06-18 15:48:43,107 - __main__ - INFO - [PID:3006] アイテム検索開始: 'ゼクロ' from nekimari
+2025-06-18 15:49:33,925 - __main__ - INFO - [PID:3006] アイテム検索開始: 'よるず' from nekimari
+2025-06-18 15:51:26,943 - discord.app_commands.tree - ERROR - Ignoring exception in command 'add_admin_role'
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/commands.py", line 827, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+  File "/app/product/DA_discord/src/main.py", line 461, in add_admin_role
+    if not self.bot.is_admin_interaction(interaction):
+  File "/app/product/DA_discord/src/main.py", line 284, in is_admin_interaction
+    user_roles = [role.id for role in interaction.user.roles] if hasattr(interaction.user, 'roles') and interaction.user.roles else []
+  File "/app/product/DA_discord/src/main.py", line 284, in <listcomp>
+    user_roles = [role.id for role in interaction.user.roles] if hasattr(interaction.user, 'roles') and interaction.user.roles else []
+AttributeError: 'NoneType' object has no attribute 'id'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1248, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/commands.py", line 853, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/commands.py", line 846, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'add_admin_role' raised an exception: AttributeError: 'NoneType' object has no attribute 'id'
+2025-06-18 15:52:09,736 - discord.app_commands.tree - ERROR - Ignoring exception in command 'add_allowed_channel'
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1248, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/commands.py", line 852, in _invoke_with_namespace
+    transformed_values = await self._transform_arguments(interaction, namespace)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/commands.py", line 818, in _transform_arguments
+    transformed_values[param.name] = await param.transform(interaction, value)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/transformers.py", line 181, in transform
+    return await maybe_coroutine(self._annotation.transform, interaction, value)  # type: ignore
+  File "/usr/local/lib/python3.9/dist-packages/discord/utils.py", line 693, in maybe_coroutine
+    return await value
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/transformers.py", line 661, in transform
+    raise TransformerError(value, AppCommandOptionType.channel, self)
+discord.app_commands.errors.TransformerError: Failed to convert tetest to TextChannel
+2025-06-18 15:52:20,644 - discord.app_commands.tree - ERROR - Ignoring exception in command 'add_admin_role'
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/commands.py", line 827, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+  File "/app/product/DA_discord/src/main.py", line 461, in add_admin_role
+    if not self.bot.is_admin_interaction(interaction):
+  File "/app/product/DA_discord/src/main.py", line 284, in is_admin_interaction
+    user_roles = [role.id for role in interaction.user.roles] if hasattr(interaction.user, 'roles') and interaction.user.roles else []
+  File "/app/product/DA_discord/src/main.py", line 284, in <listcomp>
+    user_roles = [role.id for role in interaction.user.roles] if hasattr(interaction.user, 'roles') and interaction.user.roles else []
+AttributeError: 'NoneType' object has no attribute 'id'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1248, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/commands.py", line 853, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/commands.py", line 846, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'add_admin_role' raised an exception: AttributeError: 'NoneType' object has no attribute 'id'
+2025-06-18 15:53:06,260 - discord.app_commands.tree - ERROR - Ignoring exception in command 'list_permissions'
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/commands.py", line 827, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+  File "/app/product/DA_discord/src/main.py", line 639, in list_permissions
+    if not self.bot.is_admin_interaction(interaction):
+  File "/app/product/DA_discord/src/main.py", line 284, in is_admin_interaction
+    user_roles = [role.id for role in interaction.user.roles] if hasattr(interaction.user, 'roles') and interaction.user.roles else []
+  File "/app/product/DA_discord/src/main.py", line 284, in <listcomp>
+    user_roles = [role.id for role in interaction.user.roles] if hasattr(interaction.user, 'roles') and interaction.user.roles else []
+AttributeError: 'NoneType' object has no attribute 'id'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/tree.py", line 1248, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/commands.py", line 853, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+  File "/usr/local/lib/python3.9/dist-packages/discord/app_commands/commands.py", line 846, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'list_permissions' raised an exception: AttributeError: 'NoneType' object has no attribute 'id'
+2025-06-18 15:53:15,963 - __main__ - INFO - [PID:3006] アイテム検索開始: 'あ' from nekimari
+2025-06-18 15:53:54,994 - __main__ - INFO - [PID:3006] アイテム検索開始: 'カイト' from nekimari
+2025-06-18 15:54:11,952 - __main__ - INFO - [PID:3006] アイテム検索開始: 'シュクト' from nekimari
+2025-06-18 15:57:06,711 - __main__ - INFO - [PID:3006] アイテム検索開始: 'い' from nekimari
+2025-06-18 15:57:53,805 - embed_manager - ERROR - NPC交換選択エラー: 'formal_name'
+2025-06-18 15:59:08,495 - __main__ - INFO - [PID:3006] アイテム検索開始: 'コンポ' from nekimari
+2025-06-18 16:00:24,507 - __main__ - INFO - [PID:3006] アイテム検索開始: 'じぇま' from nekimari
+2025-06-18 16:01:12,070 - embed_manager - ERROR - NPC交換選択エラー: 'formal_name'
+2025-06-18 16:01:16,418 - embed_manager - ERROR - NPC交換選択エラー: 'formal_name'
+2025-06-18 16:01:20,601 - embed_manager - ERROR - NPC交換選択エラー: 'formal_name'
+2025-06-18 16:01:25,737 - embed_manager - ERROR - NPC交換選択エラー: 'formal_name'
+2025-06-18 18:01:56,664 - discord.client - ERROR - Attempting a reconnect in 0.42s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-18 18:01:57,510 - discord.gateway - INFO - Shard ID None has successfully RESUMED session f0033c43eb6796487d849441edc1d07a.
+2025-06-19 03:59:20,479 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-19 03:59:20,479 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-19 03:59:20,481 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-19 03:59:20,481 - discord.client - INFO - logging in using static token
+2025-06-19 03:59:21,199 - database - INFO - データベースの初期化が完了しました
+2025-06-19 03:59:21,555 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-19 03:59:21,555 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-19 03:59:22,057 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: dc8130bb4160d0bd63ac89a634be290f).
+2025-06-19 03:59:24,061 - __main__ - INFO - [PID:14] DA_dictionary#9184 として接続しました
+2025-06-19 03:59:24,061 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-19 03:59:24,062 - __main__ - INFO - 接続サーバー数: 1
+2025-06-19 03:59:24,062 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-19 03:59:31,399 - __main__ - INFO - [PID:14] アイテム検索開始: '@everyone 
+再起動完了' from klee.com
+2025-06-19 03:59:32,174 - __main__ - INFO - [PID:14] アイテム検索開始: '今日の夜には修正かけたい' from klee.com
+2025-06-19 04:04:14,603 - __main__ - INFO - [PID:14] アイテム検索開始: 'ん' from nekimari
+2025-06-19 04:26:14,486 - __main__ - INFO - [PID:14] アイテム検索開始: 'あ' from himas3110
+2025-06-19 04:55:57,490 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-19 05:37:56,388 - __main__ - INFO - [PID:14] アイテム検索開始: '砂岩' from _suzuki7
+2025-06-19 05:38:12,390 - __main__ - INFO - [PID:14] アイテム検索開始: 'えーすご' from _suzuki7
+2025-06-19 07:09:25,338 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-19 07:18:59,984 - __main__ - INFO - [PID:14] アイテム検索開始: 'えふぉえび' from murakumo122asahi
+2025-06-19 08:55:54,965 - __main__ - INFO - [PID:14] アイテム検索開始: 'クエスト' from himas3110
+2025-06-19 09:49:41,997 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-19 11:43:47,220 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-19 12:54:21,515 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-19 15:17:07,375 - discord.client - ERROR - Attempting a reconnect in 0.36s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-19 15:17:08,171 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-19 16:16:57,614 - discord.client - ERROR - Attempting a reconnect in 1.17s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-19 16:16:59,225 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-19 17:54:23,093 - discord.client - ERROR - Attempting a reconnect in 1.26s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-19 17:54:24,786 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-19 18:07:51,228 - discord.client - ERROR - Attempting a reconnect in 2.64s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-19 18:07:54,281 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-19 18:47:55,683 - discord.client - ERROR - Attempting a reconnect in 0.49s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-19 18:47:56,584 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-19 19:09:12,862 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-19 20:53:48,389 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-19 21:49:10,918 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-19 23:02:06,341 - __main__ - INFO - [PID:14] アイテム検索開始: '紅玉' from klee.com
+2025-06-19 23:02:39,792 - __main__ - INFO - [PID:14] アイテム検索開始: 'サプネラ' from klee.com
+2025-06-19 23:03:07,769 - __main__ - INFO - [PID:14] アイテム検索開始: 'ブラック' from klee.com
+2025-06-19 23:03:51,307 - __main__ - INFO - [PID:14] アイテム検索開始: 'メル' from klee.com
+2025-06-19 23:04:29,433 - __main__ - INFO - [PID:14] アイテム検索開始: '時空剣' from klee.com
+2025-06-19 23:04:39,256 - __main__ - INFO - [PID:14] アイテム検索開始: '時空' from klee.com
+2025-06-19 23:04:55,370 - __main__ - INFO - [PID:14] アイテム検索開始: '紅玉' from klee.com
+2025-06-19 23:05:05,607 - __main__ - INFO - [PID:14] アイテム検索開始: 'サルファーインゴット' from klee.com
+2025-06-19 23:08:30,257 - __main__ - INFO - [PID:14] アイテム検索開始: '時空を' from klee.com
+2025-06-19 23:08:51,724 - __main__ - INFO - [PID:14] アイテム検索開始: 'メル' from klee.com
+2025-06-19 23:14:30,403 - __main__ - INFO - [PID:14] アイテム検索開始: 'トト' from klee.com
+2025-06-19 23:16:10,600 - __main__ - INFO - [PID:14] アイテム検索開始: '破片' from klee.com
+2025-06-19 23:19:37,322 - __main__ - INFO - [PID:14] アイテム検索開始: '石' from klee.com
+2025-06-19 23:19:46,806 - __main__ - INFO - [PID:14] アイテム検索開始: '紅玉' from klee.com
+2025-06-19 23:23:46,332 - __main__ - INFO - [PID:14] アイテム検索開始: 'アクアコア' from ast1939
+2025-06-19 23:25:53,809 - __main__ - INFO - [PID:14] アイテム検索開始: '作り忘れてるアイテム結構あるね' from klee.com
+2025-06-20 01:20:14,925 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-20 02:19:23,468 - __main__ - INFO - [PID:14] アイテム検索開始: '紋章' from himas3110
+2025-06-20 02:28:22,672 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-20 04:51:03,161 - __main__ - INFO - [PID:14] アイテム検索開始: '夏弓' from _suzuki7
+2025-06-20 04:51:17,988 - __main__ - INFO - [PID:14] アイテム検索開始: '隠しコイン' from _suzuki7
+2025-06-20 04:51:48,938 - __main__ - INFO - [PID:14] アイテム検索開始: 'ソルティードック' from _suzuki7
+2025-06-20 04:51:53,141 - __main__ - INFO - [PID:14] アイテム検索開始: 'タバコ' from _suzuki7
+2025-06-20 04:56:10,547 - __main__ - INFO - [PID:14] アイテム検索開始: '過去イベントアイテムとか隠しアイテムどうするか問題が' from himas3110
+2025-06-20 04:59:15,626 - __main__ - INFO - [PID:14] アイテム検索開始: '紋章' from himas3110
+2025-06-20 05:18:22,450 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-20 06:37:19,711 - discord.client - ERROR - Attempting a reconnect in 0.35s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-20 06:37:20,463 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-20 08:44:31,780 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-20 09:26:51,498 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-20 11:00:02,818 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-20 13:40:46,127 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-20 14:19:39,706 - __main__ - INFO - [PID:14] アイテム検索開始: 'トト' from nekimari
+2025-06-20 14:41:30,562 - discord.client - ERROR - Attempting a reconnect in 0.04s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-20 14:41:31,008 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-20 15:01:35,401 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-20 15:47:58,640 - discord.client - ERROR - Attempting a reconnect in 0.09s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-20 15:47:59,145 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-20 16:34:18,731 - discord.client - ERROR - Attempting a reconnect in 0.93s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-20 16:34:20,117 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-20 17:38:16,232 - discord.client - ERROR - Attempting a reconnect in 0.70s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-20 17:38:17,337 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-20 18:35:59,364 - discord.client - ERROR - Attempting a reconnect in 0.26s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-20 18:36:00,031 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-20 18:49:33,820 - discord.client - ERROR - Attempting a reconnect in 2.89s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-20 18:49:37,119 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-20 20:55:02,119 - discord.client - ERROR - Attempting a reconnect in 1.31s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-20 20:55:03,841 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-21 00:45:27,061 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-21 01:57:15,142 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-21 02:30:52,051 - discord.client - ERROR - Attempting a reconnect in 1.24s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-21 02:30:53,723 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-21 02:32:57,032 - discord.client - ERROR - Attempting a reconnect in 0.94s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-21 02:32:58,392 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-21 03:25:32,706 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-21 03:47:34,487 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-21 06:55:20,047 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-21 08:17:52,520 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-21 10:12:36,865 - discord.client - ERROR - Attempting a reconnect in 1.01s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-21 10:12:38,283 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-21 10:34:10,203 - discord.client - ERROR - Attempting a reconnect in 0.02s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-21 10:34:10,641 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-21 12:29:59,808 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-21 15:27:23,835 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-21 18:32:09,013 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-21 20:10:35,707 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-21 23:03:30,669 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-21 23:43:38,731 - __main__ - INFO - [PID:14] アイテム検索開始: 'ｔｔ' from klee.com
+2025-06-21 23:44:16,564 - __main__ - INFO - [PID:14] アイテム検索開始: '釣り' from himas3110
+2025-06-21 23:47:26,097 - __main__ - INFO - [PID:14] アイテム検索開始: 'ダルフガゼル' from himas3110
+2025-06-21 23:47:33,621 - __main__ - INFO - [PID:14] アイテム検索開始: 'ベズ' from himas3110
+2025-06-21 23:47:49,333 - __main__ - INFO - [PID:14] アイテム検索開始: 'ベス' from himas3110
+2025-06-21 23:48:00,956 - __main__ - INFO - [PID:14] アイテム検索開始: '黒' from himas3110
+2025-06-21 23:48:17,202 - __main__ - INFO - [PID:14] アイテム検索開始: 'えん' from himas3110
+2025-06-21 23:48:37,900 - __main__ - INFO - [PID:14] アイテム検索開始: 'セシドエッグ' from himas3110
+2025-06-21 23:49:01,702 - __main__ - INFO - [PID:14] アイテム検索開始: '炎' from himas3110
+2025-06-21 23:49:30,733 - __main__ - INFO - [PID:14] アイテム検索開始: '牙' from himas3110
+2025-06-22 00:32:28,074 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-22 00:51:49,760 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-22 03:22:00,128 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-22 06:17:51,782 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-22 06:53:28,561 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-22 08:53:01,167 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-22 12:41:24,952 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-22 16:34:35,827 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-22 18:53:06,298 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-22 21:57:50,179 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-22 23:57:14,650 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-23 00:29:09,678 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-23 02:45:40,802 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-23 04:04:20,978 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-23 06:14:20,875 - discord.gateway - INFO - Shard ID None has successfully RESUMED session dc8130bb4160d0bd63ac89a634be290f.
+2025-06-23 12:45:28,315 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-23 12:45:28,315 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-23 12:45:28,317 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-23 12:45:28,317 - discord.client - INFO - logging in using static token
+2025-06-23 12:45:29,309 - database - INFO - データベースの初期化が完了しました
+2025-06-23 12:45:29,626 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-23 12:45:29,626 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-23 12:45:30,131 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 117f3dbb96446878c5ab8db5139a1952).
+2025-06-23 12:45:32,138 - __main__ - INFO - [PID:2478] DA_dictionary#9184 として接続しました
+2025-06-23 12:45:32,138 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-23 12:45:32,138 - __main__ - INFO - 接続サーバー数: 1
+2025-06-23 12:45:32,139 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-23 12:47:32,860 - database - INFO - データベースをバックアップしました: ./backups//backup_20250623_124732.db
+2025-06-23 12:47:32,861 - __main__ - INFO - バックアップを作成: ./backups//backup_20250623_124732.db
+2025-06-23 12:47:33,860 - csv_manager - INFO - CSVから読み込んだカラム: ['正式名称', '一般名称', '入手場所', '入手カテゴリ', '種類', '必要素材', '効果', '一言', '画像リンク']
+2025-06-23 12:47:33,865 - csv_manager - INFO - Original columns: ['正式名称', '一般名称', '入手場所', '入手カテゴリ', '種類', '必要素材', '効果', '一言', '画像リンク']
+2025-06-23 12:47:33,865 - csv_manager - INFO - Mapping for equipment: {'正式名称': 'formal_name', '一般名称': 'common_name', '入手場所': 'acquisition_location', '入手カテゴリ': 'acquisition_category', '種類': 'type', '必要素材': 'required_materials', '効果': 'item_effect', '一言': 'description', '画像リンク': 'image_url'}
+2025-06-23 12:47:33,866 - csv_manager - INFO - Renamed columns: ['formal_name', 'common_name', 'acquisition_location', 'acquisition_category', 'type', 'required_materials', 'item_effect', 'description', 'image_url']
+2025-06-23 12:47:33,874 - csv_manager - INFO - 空のformal_name行を削除後のレコード数: 437
+2025-06-23 12:47:33,914 - csv_manager - INFO - equipmentデータを437件処理しました
+2025-06-23 12:47:52,733 - database - INFO - データベースをバックアップしました: ./backups//backup_20250623_124752.db
+2025-06-23 12:47:52,733 - __main__ - INFO - バックアップを作成: ./backups//backup_20250623_124752.db
+2025-06-23 12:47:53,284 - csv_manager - INFO - CSVから読み込んだカラム: ['正式名称', '一般名称', '入手カテゴリ', '入手方法', '利用カテゴリ', '使用用途', '一言', '画像リンク']
+2025-06-23 12:47:53,285 - csv_manager - INFO - Original columns: ['正式名称', '一般名称', '入手カテゴリ', '入手方法', '利用カテゴリ', '使用用途', '一言', '画像リンク']
+2025-06-23 12:47:53,285 - csv_manager - INFO - Mapping for material: {'正式名称': 'formal_name', '一般名称': 'common_name', '入手カテゴリ': 'acquisition_category', '入手方法': 'acquisition_method', '利用カテゴリ': 'usage_category', '使用用途': 'usage_purpose', '一言': 'description', '画像リンク': 'image_url'}
+2025-06-23 12:47:53,285 - csv_manager - INFO - Renamed columns: ['formal_name', 'common_name', 'acquisition_category', 'acquisition_method', 'usage_category', 'usage_purpose', 'description', 'image_url']
+2025-06-23 12:47:53,288 - csv_manager - INFO - 空のformal_name行を削除後のレコード数: 111
+2025-06-23 12:47:53,326 - csv_manager - INFO - materialデータを111件処理しました
+2025-06-23 12:48:07,165 - database - INFO - データベースをバックアップしました: ./backups//backup_20250623_124807.db
+2025-06-23 12:48:07,165 - __main__ - INFO - バックアップを作成: ./backups//backup_20250623_124807.db
+2025-06-23 12:48:07,561 - csv_manager - INFO - CSVから読み込んだカラム: ['正式名称', '一般名称', '出没エリア', '出没エリア詳細', '必要レベル', 'ドロップ品', 'EXP', 'Gold', '必要守備力', '一言', '画像リンク']
+2025-06-23 12:48:07,565 - csv_manager - INFO - Original columns: ['正式名称', '一般名称', '出没エリア', '出没エリア詳細', '必要レベル', 'ドロップ品', 'EXP', 'Gold', '必要守備力', '一言', '画像リンク']
+2025-06-23 12:48:07,565 - csv_manager - INFO - Mapping for mob: {'正式名称': 'formal_name', '一般名称': 'common_name', '出没エリア': 'area', '出没エリア詳細': 'area_detail', '必要レベル': 'required_level', 'ドロップ品': 'drops', 'EXP': 'exp', 'Gold': 'gold', '必要守備力': 'required_defense', '一言': 'description', '画像リンク': 'image_url'}
+2025-06-23 12:48:07,566 - csv_manager - INFO - Renamed columns: ['formal_name', 'common_name', 'area', 'area_detail', 'required_level', 'drops', 'exp', 'gold', 'required_defense', 'description', 'image_url']
+2025-06-23 12:48:07,568 - csv_manager - INFO - 空のformal_name行を削除後のレコード数: 42
+2025-06-23 12:48:07,586 - csv_manager - INFO - mobデータを42件処理しました
+2025-06-23 12:48:19,038 - database - INFO - データベースをバックアップしました: ./backups//backup_20250623_124818.db
+2025-06-23 12:48:19,038 - __main__ - INFO - バックアップを作成: ./backups//backup_20250623_124818.db
+2025-06-23 12:48:19,542 - csv_manager - INFO - CSVから読み込んだカラム: ['正式名称', '一般名称', '入手カテゴリ', '入手方法', '利用カテゴリ', '使用用途', '一言', '画像リンク']
+2025-06-23 12:48:41,750 - database - INFO - データベースをバックアップしました: ./backups//backup_20250623_124841.db
+2025-06-23 12:48:41,751 - __main__ - INFO - バックアップを作成: ./backups//backup_20250623_124841.db
+2025-06-23 12:48:42,211 - csv_manager - INFO - CSVから読み込んだカラム: ['名前', '配置場所', '対応業務', '入手アイテム', '必要素材', 'EXP', 'GOLD', '一言', '画像リンク']
+2025-06-23 12:48:42,211 - csv_manager - INFO - Original columns: ['名前', '配置場所', '対応業務', '入手アイテム', '必要素材', 'EXP', 'GOLD', '一言', '画像リンク']
+2025-06-23 12:48:42,212 - csv_manager - INFO - Mapping for npc: {'名前': 'name', '配置場所': 'location', '対応業務': 'business_type', '入手アイテム': 'obtainable_items', '必要素材': 'required_materials', 'EXP': 'exp', 'GOLD': 'gold', '一言': 'description', '画像パス': 'image_path'}
+2025-06-23 12:48:42,212 - csv_manager - WARNING - マッピングされていないカラム: ['画像リンク']
+2025-06-23 12:48:42,213 - csv_manager - INFO - マッピングされていないカラムを削除しました: ['画像リンク']
+2025-06-23 12:48:42,213 - csv_manager - INFO - Renamed columns: ['name', 'location', 'business_type', 'obtainable_items', 'required_materials', 'exp', 'gold', 'description']
+2025-06-23 12:48:42,215 - csv_manager - INFO - 空のname行を削除後のレコード数: 106
+2025-06-23 12:48:42,237 - csv_manager - INFO - npcデータを106件処理しました
+2025-06-23 12:48:51,380 - database - INFO - データベースをバックアップしました: ./backups//backup_20250623_124851.db
+2025-06-23 12:48:51,380 - __main__ - INFO - バックアップを作成: ./backups//backup_20250623_124851.db
+2025-06-23 12:48:51,757 - csv_manager - INFO - CSVから読み込んだカラム: ['収集場所', '収集方法', '必要ツールレベル', '入手素材', '一言']
+2025-06-23 12:48:51,761 - csv_manager - INFO - Original columns: ['収集場所', '収集方法', '必要ツールレベル', '入手素材', '一言']
+2025-06-23 12:48:51,762 - csv_manager - INFO - Mapping for gathering: {'収集場所': 'location', '収集方法': 'collection_method', '入手素材': 'obtained_materials', '必要ツールレベル': 'required_tools', '一言': 'description'}
+2025-06-23 12:48:51,764 - csv_manager - INFO - Renamed columns: ['location', 'collection_method', 'required_tools', 'obtained_materials', 'description']
+2025-06-23 12:48:51,766 - csv_manager - INFO - 空のlocation行を削除後のレコード数: 21
+2025-06-23 12:48:51,816 - csv_manager - INFO - gatheringデータを21件処理しました
+2025-06-23 12:49:21,523 - __main__ - INFO - [PID:2478] アイテム検索開始: '<@826766773785329665> 修正してみたけどどうだろ' from klee.com
+2025-06-23 12:49:56,451 - __main__ - INFO - [PID:2478] アイテム検索開始: 'トト' from nekimari
+2025-06-23 12:50:01,558 - __main__ - INFO - [PID:2478] アイテム検索開始: 'ゼクロ' from nekimari
+2025-06-23 12:50:07,097 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 12:50:12,279 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 12:50:38,079 - __main__ - INFO - [PID:2478] アイテム検索開始: '修正内容がききたいかも' from nekimari
+2025-06-23 12:51:09,275 - __main__ - INFO - [PID:2478] アイテム検索開始: 'https://discord.com/channels/1384907932885582035/1384914155005280437
+でチェック付けた6つの投稿' from klee.com
+2025-06-23 12:51:33,202 - __main__ - INFO - [PID:2478] アイテム検索開始: 'おうけい' from nekimari
+2025-06-23 12:52:00,936 - __main__ - INFO - [PID:2478] アイテム検索開始: '古英雄' from nekimari
+2025-06-23 12:52:01,026 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 12:52:42,264 - __main__ - INFO - [PID:2478] アイテム検索開始: 'サルファ' from nekimari
+2025-06-23 12:52:45,162 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 12:53:30,438 - __main__ - INFO - [PID:2478] アイテム検索開始: '*' from nekimari
+2025-06-23 12:53:46,256 - __main__ - INFO - [PID:2478] アイテム検索開始: 'ゼクロ' from nekimari
+2025-06-23 12:53:50,639 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 12:53:55,427 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 12:55:16,512 - __main__ - INFO - [PID:2478] アイテム検索開始: 'メル' from nekimari
+2025-06-23 12:55:48,286 - __main__ - INFO - [PID:2478] アイテム検索開始: '時空' from nekimari
+2025-06-23 12:55:52,054 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 12:56:32,379 - __main__ - INFO - [PID:2478] アイテム検索開始: '魔法石' from nekimari
+2025-06-23 12:56:51,356 - __main__ - INFO - [PID:2478] アイテム検索開始: '破片' from nekimari
+2025-06-23 12:57:28,086 - __main__ - INFO - [PID:2478] アイテム検索開始: 'ワイルドカード回りはスプシの書き方変えたほうがいいかな' from klee.com
+2025-06-23 12:57:33,428 - __main__ - INFO - [PID:2478] アイテム検索開始: 'どんな仕様にしたらいいだろう' from klee.com
+2025-06-23 12:57:38,617 - __main__ - INFO - [PID:2478] アイテム検索開始: 'G' from nekimari
+2025-06-23 12:58:44,211 - __main__ - INFO - [PID:2478] アイテム検索開始: 'リアクションつけたやつよくわかんないけど多分出来てない' from nekimari
+2025-06-23 12:59:08,477 - __main__ - INFO - [PID:2478] アイテム検索開始: 'メルの時空剣が全部rankついてた' from nekimari
+2025-06-23 12:59:11,416 - __main__ - INFO - [PID:2478] アイテム検索開始: 'メル' from nekimari
+2025-06-23 13:02:12,222 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:05:49,859 - __main__ - INFO - [PID:2478] アイテム検索開始: 'セシド' from klee.com
+2025-06-23 13:06:54,811 - __main__ - INFO - [PID:2478] アイテム検索開始: 'しかばね' from nekimari
+2025-06-23 13:06:58,523 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:07:59,986 - __main__ - INFO - [PID:2478] アイテム検索開始: 'さんどす' from nekimari
+2025-06-23 13:08:05,539 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:08:13,893 - __main__ - INFO - [PID:2478] アイテム検索開始: 'ゼクロ' from nekimari
+2025-06-23 13:08:24,106 - __main__ - INFO - [PID:2478] アイテム検索開始: 'よる' from nekimari
+2025-06-23 13:08:27,095 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:08:32,081 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:08:51,135 - __main__ - INFO - [PID:2478] アイテム検索開始: 'イグ' from nekimari
+2025-06-23 13:08:56,255 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:09:20,508 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:09:30,582 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:09:41,172 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:09:45,704 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:09:51,514 - embed_manager - INFO - 採集情報表示 - 元アイテム名: 砂漠の涙, 場所: サプネラ, 方法: 採取
+2025-06-23 13:09:57,388 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:15:51,926 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:16:14,438 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:16:28,398 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:21:02,368 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-23 13:21:02,368 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-23 13:21:02,370 - __main__ - INFO - Botが正常に終了しました
+2025-06-23 13:26:08,240 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-23 13:26:08,240 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-23 13:26:08,241 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-23 13:26:08,242 - discord.client - INFO - logging in using static token
+2025-06-23 13:26:08,897 - database - INFO - データベースの初期化が完了しました
+2025-06-23 13:26:09,222 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-23 13:26:09,223 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-23 13:26:09,743 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 3a0c5dd7aba19fb740f56ac749161c5b).
+2025-06-23 13:26:11,749 - __main__ - INFO - [PID:3235] DA_dictionary#9184 として接続しました
+2025-06-23 13:26:11,749 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-23 13:26:11,750 - __main__ - INFO - 接続サーバー数: 1
+2025-06-23 13:26:11,750 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-23 13:26:29,557 - database - INFO - データベースをバックアップしました: ./backups//backup_20250623_132629.db
+2025-06-23 13:26:29,557 - __main__ - INFO - バックアップを作成: ./backups//backup_20250623_132629.db
+2025-06-23 13:26:30,112 - csv_manager - INFO - CSVから読み込んだカラム: ['正式名称', '一般名称', '入手場所', '入手カテゴリ', '種類', '必要素材', '効果', '一言', '画像リンク']
+2025-06-23 13:26:30,114 - csv_manager - INFO - Original columns: ['正式名称', '一般名称', '入手場所', '入手カテゴリ', '種類', '必要素材', '効果', '一言', '画像リンク']
+2025-06-23 13:26:30,114 - csv_manager - INFO - Mapping for equipment: {'正式名称': 'formal_name', '一般名称': 'common_name', '入手場所': 'acquisition_location', '入手カテゴリ': 'acquisition_category', '種類': 'type', '必要素材': 'required_materials', '効果': 'item_effect', '一言': 'description', '画像リンク': 'image_url'}
+2025-06-23 13:26:30,114 - csv_manager - INFO - Renamed columns: ['formal_name', 'common_name', 'acquisition_location', 'acquisition_category', 'type', 'required_materials', 'item_effect', 'description', 'image_url']
+2025-06-23 13:26:30,118 - csv_manager - INFO - 空のformal_name行を削除後のレコード数: 437
+2025-06-23 13:26:30,157 - csv_manager - INFO - equipmentデータを437件処理しました
+2025-06-23 13:26:48,274 - __main__ - INFO - [PID:3235] アイテム検索開始: 'ヨルズ' from klee.com
+2025-06-23 13:26:51,619 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:27:12,918 - __main__ - INFO - [PID:3235] アイテム検索開始: 'スライム' from murakumo122asahi
+2025-06-23 13:27:20,901 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:27:24,024 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:27:31,303 - __main__ - INFO - [PID:3235] アイテム検索開始: '時空' from klee.com
+2025-06-23 13:27:49,792 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:27:54,074 - __main__ - INFO - [PID:3235] アイテム検索開始: '薬草' from murakumo122asahi
+2025-06-23 13:27:54,157 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:28:07,007 - __main__ - INFO - [PID:3235] アイテム検索開始: 'ポーション' from murakumo122asahi
+2025-06-23 13:28:14,235 - __main__ - INFO - [PID:3235] アイテム検索開始: '食べ物はないか' from murakumo122asahi
+2025-06-23 13:28:39,794 - __main__ - INFO - [PID:3235] アイテム検索開始: 'にんじん' from murakumo122asahi
+2025-06-23 13:28:39,883 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:28:43,222 - __main__ - INFO - [PID:3235] アイテム検索開始: '石' from murakumo122asahi
+2025-06-23 13:32:25,317 - embed_manager - WARNING - ワイルドカード説明検索エラー: 'EmbedManager' object has no attribute 'db_manager'
+2025-06-23 13:37:29,039 - __main__ - INFO - [PID:3235] アイテム検索開始: '1Gコイン' from klee.com
+2025-06-23 14:20:28,264 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-23 14:20:28,267 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-23 14:20:28,272 - __main__ - INFO - Botが正常に終了しました
+2025-06-23 14:20:34,240 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-23 14:20:34,240 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-23 14:20:34,245 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-23 14:20:34,245 - discord.client - INFO - logging in using static token
+2025-06-23 14:20:35,068 - database - INFO - データベースの初期化が完了しました
+2025-06-23 14:20:35,439 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-23 14:20:35,439 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-23 14:20:36,005 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: c2dc35b5e96885b1b88459485720b806).
+2025-06-23 14:20:38,009 - __main__ - INFO - [PID:3540] DA_dictionary#9184 として接続しました
+2025-06-23 14:20:38,010 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-23 14:20:38,010 - __main__ - INFO - 接続サーバー数: 1
+2025-06-23 14:20:38,010 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-23 14:32:12,116 - __main__ - INFO - [PID:3540] アイテム検索開始: '時空' from klee.com
+2025-06-23 14:32:21,757 - search_engine - ERROR - Mobs dropping item検索エラー: no such column: dropped_items
+2025-06-23 14:32:21,787 - search_engine - ERROR - 採集情報検索エラー: no such column: acquisition_location
+2025-06-23 14:33:04,853 - embed_manager - INFO - NPCItemSearchButton: 検索アイテム名 = '時空を護りし剣RankSS'
+2025-06-23 14:33:04,897 - search_engine - INFO - レベル/ランク除去: '時空を護りし剣rankss' → '時空を護りし剣'
+2025-06-23 14:33:14,725 - embed_manager - INFO - NPCItemSearchButton: 検索アイテム名 = 'ゼクロニアスの結晶'
+2025-06-23 14:36:47,625 - __main__ - INFO - [PID:3540] アイテム検索開始: '魔法石' from klee.com
+2025-06-23 14:55:34,041 - __main__ - INFO - [PID:3540] アイテム検索開始: '魔法石' from _suzuki7
+2025-06-23 14:55:36,445 - search_engine - ERROR - Mobs dropping item検索エラー: no such column: dropped_items
+2025-06-23 14:55:36,450 - search_engine - ERROR - 採集情報検索エラー: no such column: acquisition_location
+2025-06-23 14:55:43,935 - search_engine - ERROR - Mobs dropping item検索エラー: no such column: dropped_items
+2025-06-23 14:55:43,939 - search_engine - ERROR - 採集情報検索エラー: no such column: acquisition_location
+2025-06-23 15:01:43,808 - search_engine - ERROR - Mobs dropping item検索エラー: no such column: dropped_items
+2025-06-23 15:01:43,813 - search_engine - ERROR - 採集情報検索エラー: no such column: acquisition_location
+2025-06-23 15:01:46,324 - search_engine - ERROR - Mobs dropping item検索エラー: no such column: dropped_items
+2025-06-23 15:01:46,329 - search_engine - ERROR - 採集情報検索エラー: no such column: acquisition_location
+2025-06-23 15:49:15,279 - __main__ - INFO - [PID:3540] アイテム検索開始: 'しかばね' from nekimari
+2025-06-23 16:17:46,438 - discord.gateway - INFO - Shard ID None has successfully RESUMED session c2dc35b5e96885b1b88459485720b806.
+2025-06-23 19:45:42,516 - discord.gateway - INFO - Shard ID None has successfully RESUMED session c2dc35b5e96885b1b88459485720b806.
+2025-06-23 23:30:13,931 - discord.gateway - INFO - Shard ID None has successfully RESUMED session c2dc35b5e96885b1b88459485720b806.
+2025-06-24 01:06:55,368 - discord.gateway - INFO - Shard ID None has successfully RESUMED session c2dc35b5e96885b1b88459485720b806.
+2025-06-24 02:09:03,512 - __main__ - INFO - [PID:3540] アイテム検索開始: 'オーク' from klee.com
+2025-06-24 02:09:03,552 - search_engine - ERROR - 重複除去・スコアリングエラー: 'NoneType' object has no attribute 'lower'
+2025-06-24 02:10:22,909 - __main__ - INFO - [PID:3540] アイテム検索開始: 'ゼクロ' from klee.com
+2025-06-24 02:11:08,603 - search_engine - ERROR - Mobs dropping item検索エラー: no such column: dropped_items
+2025-06-24 02:11:08,611 - search_engine - ERROR - 採集情報検索エラー: no such column: acquisition_location
+2025-06-24 02:11:14,713 - search_engine - INFO - ワイルドカード末尾検索: 'ゼクロニアス・ノーマルの破片' → '*破片'
+2025-06-24 02:12:53,219 - database - INFO - データベースをバックアップしました: ./backups//backup_20250624_021253.db
+2025-06-24 02:12:53,219 - __main__ - INFO - バックアップを作成: ./backups//backup_20250624_021253.db
+2025-06-24 02:12:54,010 - csv_manager - INFO - CSVから読み込んだカラム: ['正式名称', '一般名称', '入手場所', '入手カテゴリ', '種類', '必要素材', '効果', '一言', '画像リンク']
+2025-06-24 02:12:54,015 - csv_manager - INFO - Original columns: ['正式名称', '一般名称', '入手場所', '入手カテゴリ', '種類', '必要素材', '効果', '一言', '画像リンク']
+2025-06-24 02:12:54,016 - csv_manager - INFO - Mapping for equipment: {'正式名称': 'formal_name', '一般名称': 'common_name', '入手場所': 'acquisition_location', '入手カテゴリ': 'acquisition_category', '種類': 'type', '必要素材': 'required_materials', '効果': 'item_effect', '一言': 'description', '画像リンク': 'image_url'}
+2025-06-24 02:12:54,017 - csv_manager - INFO - Renamed columns: ['formal_name', 'common_name', 'acquisition_location', 'acquisition_category', 'type', 'required_materials', 'item_effect', 'description', 'image_url']
+2025-06-24 02:12:54,025 - csv_manager - INFO - 空のformal_name行を削除後のレコード数: 437
+2025-06-24 02:12:54,118 - csv_manager - INFO - equipmentデータを437件処理しました
+2025-06-24 02:13:15,366 - __main__ - INFO - [PID:3540] アイテム検索開始: 'ゼクロ' from klee.com
+2025-06-24 02:13:36,366 - search_engine - INFO - ワイルドカード末尾検索: 'ゼクロニアス・ノーマルの破片' → '*破片'
+2025-06-24 02:14:05,449 - search_engine - ERROR - Mobs dropping item検索エラー: no such column: dropped_items
+2025-06-24 02:14:05,454 - search_engine - ERROR - 採集情報検索エラー: no such column: acquisition_location
+2025-06-24 02:14:10,579 - search_engine - ERROR - Mobs dropping item検索エラー: no such column: dropped_items
+2025-06-24 02:14:10,587 - search_engine - ERROR - 採集情報検索エラー: no such column: acquisition_location
+2025-06-24 02:16:21,497 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-24 02:16:21,498 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-24 02:16:21,499 - __main__ - INFO - Botが正常に終了しました
+2025-06-24 02:16:28,736 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 02:16:28,737 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-24 02:16:28,739 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-24 02:16:28,739 - discord.client - INFO - logging in using static token
+2025-06-24 02:16:29,411 - database - INFO - データベースの初期化が完了しました
+2025-06-24 02:16:29,849 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-24 02:16:29,849 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-24 02:16:30,319 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: adcfae7a1318d0dcfc03b82fc0e0e51b).
+2025-06-24 02:16:32,325 - __main__ - INFO - [PID:5549] DA_dictionary#9184 として接続しました
+2025-06-24 02:16:32,326 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-24 02:16:32,326 - __main__ - INFO - 接続サーバー数: 1
+2025-06-24 02:16:32,326 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-24 02:16:39,552 - __main__ - INFO - [PID:5549] アイテム検索開始: 'ゼクロ' from klee.com
+2025-06-24 02:16:45,522 - search_engine - INFO - ワイルドカード末尾検索: 'ゼクロニアス・ノーマルの破片' → '*破片'
+2025-06-24 02:18:18,209 - __main__ - INFO - [PID:5549] アイテム検索開始: 'オーク' from klee.com
+2025-06-24 02:18:55,325 - __main__ - INFO - [PID:5549] アイテム検索開始: 'セシド' from klee.com
+2025-06-24 02:19:02,404 - search_engine - INFO - レベル/ランク除去: '魔法石lv1' → '魔法石'
+2025-06-24 02:26:26,723 - __main__ - INFO - [PID:5549] アイテム検索開始: 'ゼクロニアス・ノーマルの破片' from klee.com
+2025-06-24 02:26:26,819 - search_engine - INFO - ワイルドカード末尾検索: 'ゼクロニアス・ノーマルの破片' → '*破片'
+2025-06-24 02:29:33,824 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-24 02:29:33,824 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-24 02:29:33,835 - __main__ - INFO - Botが正常に終了しました
+2025-06-24 02:34:19,308 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 02:34:19,308 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-24 02:34:19,310 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-24 02:34:19,310 - discord.client - INFO - logging in using static token
+2025-06-24 02:34:19,974 - database - INFO - データベースの初期化が完了しました
+2025-06-24 02:34:20,625 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-24 02:34:20,625 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-24 02:34:21,112 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 4efcbfa518d1177917c9c93e0423b589).
+2025-06-24 02:34:23,115 - __main__ - INFO - [PID:5786] DA_dictionary#9184 として接続しました
+2025-06-24 02:34:23,115 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-24 02:34:23,115 - __main__ - INFO - 接続サーバー数: 1
+2025-06-24 02:34:23,116 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-24 02:34:23,543 - __main__ - INFO - [PID:5786] アイテム検索開始: '起動したよ' from klee.com
+2025-06-24 02:39:36,664 - __main__ - INFO - [PID:5786] アイテム検索開始: '破片' from nekimari
+2025-06-24 02:39:46,223 - __main__ - INFO - [PID:5786] アイテム検索開始: 'ゼクロ' from nekimari
+2025-06-24 02:39:52,646 - search_engine - INFO - ワイルドカード末尾検索: 'ゼクロニアス・ノーマルの破片' → '*破片'
+2025-06-24 02:40:09,239 - __main__ - INFO - [PID:5786] アイテム検索開始: 'できてるね' from klee.com
+2025-06-24 02:40:17,388 - __main__ - INFO - [PID:5786] アイテム検索開始: 'ぜくろが破片落とさない' from nekimari
+2025-06-24 02:40:41,583 - __main__ - INFO - [PID:5786] アイテム検索開始: 'れいろうけっしょうゆみけんだけ' from nekimari
+2025-06-24 02:40:52,532 - __main__ - INFO - [PID:5786] アイテム検索開始: 'ほんとだ' from klee.com
+2025-06-24 02:40:59,352 - __main__ - INFO - [PID:5786] アイテム検索開始: '修正しまーす' from klee.com
+2025-06-24 02:41:00,124 - __main__ - INFO - [PID:5786] アイテム検索開始: 'よるず' from nekimari
+2025-06-24 02:41:07,436 - __main__ - INFO - [PID:5786] アイテム検索開始: 'とと' from nekimari
+2025-06-24 02:41:21,625 - __main__ - INFO - [PID:5786] アイテム検索開始: '破片が全部ないぽいね' from nekimari
+2025-06-24 02:42:26,774 - __main__ - INFO - [PID:5786] アイテム検索開始: 'その検索だと破片はなくていい' from klee.com
+2025-06-24 02:42:26,847 - search_engine - INFO - ワイルドカード末尾検索: 'その検索だと破片はなくていい' → '*検索だと破片はなくていい'
+2025-06-24 02:43:05,879 - __main__ - INFO - [PID:5786] アイテム検索開始: 'モブが破片落とさないのはしよう？' from nekimari
+2025-06-24 02:43:05,961 - search_engine - INFO - ワイルドカード末尾検索: 'モブが破片落とさないのはしよう?' → '*はしよう?'
+2025-06-24 02:43:08,862 - __main__ - INFO - [PID:5786] アイテム検索開始: 'materialには*破片で統一して登録してるから' from klee.com
+2025-06-24 02:43:18,648 - __main__ - INFO - [PID:5786] アイテム検索開始: '破片' from nekimari
+2025-06-24 02:43:33,053 - __main__ - INFO - [PID:5786] アイテム検索開始: 'それは修正中。プルダウンのリストにないってことでしょ？' from klee.com
+2025-06-24 02:43:33,584 - search_engine - INFO - ワイルドカード末尾検索: 'それは修正中。プルダウンのリストにないってことでしょ?' → '*リストにないってことでしょ?'
+2025-06-24 02:43:39,705 - __main__ - INFO - [PID:5786] アイテム検索開始: 'そそ' from nekimari
+2025-06-24 02:43:48,878 - __main__ - INFO - [PID:5786] アイテム検索開始: 'AIが頑張ってます' from klee.com
+2025-06-24 02:45:59,658 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-24 02:45:59,658 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-24 02:45:59,659 - __main__ - INFO - Botが正常に終了しました
+2025-06-24 02:46:07,437 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 02:46:07,437 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-24 02:46:07,440 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-24 02:46:07,440 - discord.client - INFO - logging in using static token
+2025-06-24 02:46:08,129 - database - INFO - データベースの初期化が完了しました
+2025-06-24 02:46:08,721 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-24 02:46:08,755 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-24 02:46:09,264 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: c9c2833f8bb615ce621bb640fc485d52).
+2025-06-24 02:46:11,267 - __main__ - INFO - [PID:6187] DA_dictionary#9184 として接続しました
+2025-06-24 02:46:11,267 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-24 02:46:11,267 - __main__ - INFO - 接続サーバー数: 1
+2025-06-24 02:46:11,268 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-24 02:46:12,717 - __main__ - INFO - [PID:6187] アイテム検索開始: 'ゼクロ' from klee.com
+2025-06-24 02:48:07,345 - database - INFO - データベースをバックアップしました: ./backups//backup_20250624_024807.db
+2025-06-24 02:48:07,346 - __main__ - INFO - バックアップを作成: ./backups//backup_20250624_024807.db
+2025-06-24 02:48:07,795 - csv_manager - INFO - CSVから読み込んだカラム: ['正式名称', '一般名称', '入手カテゴリ', '入手方法', '利用カテゴリ', '使用用途', '一言', '画像リンク']
+2025-06-24 02:48:07,800 - csv_manager - INFO - Original columns: ['正式名称', '一般名称', '入手カテゴリ', '入手方法', '利用カテゴリ', '使用用途', '一言', '画像リンク']
+2025-06-24 02:48:07,800 - csv_manager - INFO - Mapping for material: {'正式名称': 'formal_name', '一般名称': 'common_name', '入手カテゴリ': 'acquisition_category', '入手方法': 'acquisition_method', '利用カテゴリ': 'usage_category', '使用用途': 'usage_purpose', '一言': 'description', '画像リンク': 'image_url'}
+2025-06-24 02:48:07,801 - csv_manager - INFO - Renamed columns: ['formal_name', 'common_name', 'acquisition_category', 'acquisition_method', 'usage_category', 'usage_purpose', 'description', 'image_url']
+2025-06-24 02:48:07,806 - csv_manager - INFO - 空のformal_name行を削除後のレコード数: 111
+2025-06-24 02:48:07,835 - csv_manager - INFO - materialデータを111件処理しました
+2025-06-24 02:48:15,860 - __main__ - INFO - [PID:6187] アイテム検索開始: 'ゼクロ' from klee.com
+2025-06-24 02:48:43,097 - __main__ - INFO - [PID:6187] アイテム検索開始: 'グロースクリスタル' from klee.com
+2025-06-24 02:51:15,799 - __main__ - INFO - [PID:6187] アイテム検索開始: 'セシド' from klee.com
+2025-06-24 02:59:12,752 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-24 02:59:12,753 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-24 02:59:12,753 - __main__ - INFO - Botが正常に終了しました
+2025-06-24 03:29:36,279 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 03:29:36,279 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-24 03:29:36,281 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-24 03:29:36,281 - discord.client - INFO - logging in using static token
+2025-06-24 03:29:36,955 - database - INFO - データベースの初期化が完了しました
+2025-06-24 03:29:37,397 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-24 03:29:37,397 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-24 03:29:38,026 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 645a748924152f903ec2f69e1f995b9d).
+2025-06-24 03:29:40,029 - __main__ - INFO - [PID:6627] DA_dictionary#9184 として接続しました
+2025-06-24 03:29:40,030 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-24 03:29:40,030 - __main__ - INFO - 接続サーバー数: 1
+2025-06-24 03:29:40,031 - __main__ - INFO - プレゼンス設定が完了しました

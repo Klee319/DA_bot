@@ -1,0 +1,30 @@
+{
+    "bot": {
+        "token": "YOUR_DISCORD_BOT_TOKEN_HERE",
+        "prefix": "!",
+        "owner_id": "YOUR_DISCORD_USER_ID_HERE"
+    },
+    "features": {
+        "auto_backup": true,
+        "backup_interval": 3600,
+        "max_search_results": 20,
+        "pagination_size": 10,
+        "image_validation": false,
+        "related_item_search": true,
+        "fuzzy_search": true,
+        "enable_admin_commands": true,
+        "admin_role_name": "Bot管理者",
+        "allowed_channels": []
+    },
+    "database": {
+        "path": "data/items.db",
+        "backup_dir": "backups",
+        "max_backups": 5
+    },
+    "logging": {
+        "level": "INFO",
+        "file": "logs/bot.log",
+        "max_size": 10485760,
+        "backup_count": 5
+    }
+}

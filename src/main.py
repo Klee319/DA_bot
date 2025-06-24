@@ -158,7 +158,7 @@ class ItemReferenceBot(commands.Bot):
                     # 管理者権限を持つユーザーには案内メッセージを表示
                     user_roles = [role.id for role in message.author.roles] if hasattr(message.author, 'roles') and message.author.roles else []
                     if self.is_admin(message.author.id, user_roles):
-                        await message.reply("⚠️ BOT利用可能チャンネルが設定されていません。\n`/add_allowed_channel` コマンドでチャンネルを追加してください。")
+                        await message.reply("⚠️ BOT利用可能チャンネルが設定されていません。\n`/add_allowed_channel` コマンドでチャンネルを追加してください。", mention_author=False)
                     return
                 
                 # 現在のチャンネルが許可リストに含まれているかチェック
@@ -220,17 +220,17 @@ class ItemReferenceBot(commands.Bot):
                     embed, view = await self.embed_manager.create_item_detail_embed(
                         results[0], str(message.author.id)
                     )
-                    await message.reply(embed=embed, view=view)
+                    await message.reply(embed=embed, view=view, mention_author=False)
                 else:
                     # 複数結果の場合はリスト表示
                     embed, view = await self.embed_manager.create_search_results_embed(
                         results, query, page=0
                     )
-                    await message.reply(embed=embed, view=view)
+                    await message.reply(embed=embed, view=view, mention_author=False)
             else:
                 # より詳細なメッセージを提供
                 if len(query.strip()) < 2:
-                    await message.reply("検索文字は2文字以上で入力してください")
+                    await message.reply("検索文字は2文字以上で入力してください", mention_author=False, delete_after=10)
                 else:
                     suggestions = await self.search_engine.get_search_suggestions(query.strip()[:20], 5)
                     if suggestions:
@@ -244,9 +244,9 @@ class ItemReferenceBot(commands.Bot):
                             value="\n".join([f"- {suggestion}" for suggestion in suggestions]),
                             inline=False
                         )
-                        await message.reply(embed=embed)
+                        await message.reply(embed=embed, mention_author=False)
                     else:
-                        await message.reply("アイテムが存在しないかデータが作成されていません")
+                        await message.reply("アイテムが存在しないかデータが作成されていません", mention_author=False, delete_after=10)
                 
         except Exception as e:
             logger.error(f"アイテム検索エラー: {e}")
@@ -261,7 +261,7 @@ class ItemReferenceBot(commands.Bot):
                 value="- 検索文字を短くしてみてください\n- 特殊文字を使わないでください\n- しばらく時間をおいて再度お試しください",
                 inline=False
             )
-            await message.reply(embed=embed)
+            await message.reply(embed=embed, mention_author=False)
     
     def is_admin(self, user_id: int, user_roles: List[int] = None) -> bool:
         """管理者権限をチェック（ユーザーIDまたはロールで判定）"""
@@ -313,7 +313,7 @@ class ItemReferenceBot(commands.Bot):
         
         # Viewを作成
         view = LocationAcquisitionView(options, acquisition_method, None, self.embed_manager, self.search_engine)
-        await message.reply(embed=embed, view=view)
+        await message.reply(embed=embed, view=view, mention_author=False)
     
     async def handle_location_query(self, message, location, acquisition_methods):
         """場所が入力された時の処理"""
@@ -334,7 +334,7 @@ class ItemReferenceBot(commands.Bot):
         
         # Viewを作成
         view = LocationAcquisitionView(options, None, location, self.embed_manager, self.search_engine)
-        await message.reply(embed=embed, view=view)
+        await message.reply(embed=embed, view=view, mention_author=False)
 
 # コマンドクラス
 class ItemCommands(commands.Cog):
