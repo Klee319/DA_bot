@@ -5,6 +5,7 @@ import jaconv
 from fnmatch import fnmatch
 from typing import List, Dict, Any, Optional
 from database import DatabaseManager
+from constants import WILDCARD_CHARS, WILDCARD_SET
 
 logger = logging.getLogger(__name__)
 
@@ -191,7 +192,6 @@ class SearchEngine:
         """アイテム名からレベル/ランク表記を除去"""
         try:
             # レベル表記のパターン（Lv1, Lv.1, レベル1など）
-            import re
             # Lv、レベル、ランクの表記を除去
             patterns = [
                 r'[Ll][Vv]\.?\s*\d+$',  # Lv1, Lv.1, lv1など
@@ -214,7 +214,7 @@ class SearchEngine:
     
     def _has_wildcards(self, query: str) -> bool:
         """ワイルドカードが含まれているかチェック（全角対応）"""
-        return '*' in query or '?' in query or '＊' in query or '？' in query
+        return any(char in query for char in WILDCARD_CHARS)
     
     async def _search_exact_formal_name(self, query: str) -> List[Dict[str, Any]]:
         """正式名称の完全一致検索"""
@@ -666,7 +666,7 @@ class SearchEngine:
                         for item in item_results:
                             item['drop_info'] = item_info.get('drop_rate', '')
                             # ワイルドカードアイテムの場合、元のアイテム名も保持
-                            if any(c in item.get('formal_name', '') for c in ['*', '?', '＊', '？']):
+                            if any(c in item.get('formal_name', '') for c in WILDCARD_CHARS):
                                 item['original_drop_name'] = item_name_to_search
                             related_items['dropped_items'].append(item)
                 
@@ -1257,16 +1257,17 @@ class SearchEngine:
                         result['wildcard_matched'] = True
                     return wildcard_results
             
-            # 「の」で分割して最後の部分を取得（後方互換性のため残す）
+            # ワイルドカード分割検索は、データベースに該当するワイルドカードアイテムが存在する場合のみ実行
+            # 「の」で分割して最後の部分を取得
             parts = query.split('の')
             if len(parts) > 1:
                 suffix = parts[-1].strip()
                 wildcard_query = f"*{suffix}"
-                logger.info(f"ワイルドカード末尾検索: '{query}' → '{wildcard_query}'")
                 
                 # まず、完全一致する「*破片」のようなワイルドカードアイテムを検索
                 exact_wildcard_results = await self._search_exact_wildcard_item(wildcard_query)
                 if exact_wildcard_results:
+                    logger.info(f"ワイルドカード末尾検索: '{query}' → '{wildcard_query}'")
                     # オリジナルクエリ情報を追加
                     for result in exact_wildcard_results:
                         result['original_query'] = query
@@ -1278,10 +1279,10 @@ class SearchEngine:
             if len(parts) > 1:
                 suffix = parts[-1].strip()
                 wildcard_query = f"*{suffix}"
-                logger.info(f"ワイルドカード末尾検索: '{query}' → '{wildcard_query}'")
                 
                 exact_wildcard_results = await self._search_exact_wildcard_item(wildcard_query)
                 if exact_wildcard_results:
+                    logger.info(f"ワイルドカード末尾検索: '{query}' → '{wildcard_query}'")
                     for result in exact_wildcard_results:
                         result['original_query'] = query
                         result['wildcard_matched'] = True
@@ -1380,7 +1381,7 @@ class SearchEngine:
         """ワイルドカードパターンがアイテム名にマッチするかチェック"""
         try:
             # ワイルドカード文字を統一（全角も半角も*として扱う）
-            wildcard_chars = {'*', '?', '＊', '？'}
+            wildcard_chars = WILDCARD_SET
             
             # パターンからワイルドカード文字の位置を特定
             wildcard_positions = []

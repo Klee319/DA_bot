@@ -1,204 +1,279 @@
-# Discord アイテム参照BOT
+# Discord DA アイテム参照BOT
 
-ゲーム内アイテム情報を検索・表示するDiscord BOTです。装備、素材、モンスター、採集場所、NPCの情報を一元管理し、インタラクティブな検索機能を提供します。
+Discord上で動作する日本語アイテム検索BOT。ゲーム内の装備・素材・モンスター・NPC・採集情報を簡単に検索できます。
 
 ## 主な機能
 
-### 🔍 検索機能
-- **アイテム検索**: メッセージ入力で自動検索（装備/素材/モンスター/NPC）
-- **複数検索**: 最大3アイテムを同時検索
-- **あいまい検索**: ひらがな⇔カタカナ、部分一致対応
-- **場所×入手手段検索**: 場所と入手方法の組み合わせ検索
+### 🔍 高度な検索機能
+- **統合検索**: 装備、素材、モンスター、NPC、採集場所を一括検索
+- **ワイルドカード対応**: `*破片`のような柔軟な検索が可能
+- **レベル/ランク自動除去**: 「グロースクリスタルLv1」→「グロースクリスタル*」を自動検索
+- **表記ゆれ対応**: ひらがな・カタカナ・漢字・全角半角を自動変換
 
-### 🎯 インタラクティブ機能
-- **プルダウンメニュー**: 
-  - NPCの取引詳細
-  - モブのドロップアイテム
-  - 装備の必要素材
-  - 採集場所の入手可能素材
-- **ボタン操作**:
-  - 入手元詳細（素材・装備）
-  - 利用先詳細（素材）
-  - ページネーション
+### 📊 リッチな表示
+- **Embed形式**: 見やすいカード形式で情報表示
+- **インタラクティブUI**: プルダウンメニューやボタンで詳細情報にアクセス
+- **画像対応**: アイテム画像のサムネイル表示
+- **関連情報表示**: 入手元・利用先・ドロップアイテムなどを表示
 
-### 📊 ユーザー機能
-- **お気に入り登録**: アイテムをお気に入りに保存
-- **検索履歴**: 過去30日間の検索履歴を表示
-- **画像表示**: アイテム画像のサムネイル表示
-
-### 🛠️ 管理者機能
-- **CSVアップロード**: データの一括更新
-- **検索統計**: 人気検索ワードの表示
+### 🛡️ 管理機能
+- **権限管理**: 管理者ロール・ユーザー指定
+- **チャンネル制限**: 特定チャンネルでのみ使用可能に設定
+- **データベース管理**: CSVからの一括更新、自動バックアップ
 
 ## セットアップ
 
-### 1. 必要な環境
-- Python 3.10以上
-- Discord Bot トークン
-- 必要な権限: メッセージ送信、埋め込みリンク、ファイル添付
+### 必要環境
+- Python 3.9以上
+- Discord Bot Token
 
-### 2. インストール
+### インストール
+
+1. リポジトリをクローン
 ```bash
-# リポジトリのクローン
-git clone [repository-url]
-cd DA_discord
+git clone https://github.com/Klee319/DA_bot.git
+cd DA_bot
+```
 
-# 依存関係のインストール
+2. 依存関係をインストール
+```bash
 pip install -r requirements.txt
 ```
 
-### 3. 環境設定
-`.env`ファイルを作成:
-```env
-DISCORD_TOKEN=your_bot_token_here
-ADMIN_USER_IDS=123456789012345678,987654321098765432
-LOG_CHANNEL_ID=123456789012345678
+3. 設定ファイルを作成
+```bash
+cp config.example.json config.json
 ```
 
-### 4. 起動
+4. `config.json`を編集してBot Tokenを設定
+```json
+{
+    "bot": {
+        "token": "YOUR_DISCORD_BOT_TOKEN_HERE",
+        "prefix": "!",
+        "owner_id": "YOUR_DISCORD_USER_ID_HERE"
+    }
+}
+```
+
+5. Botを起動
 ```bash
 python src/main.py
 ```
 
 ## 使い方
 
-### 基本的な検索
+### 基本コマンド
+
+#### アイテム検索
 ```
-ウッドソード        # アイテム名で検索
-木の棒 鉄の棒       # 複数アイテム検索
-モブ レポロ        # 場所×入手手段検索
+!da <検索キーワード>
 ```
 
-### スラッシュコマンド
+例：
+- `!da グロースクリスタル` - グロースクリスタルを検索
+- `!da *破片` - 「○○破片」という名前のアイテムをすべて検索
+- `!da スライム` - スライムというモンスターを検索
 
-#### 管理者用コマンド
-- `/upload_csv` - CSVファイルでデータ更新
-- `/stats` - 検索統計を表示
-- `/add_admin_role` - 管理者ロールを追加
-- `/remove_admin_role` - 管理者ロールを削除
-- `/add_allowed_channel` - BOT利用可能チャンネルを追加
-- `/remove_allowed_channel` - BOT利用可能チャンネルを削除
-- `/list_permissions` - 現在の権限設定を表示
+### 管理者コマンド（Bot管理者ロールまたは指定ユーザーのみ）
 
-### 通常コマンド
-- `!favorites` / `!fav` - お気に入り一覧
-- `!history` - 検索履歴
+#### データベース更新
+```
+!da-update
+```
+CSVファイルを添付してデータベースを更新
 
-### チャンネル制限について
-このBOTはホワイトリスト制で動作します。BOTを使用するには、管理者が `/add_allowed_channel` コマンドで利用可能なチャンネルを明示的に追加する必要があります。
+#### バックアップ作成
+```
+!da-backup
+```
+現在のデータベースをバックアップ
+
+#### 設定再読み込み
+```
+!da-reload
+```
+config.jsonを再読み込み
+
+#### 管理者ロール管理
+```
+!da-admin-role-add @ロール名
+!da-admin-role-remove @ロール名
+!da-admin-role-list
+```
+
+#### チャンネル制限管理
+```
+!da-channel-add #チャンネル名
+!da-channel-remove #チャンネル名
+!da-channel-list
+```
+
+## 設定
+
+### config.json の詳細
+
+```json
+{
+    "bot": {
+        "token": "Discord Bot Token",
+        "prefix": "!",              // コマンドプレフィックス
+        "owner_id": "所有者のDiscord ID"
+    },
+    "features": {
+        "auto_backup": true,        // 自動バックアップ
+        "backup_interval": 3600,    // バックアップ間隔（秒）
+        "max_search_results": 20,   // 最大検索結果数
+        "pagination_size": 10,      // ページあたりの表示数
+        "image_validation": false,  // 画像URL検証
+        "related_item_search": true,// 関連アイテム検索
+        "fuzzy_search": true,       // あいまい検索
+        "enable_admin_commands": true, // 管理コマンド有効化
+        "admin_role_name": "Bot管理者",  // 管理者ロール名
+        "allowed_channels": []      // 使用可能チャンネルID（空=全チャンネル）
+    },
+    "database": {
+        "path": "data/items.db",    // データベースパス
+        "backup_dir": "backups",    // バックアップディレクトリ
+        "max_backups": 5           // 最大バックアップ数
+    },
+    "logging": {
+        "level": "INFO",           // ログレベル
+        "file": "logs/bot.log",    // ログファイル
+        "max_size": 10485760,      // 最大サイズ（10MB）
+        "backup_count": 5          // ログファイル世代数
+    }
+}
+```
 
 ## データベース構造
 
-### 実装済みテーブル
-| テーブル名 | 説明 | 主要カラム |
-|------------|------|------------|
-| equipments | 装備アイテム | formal_name, required_materials, image_url |
-| materials | 素材アイテム | formal_name, acquisition_method, usage_purpose |
-| mobs | モンスター | formal_name, required_level, drops |
-| gatherings | 採集場所 | location, collection_method, obtained_materials |
-| npcs | NPC情報 | name, business_type, obtainable_items |
+### テーブル一覧
+- **equipments**: 装備品情報
+- **materials**: 素材情報  
+- **mobs**: モンスター情報
+- **npcs**: NPC情報
+- **gatherings**: 採集場所情報
+- **admin_roles**: 管理者ロール（動的管理）
+- **admin_users**: 管理者ユーザー（動的管理）
+- **user_favorites**: お気に入り（未実装）
+- **search_history**: 検索履歴（未実装）
+- **search_stats**: 検索統計（未実装）
 
 ### CSV形式
 
-#### 装備 (equipments)
+各テーブルに対応するCSVファイルの形式：
+
+#### equipments.csv
 ```csv
-正式名称,一般名称,入手場所,入手カテゴリ,種類,必要素材,アイテム効果,一言,画像リンク
+正式名称,一般名称,入手場所,入手カテゴリ,種類,必要素材,必要レベル,アイテム効果,一言,画像リンク
 ```
 
-#### 素材 (materials)
+#### materials.csv
 ```csv
 正式名称,一般名称,入手カテゴリ,入手方法,利用カテゴリ,使用用途,一言,画像リンク
 ```
 
-#### モンスター (mobs)
+#### mobs.csv
 ```csv
-正式名称,一般名称,出没エリア,出没エリア詳細,必要レベル,ドロップ品,EXP,Gold,必要防御力,一言,画像リンク
+正式名称,一般名称,出没エリア,出没エリア詳細,必要レベル,ドロップ品,EXP,Gold,必要守備力,一言,画像リンク
 ```
 
-#### 採集 (gatherings)
+#### gatherings.csv
 ```csv
-場所,収集方法,入手素材,必要ツール,一言
+場所,収集方法,入手素材,使用用途,必要ツール,一言,画像リンク
 ```
 
-#### NPC (npcs)
+#### npcs.csv
 ```csv
 場所,NPC名,業種,入手アイテム,必要素材,EXP,Gold,一言,画像パス
 ```
 
-## 技術仕様
+## 開発
 
-### 使用技術
-- **言語**: Python 3.10+
-- **フレームワーク**: discord.py 2.3.x
-- **データベース**: SQLite3
-- **主要ライブラリ**:
-  - pandas: CSV処理
-  - jaconv: 日本語変換
-  - aiohttp: 非同期HTTP
-  - aiosqlite: 非同期DB操作
-
-### アーキテクチャ
+### ディレクトリ構造
 ```
-src/
-├── main.py           # BOT本体
-├── database.py       # DB管理
-├── search_engine.py  # 検索エンジン
-├── embed_manager.py  # 表示管理
-├── csv_manager.py    # CSV処理
-└── npc_parser.py     # NPC解析
+DA_bot/
+├── src/                    # ソースコード
+│   ├── main.py            # メインエントリー
+│   ├── database.py        # データベース管理
+│   ├── search_engine.py   # 検索エンジン
+│   ├── embed_manager.py   # Embed生成
+│   ├── npc_parser.py      # NPC交換データ解析
+│   └── constants.py       # 共通定数
+├── data/                  # データファイル
+│   └── items.db          # SQLiteデータベース
+├── logs/                  # ログファイル
+├── backups/              # バックアップ
+├── ref/                  # 仕様書・設計書
+│   ├── specification_v2.md    # 最新仕様書
+│   ├── task_management.md     # タスク管理書
+│   └── npc_exchange_specification.md
+└── tests/                # テストコード
 ```
 
-### 特徴的な実装
-- **非同期処理**: 全DB操作を非同期化
-- **インデント統一**: ゼロ幅スペース使用
-- **エラーハンドリング**: ユーザーフレンドリーなメッセージ
-- **メモリ効率**: ページネーションによる分割表示
+### 主な特徴
+
+#### ワイルドカード検索
+- 前方一致: `*破片` → ○○破片
+- 後方一致: `グロースクリスタル*` → グロースクリスタル○○
+- 中間一致: `【圧縮】*` → 【圧縮】○○
+
+#### レベル/ランク除去
+以下のパターンを自動的に除去：
+- Lv○○, Lv.○○
+- レベル○○
+- ランク○○, Rank○○
+- ★○○
+- 末尾の数字
+
+#### 表記ゆれ対応
+- ひらがな ⇔ カタカナ ⇔ 漢字
+- 全角 ⇔ 半角
+- よくある誤字（づ/ず、ぢ/じ等）
 
 ## トラブルシューティング
 
-### BOTが応答しない
-1. トークンが正しく設定されているか確認
-2. BOTに必要な権限があるか確認
-3. `logs/bot.log`でエラーを確認
+### よくある問題
 
-### 検索結果が表示されない
-1. データベースにデータが存在するか確認
-2. 検索ワードの表記を確認（ひらがな/カタカナ）
+**Q: Botが反応しない**
+- Bot Tokenが正しく設定されているか確認
+- Botに必要な権限があるか（メッセージ送信、Embed送信、リアクション追加）
+- `allowed_channels`が設定されている場合、正しいチャンネルで使用しているか
 
-### CSVアップロードエラー
-1. CSV形式が仕様と一致しているか確認
-2. 文字コードがUTF-8か確認
-3. 必須カラムが存在するか確認
+**Q: 検索結果が表示されない**
+- データベースが正しく初期化されているか確認
+- CSVファイルが正しくインポートされているか
+- ログファイルでエラーを確認
 
-## 開発者向け情報
+**Q: ワイルドカードアイテムが表示されない**
+- モブのドロップにワイルドカードアイテムも含まれるようになりました
+- `*破片`のようなアイテムも正しく検索・表示されます
 
-### コントリビューション
-1. Issueで機能提案・バグ報告
-2. Pull Requestは`develop`ブランチへ
-3. コミットメッセージは日本語可
+## 今後の実装予定
 
-### テスト実行
-```bash
-python test_bot.py
-```
-
-### ログ確認
-- 実行ログ: `logs/bot.log`
-- エラーログ: `logs/error.log`
-- CSVログ: `logs/csv_import.log`
+- お気に入り機能（user_favorites）
+- 検索履歴機能（search_history）
+- 検索統計・ランキング（search_stats）
+- 高度な検索（複数条件、レベル範囲指定等）
 
 ## ライセンス
 
-MIT License
+このプロジェクトはMITライセンスの下で公開されています。
 
-## 更新履歴
+## 貢献
 
-### 最新版の主な変更点
-- NPCテーブルの実装完了
-- プルダウンメニューの全面採用
-- embedインデントの統一
-- 利用先詳細ボタンの復活
-- ※記号の削除によるUI簡素化
+バグ報告や機能提案は[Issues](https://github.com/Klee319/DA_bot/issues)にお願いします。
+
+プルリクエストも歓迎します！
+
+## 作者
+
+- GitHub: [@Klee319](https://github.com/Klee319)
+
+## 謝辞
+
+このBotは[Claude Code](https://claude.ai/code)の支援を受けて開発されました。
 
 ---
 

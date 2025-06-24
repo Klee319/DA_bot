@@ -6,6 +6,7 @@ import asyncio
 import aiosqlite
 from typing import Dict, Any, List, Optional, Tuple
 from datetime import datetime
+from constants import WILDCARD_CHARS, DISCORD_SELECT_MAX_OPTIONS, VIEW_TIMEOUT
 
 logger = logging.getLogger(__name__)
 
@@ -39,7 +40,7 @@ class EmbedManager:
             # ワイルドカードアイテムの場合、オリジナルクエリを使用
             display_name = formal_name
             original_query = item_data.get('original_query')
-            if original_query and ('*' in formal_name or '?' in formal_name or '＊' in formal_name or '？' in formal_name):
+            if original_query and any(char in formal_name for char in WILDCARD_CHARS):
                 # ワイルドカードアイテムの場合、検索されたレベル/ランク情報を含める
                 display_name = original_query
             
@@ -665,8 +666,8 @@ class EmbedManager:
                 exchange_data = []
                 
                 for i, exchange in enumerate(exchanges[:25]):  # Discordの制限で最大25件
-                    obtainable = exchange.get('obtainable_item', '').strip()
-                    required = exchange.get('required_materials', '').strip()
+                    obtainable = (exchange.get('obtainable_item') or '').strip()
+                    required = (exchange.get('required_materials') or '').strip()
                     exp = exchange.get('exp')
                     gold = exchange.get('gold')
                     
@@ -889,6 +890,104 @@ class EmbedManager:
             logger.warning(f"アイテムリストフォーマットエラー: {e}")
             return item_list
     
+    def _parse_and_format_materials(self, materials_str: str) -> List[str]:
+        """必要素材を解析して箇条書きフォーマットで返す"""
+        try:
+            if not materials_str:
+                return []
+            
+            formatted_items = []
+            
+            # 複数の分割パターンに対応
+            # 1. 「+」で分割（例：「アクアコア×3 + アクアロッド:4」）
+            # 2. カンマで分割（例：「素材A:2,素材B:3」）
+            # 3. 連続記述（例：「素材A:2素材B:3」）
+            
+            # まず「+」で分割を試す
+            if ' + ' in materials_str:
+                parts = materials_str.split(' + ')
+            elif '+' in materials_str:
+                parts = materials_str.split('+')
+            else:
+                # 「+」がない場合は他の形式を試す
+                parts = [materials_str]
+            
+            for part_index, part in enumerate(parts):
+                part = part.strip()
+                if not part:
+                    continue
+                
+                # この部分にさらに複数の素材が含まれているかチェック
+                sub_materials = self._extract_individual_materials(part)
+                
+                for sub_index, material in enumerate(sub_materials):
+                    material = material.strip()
+                    if not material:
+                        continue
+                    
+                    # フォーマット処理
+                    formatted_material = self._format_single_material(material)
+                    
+                    # 最初のアイテムには特殊な空白文字を追加
+                    if part_index == 0 and sub_index == 0:
+                        formatted_items.append(f"\u200B　• {formatted_material}")
+                    else:
+                        formatted_items.append(f"　• {formatted_material}")
+            
+            return formatted_items
+            
+        except Exception as e:
+            logger.warning(f"素材解析エラー: {e}")
+            return [f"\u200B　• `{materials_str}`"]
+    
+    def _extract_individual_materials(self, text: str) -> List[str]:
+        """テキストから個別の素材を抽出"""
+        try:
+            materials = []
+            
+            # カンマ区切りがある場合
+            if ',' in text:
+                return [item.strip() for item in text.split(',') if item.strip()]
+            
+            # 連続記述の場合（例：「素材A:2素材B:3」）
+            import re
+            
+            # パターン1: 「素材名:数量」の繰り返し
+            pattern1 = r'([^:]+):(\d+)'
+            matches = re.findall(pattern1, text)
+            
+            if len(matches) > 1:
+                # 複数マッチした場合は連続記述
+                for name, qty in matches:
+                    materials.append(f"{name.strip()}:{qty}")
+                return materials
+            
+            # パターン2: 単一素材
+            return [text]
+            
+        except Exception as e:
+            logger.warning(f"個別素材抽出エラー: {e}")
+            return [text]
+    
+    def _format_single_material(self, material: str) -> str:
+        """単一素材をフォーマット"""
+        try:
+            # 既に「×」表記の場合
+            if '×' in material:
+                return f"`{material}`"
+            
+            # 「:」表記を「×」に変換
+            if ':' in material:
+                name, quantity = material.split(':', 1)
+                return f"`{name.strip()}×{quantity.strip()}`"
+            
+            # その他（価格など）
+            return f"`{material}`"
+            
+        except Exception as e:
+            logger.warning(f"素材フォーマットエラー: {e}")
+            return f"`{material}`"
+    
     async def _is_valid_image_url(self, url: str) -> bool:
         """画像URLの有効性をチェック"""
         if not self.config['features']['image_validation']:
@@ -1094,7 +1193,7 @@ class EmbedManager:
                 # ワイルドカードアイテムの場合、オリジナルクエリを使用
                 display_name = formal_name
                 original_query = item.get('original_query')
-                if original_query and ('*' in formal_name or '?' in formal_name or '＊' in formal_name or '？' in formal_name):
+                if original_query and any(char in formal_name for char in WILDCARD_CHARS):
                     display_name = original_query
                 
                 # アイテム情報を表示（一般名称は表示しない）
@@ -2721,48 +2820,7 @@ class NewRelatedItemSelect(discord.ui.Select):
                             
                             if required:
                                 # 複数素材の場合は箇条書きに
-                                formatted_items = []
-                                
-                                # 素材A:2素材B:3形式のパース
-                                remaining = required
-                                item_index = 0
-                                
-                                while remaining:
-                                    # コロンの位置を探す
-                                    colon_pos = remaining.find(':')
-                                    if colon_pos == -1:
-                                        # コロンがない場合（価格など）
-                                        if remaining.strip():
-                                            if item_index == 0:
-                                                formatted_items.append(f"\u200B　• `{remaining.strip()}`")
-                                            else:
-                                                formatted_items.append(f"　• `{remaining.strip()}`")
-                                        break
-                                    
-                                    # アイテム名を取得
-                                    item_name = remaining[:colon_pos].strip()
-                                    
-                                    # 数量を取得（数字が続く限り）
-                                    qty_start = colon_pos + 1
-                                    qty_end = qty_start
-                                    while qty_end < len(remaining) and remaining[qty_end].isdigit():
-                                        qty_end += 1
-                                    
-                                    if qty_end > qty_start:  # 数量が見つかった場合
-                                        quantity = remaining[qty_start:qty_end]
-                                        if item_index == 0:
-                                            formatted_items.append(f"\u200B　• `{item_name}×{quantity}`")
-                                        else:
-                                            formatted_items.append(f"　• `{item_name}×{quantity}`")
-                                        remaining = remaining[qty_end:].strip()
-                                        item_index += 1
-                                    else:
-                                        # 数量がない場合
-                                        if item_index == 0:
-                                            formatted_items.append(f"\u200B　• `{remaining.strip()}`")
-                                        else:
-                                            formatted_items.append(f"　• `{remaining.strip()}`")
-                                        break
+                                formatted_items = self._parse_and_format_materials(required)
                                 
                                 if formatted_items:
                                     embed.add_field(name="必要素材/価格", value="\n".join(formatted_items), inline=False)
@@ -3170,49 +3228,25 @@ class NPCExchangeSelect(discord.ui.Select):
                         inline=False
                     )
                 
-                if required and business_type == '交換':
-                    # 必要素材を箇条書き形式で表示
-                    required_items = []
+                if required and business_type in ['交換', '購入']:
+                    # 必要素材/価格を箇条書き形式で表示（共通のヘルパーメソッドを使用）
+                    formatted_items = self.embed_manager._parse_and_format_materials(required)
                     
-                    # まずカンマで分割を試みる
-                    if ',' in required:
-                        # カンマ区切りの場合
-                        for item in required.split(','):
-                            item = item.strip()
-                            # :表記を×表記に変換
-                            if ':' in item:
-                                item_name, quantity = item.split(':', 1)
-                                formatted_item = f"• {item_name.strip()}×{quantity.strip()}"
-                            else:
-                                formatted_item = f"• {item}"
-                            required_items.append(formatted_item)
+                    # 表示名を業種に応じて変更
+                    field_name = "必要素材:" if business_type == '交換' else "価格:"
+                    
+                    if formatted_items:
+                        embed.add_field(
+                            name=field_name,
+                            value="\n".join(formatted_items),
+                            inline=False
+                        )
                     else:
-                        # カンマがない場合、複数アイテムが連続している可能性をチェック
-                        # パターン: アイテム名:数量アイテム名:数量...
-                        import re
-                        # 数字の後に文字が続くパターンを探す
-                        pattern = r'(.+?):(\d+)(?=[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF\u3400-\u4DBFa-zA-Z]|$)'
-                        matches = re.findall(pattern, required)
-                        
-                        if matches and len(matches) > 1:
-                            # 複数アイテムが見つかった場合
-                            for item_name, quantity in matches:
-                                formatted_item = f"• {item_name.strip()}×{quantity.strip()}"
-                                required_items.append(formatted_item)
-                        else:
-                            # 単一アイテムまたは通常の形式
-                            if ':' in required:
-                                item_name, quantity = required.split(':', 1)
-                                formatted_item = f"• {item_name.strip()}×{quantity.strip()}"
-                            else:
-                                formatted_item = f"• {required}"
-                            required_items.append(formatted_item)
-                    
-                    embed.add_field(
-                        name="必要素材:",
-                        value="\u200B\n".join(required_items),
-                        inline=False
-                    )
+                        embed.add_field(
+                            name=field_name,
+                            value=f"\u200B　• `{required}`",
+                            inline=False
+                        )
             
             # EXP・Gold情報
             if exp or gold:
@@ -3240,20 +3274,118 @@ class NPCExchangeSelect(discord.ui.Select):
                 search_button = NPCItemSearchButton(display_name, "入手アイテムを検索", self.embed_manager)
                 view.add_item(search_button)
             
-            # 必要素材の検索ボタン（交換の場合のみ）
-            if required and business_type == '交換':
-                # 複数素材の場合は最初の素材を検索
-                material_name = required.split(',')[0].strip()
-                if ':' in material_name:
-                    material_name = material_name.split(':')[0].strip()
-                material_button = NPCItemSearchButton(material_name, "必要素材を検索", self.embed_manager)
-                view.add_item(material_button)
+            # 必要素材の検索ボタン/プルダウン（交換・購入の場合）
+            if required and business_type in ['交換', '購入']:
+                # 素材を解析
+                material_items = []
+                
+                # 「+」や「,」で分割
+                if ' + ' in required:
+                    parts = required.split(' + ')
+                elif ',' in required:
+                    parts = required.split(',')
+                else:
+                    parts = [required]
+                
+                # 各素材を処理
+                for part in parts:
+                    part = part.strip()
+                    if not part:
+                        continue
+                    
+                    # 連続記述の場合も考慮
+                    sub_materials = self.embed_manager._extract_individual_materials(part)
+                    for material in sub_materials:
+                        material = material.strip()
+                        if not material:
+                            continue
+                        
+                        # 素材名を抽出（数量や価格記号を除去）
+                        material_name = material
+                        if ':' in material_name:
+                            material_name = material_name.split(':')[0].strip()
+                        if '×' in material_name:
+                            material_name = material_name.split('×')[0].strip()
+                        
+                        # 価格（数字+G）は除外
+                        if not material_name.endswith('G') and material_name:
+                            material_items.append(material_name)
+                
+                # 重複を除去
+                material_items = list(dict.fromkeys(material_items))
+                
+                # 素材が複数ある場合はプルダウン、単一の場合はボタン
+                if len(material_items) > 1:
+                    # プルダウンメニューを作成
+                    select_options = []
+                    for i, material_name in enumerate(material_items[:25]):  # Discord制限25個まで
+                        select_options.append(discord.SelectOption(
+                            label=material_name[:100],
+                            value=f"material_{i}",
+                            description="必要素材"
+                        ))
+                    
+                    select = NPCMaterialSearchSelect(select_options, material_items, self.embed_manager)
+                    view.add_item(select)
+                elif len(material_items) == 1:
+                    # 単一素材の場合はボタン
+                    button_label = "必要素材を検索" if business_type == '交換' else "関連アイテムを検索"
+                    material_button = NPCItemSearchButton(material_items[0], button_label, self.embed_manager)
+                    view.add_item(material_button)
             
             await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
             
         except Exception as e:
             logger.error(f"NPC交換選択エラー: {e}")
             await interaction.response.send_message("❌ 取引詳細の表示中にエラーが発生しました", ephemeral=True)
+
+
+class NPCMaterialSearchSelect(discord.ui.Select):
+    """複数素材検索用のプルダウン"""
+    def __init__(self, options: List[discord.SelectOption], material_items: List[str], embed_manager):
+        super().__init__(
+            placeholder="検索する素材を選択...",
+            min_values=1,
+            max_values=1,
+            options=options,
+            custom_id="npc_material_search_select"
+        )
+        self.material_items = material_items
+        self.embed_manager = embed_manager
+    
+    async def callback(self, interaction: discord.Interaction):
+        try:
+            # 選択された値からインデックスを取得
+            selected_value = self.values[0]
+            material_index = int(selected_value.split('_')[1])
+            selected_material = self.material_items[material_index]
+            
+            # アイテムを検索
+            from search_engine import SearchEngine
+            from database import DatabaseManager
+            
+            db = DatabaseManager()
+            search_engine = SearchEngine(db, self.embed_manager.config)
+            
+            logger.info(f"NPCMaterialSearchSelect: 検索素材名 = '{selected_material}'")
+            
+            results = await search_engine.search(selected_material)
+            
+            if results:
+                # 検索結果を表示
+                embed, view = await self.embed_manager.create_search_results_embed(
+                    results, selected_material, page=0
+                )
+                await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+            else:
+                await interaction.response.send_message(
+                    f"❌ 「{selected_material}」に一致するアイテムが見つかりませんでした",
+                    ephemeral=True
+                )
+                
+        except Exception as e:
+            logger.error(f"素材検索エラー: {e}")
+            await interaction.response.send_message("❌ 素材検索中にエラーが発生しました", ephemeral=True)
 
 
 class NPCItemSearchButton(discord.ui.Button):
