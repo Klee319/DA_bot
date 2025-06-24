@@ -988,6 +988,40 @@ class EmbedManager:
             logger.warning(f"素材フォーマットエラー: {e}")
             return f"`{material}`"
     
+    def _parse_quest_rewards(self, rewards_str: str) -> List[str]:
+        """クエスト報酬を解析して箇条書き形式で返す"""
+        try:
+            if not rewards_str:
+                return []
+            
+            import re
+            
+            # パターン: アイテム名:数量の繰り返し
+            # 例: "エフォート・エビデンスLv4:3魔法石Lv3:20歪な骨:6"
+            pattern = r'([^:]+?):(\d+)(?=(?:[^:]+?:\d+)|$)'
+            matches = re.findall(pattern, rewards_str)
+            
+            if not matches:
+                # パターンにマッチしない場合は元の文字列を返す
+                return [f"\u200B　• `{rewards_str}`"]
+            
+            formatted_items = []
+            for i, (item_name, quantity) in enumerate(matches):
+                # アイテム名と数量を×でフォーマット
+                formatted_item = f"{item_name.strip()}×{quantity.strip()}"
+                
+                # 最初のアイテムには特殊な空白文字を追加
+                if i == 0:
+                    formatted_items.append(f"\u200B　• `{formatted_item}`")
+                else:
+                    formatted_items.append(f"　• `{formatted_item}`")
+            
+            return formatted_items
+            
+        except Exception as e:
+            logger.warning(f"クエスト報酬解析エラー: {e}")
+            return [f"\u200B　• `{rewards_str}`"]
+    
     async def _is_valid_image_url(self, url: str) -> bool:
         """画像URLの有効性をチェック"""
         if not self.config['features']['image_validation']:
@@ -3208,9 +3242,11 @@ class NPCExchangeSelect(discord.ui.Select):
                         inline=False
                     )
                 if obtainable:
+                    # 複数の報酬アイテムを解析して箇条書きで表示
+                    formatted_rewards = self.embed_manager._parse_quest_rewards(obtainable)
                     embed.add_field(
                         name="報酬:",
-                        value=f"\u200B　• `{obtainable}`",
+                        value="\n".join(formatted_rewards),
                         inline=False
                     )
             else:
@@ -3265,14 +3301,48 @@ class NPCExchangeSelect(discord.ui.Select):
             # アイテム検索用のボタンを追加
             view = discord.ui.View(timeout=300)
             
-            # 入手アイテムの検索ボタン
+            # 入手アイテムの検索ボタン/プルダウン
             if obtainable:
-                # まず数量部分を除去
-                item_name = obtainable.split(':')[0].strip() if ':' in obtainable else obtainable
-                # さらにランク/レベル表記を除去（検索時に自動的に処理されるが、ボタンに表示する名前として）
-                display_name = item_name
-                search_button = NPCItemSearchButton(display_name, "入手アイテムを検索", self.embed_manager)
-                view.add_item(search_button)
+                # クエストの報酬アイテムを解析
+                if business_type == 'クエスト':
+                    # 複数の報酬アイテムを解析
+                    obtainable_items = []
+                    import re
+                    pattern = r'([^:]+?):(\d+)(?=(?:[^:]+?:\d+)|$)'
+                    matches = re.findall(pattern, obtainable)
+                    
+                    if matches:
+                        for item_name, quantity in matches:
+                            obtainable_items.append(item_name.strip())
+                    else:
+                        # パターンにマッチしない場合は単一アイテムとして処理
+                        item_name = obtainable.split(':')[0].strip() if ':' in obtainable else obtainable
+                        obtainable_items.append(item_name)
+                else:
+                    # 通常の取引の場合は単一アイテム
+                    item_name = obtainable.split(':')[0].strip() if ':' in obtainable else obtainable
+                    obtainable_items = [item_name]
+                
+                # 重複を除去
+                obtainable_items = list(dict.fromkeys(obtainable_items))
+                
+                # アイテムが複数ある場合はプルダウン、単一の場合はボタン
+                if len(obtainable_items) > 1:
+                    # プルダウンメニューを作成
+                    select_options = []
+                    for i, item_name in enumerate(obtainable_items[:25]):  # Discord制限25個まで
+                        select_options.append(discord.SelectOption(
+                            label=item_name[:100],
+                            value=f"obtainable_{i}",
+                            description="入手アイテム"
+                        ))
+                    
+                    select = NPCObtainableSearchSelect(select_options, obtainable_items, self.embed_manager)
+                    view.add_item(select)
+                else:
+                    # 単一アイテムの場合はボタン
+                    search_button = NPCItemSearchButton(obtainable_items[0], "入手アイテムを検索", self.embed_manager)
+                    view.add_item(search_button)
             
             # 必要素材の検索ボタン/プルダウン（交換・購入の場合）
             if required and business_type in ['交換', '購入']:
@@ -3372,11 +3442,19 @@ class NPCMaterialSearchSelect(discord.ui.Select):
             results = await search_engine.search(selected_material)
             
             if results:
-                # 検索結果を表示
-                embed, view = await self.embed_manager.create_search_results_embed(
-                    results, selected_material, page=0
-                )
-                await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                # 検索結果が1件の場合は直接詳細を表示
+                if len(results) == 1:
+                    item_data = results[0]
+                    embed, view = await self.embed_manager.create_item_detail_embed(
+                        item_data, str(interaction.user.id)
+                    )
+                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                else:
+                    # 複数件の場合は検索結果一覧を表示
+                    embed, view = await self.embed_manager.create_search_results_embed(
+                        results, selected_material, page=0
+                    )
+                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
             else:
                 await interaction.response.send_message(
                     f"❌ 「{selected_material}」に一致するアイテムが見つかりませんでした",
@@ -3386,6 +3464,62 @@ class NPCMaterialSearchSelect(discord.ui.Select):
         except Exception as e:
             logger.error(f"素材検索エラー: {e}")
             await interaction.response.send_message("❌ 素材検索中にエラーが発生しました", ephemeral=True)
+
+
+class NPCObtainableSearchSelect(discord.ui.Select):
+    """複数入手アイテム検索用のプルダウン"""
+    def __init__(self, options: List[discord.SelectOption], obtainable_items: List[str], embed_manager):
+        super().__init__(
+            placeholder="検索する入手アイテムを選択...",
+            min_values=1,
+            max_values=1,
+            options=options,
+            custom_id="npc_obtainable_search_select"
+        )
+        self.obtainable_items = obtainable_items
+        self.embed_manager = embed_manager
+    
+    async def callback(self, interaction: discord.Interaction):
+        try:
+            # 選択された値からインデックスを取得
+            selected_value = self.values[0]
+            item_index = int(selected_value.split('_')[1])
+            selected_item = self.obtainable_items[item_index]
+            
+            # アイテムを検索
+            from search_engine import SearchEngine
+            from database import DatabaseManager
+            
+            db = DatabaseManager()
+            search_engine = SearchEngine(db, self.embed_manager.config)
+            
+            logger.info(f"NPCObtainableSearchSelect: 検索アイテム名 = '{selected_item}'")
+            
+            results = await search_engine.search(selected_item)
+            
+            if results:
+                # 検索結果が1件の場合は直接詳細を表示
+                if len(results) == 1:
+                    item_data = results[0]
+                    embed, view = await self.embed_manager.create_item_detail_embed(
+                        item_data, str(interaction.user.id)
+                    )
+                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                else:
+                    # 複数件の場合は検索結果一覧を表示
+                    embed, view = await self.embed_manager.create_search_results_embed(
+                        results, selected_item, page=0
+                    )
+                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+            else:
+                await interaction.response.send_message(
+                    f"❌ 「{selected_item}」に一致するアイテムが見つかりませんでした",
+                    ephemeral=True
+                )
+                
+        except Exception as e:
+            logger.error(f"入手アイテム検索エラー: {e}")
+            await interaction.response.send_message("❌ 入手アイテム検索中にエラーが発生しました", ephemeral=True)
 
 
 class NPCItemSearchButton(discord.ui.Button):

@@ -2722,3 +2722,294 @@ discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
 2025-06-24 03:29:40,030 - __main__ - INFO - Discord.py version: 2.3.2
 2025-06-24 03:29:40,030 - __main__ - INFO - 接続サーバー数: 1
 2025-06-24 03:29:40,031 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-24 03:30:42,095 - __main__ - INFO - [PID:6627] アイテム検索開始: 'ぜ' from himas3110
+2025-06-24 03:30:51,408 - __main__ - INFO - [PID:6627] アイテム検索開始: 'ゼクロニアス' from himas3110
+2025-06-24 03:30:59,056 - __main__ - INFO - [PID:6627] アイテム検索開始: 'ヨルズ' from himas3110
+2025-06-24 03:31:51,495 - __main__ - INFO - [PID:6627] アイテム検索開始: '2' from himas3110
+2025-06-24 03:33:42,424 - __main__ - INFO - [PID:6627] アイテム検索開始: 'ヨルズ' from himas3110
+2025-06-24 03:33:51,072 - __main__ - INFO - [PID:6627] アイテム検索開始: '霊廟' from himas3110
+2025-06-24 03:33:59,976 - __main__ - INFO - [PID:6627] アイテム検索開始: '古' from himas3110
+2025-06-24 04:03:43,103 - __main__ - INFO - [PID:6627] アイテム検索開始: '古代杖' from ast1939
+2025-06-24 04:04:45,492 - search_engine - ERROR - 採集場所検索エラー: no such column: resource_name
+2025-06-24 04:05:06,369 - embed_manager - ERROR - NPCプルダウン追加エラー: 'NoneType' object has no attribute 'strip'
+2025-06-24 04:08:48,904 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-24 04:08:48,904 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-24 04:08:48,905 - __main__ - INFO - Botが正常に終了しました
+2025-06-24 04:10:21,111 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 04:10:21,111 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-24 04:10:21,131 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-24 04:10:21,131 - discord.client - INFO - logging in using static token
+2025-06-24 04:10:21,810 - database - INFO - データベースの初期化が完了しました
+2025-06-24 04:10:22,171 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-24 04:10:22,172 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-24 04:10:22,620 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 40cf784096be1c88c1d5dff06aa2f5de).
+2025-06-24 04:10:24,623 - __main__ - INFO - [PID:7501] DA_dictionary#9184 として接続しました
+2025-06-24 04:10:24,624 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-24 04:10:24,624 - __main__ - INFO - 接続サーバー数: 1
+2025-06-24 04:10:24,625 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-24 04:12:36,762 - __main__ - INFO - [PID:7501] アイテム検索開始: '古代杖' from klee.com
+2025-06-24 04:12:45,853 - embed_manager - ERROR - NPCプルダウン追加エラー: 'NoneType' object has no attribute 'strip'
+2025-06-24 04:13:46,954 - search_engine - INFO - ワイルドカード末尾検索: '蒼水晶の鍛冶型' → '*鍛冶型'
+2025-06-24 04:17:14,890 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-24 04:17:14,890 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-24 04:17:14,891 - __main__ - INFO - Botが正常に終了しました
+2025-06-24 04:20:43,988 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 04:20:43,988 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-24 04:20:43,990 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-24 04:20:43,991 - discord.client - INFO - logging in using static token
+2025-06-24 04:20:44,701 - database - INFO - データベースの初期化が完了しました
+2025-06-24 04:20:45,042 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-24 04:20:45,043 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-24 04:20:45,506 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 8da73f210ec7266b0c8b6929745adfd3).
+2025-06-24 04:20:47,513 - __main__ - INFO - [PID:7837] DA_dictionary#9184 として接続しました
+2025-06-24 04:20:47,513 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-24 04:20:47,514 - __main__ - INFO - 接続サーバー数: 1
+2025-06-24 04:20:47,514 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-24 04:21:09,845 - __main__ - INFO - [PID:7837] アイテム検索開始: 'ゼクロ' from klee.com
+2025-06-24 04:21:49,233 - __main__ - INFO - [PID:7837] アイテム検索開始: '輝晶石の古代杖' from klee.com
+2025-06-24 04:22:13,039 - embed_manager - INFO - NPCItemSearchButton: 検索アイテム名 = '輝晶石の古代杖RankSSS'
+2025-06-24 04:22:13,058 - search_engine - INFO - レベル/ランク除去: '輝晶石の古代杖ranksss' → '輝晶石の古代杖'
+2025-06-24 04:22:31,960 - embed_manager - INFO - NPCItemSearchButton: 検索アイテム名 = '虚空結晶'
+2025-06-24 04:26:53,376 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-24 04:26:53,377 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-24 04:26:53,377 - __main__ - INFO - Botが正常に終了しました
+2025-06-24 04:29:05,852 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 04:29:05,853 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-24 04:29:05,883 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-24 04:29:05,885 - discord.client - INFO - logging in using static token
+2025-06-24 04:29:06,673 - database - INFO - データベースの初期化が完了しました
+2025-06-24 04:29:06,981 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-24 04:29:06,982 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-24 04:29:08,707 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 7f9b3ca36b9c874564c4548f4ed8c69b).
+2025-06-24 04:29:10,709 - __main__ - INFO - [PID:8063] DA_dictionary#9184 として接続しました
+2025-06-24 04:29:10,710 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-24 04:29:10,711 - __main__ - INFO - 接続サーバー数: 1
+2025-06-24 04:29:10,712 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-24 04:29:22,150 - __main__ - INFO - [PID:8063] アイテム検索開始: 'ラテマル' from klee.com
+2025-06-24 04:29:35,128 - embed_manager - INFO - NPCItemSearchButton: 検索アイテム名 = 'アクアコア'
+2025-06-24 04:30:00,606 - __main__ - INFO - [PID:8063] アイテム検索開始: '輝晶石の古代杖' from klee.com
+2025-06-24 04:30:17,552 - embed_manager - INFO - NPCItemSearchButton: 検索アイテム名 = '虚空結晶'
+2025-06-24 04:33:01,935 - __main__ - INFO - [PID:8063] アイテム検索開始: '「現在」
+ラテマル - 取引詳細
+入手アイテム:
+​　• 蒼水晶の古代杖RankA×1
+必要素材:
+• アクアコア×3 + アクアロッド:4
+
+「修正後」
+ラテマル - 取引詳細
+入手アイテム:
+​　• 蒼水晶の古代杖RankA×1
+必要素材:
+　• アクアコア×3<=各行ごとにテキストブロック
+　• アクアロッド×4' from klee.com
+2025-06-24 04:38:44,708 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-24 04:38:44,708 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-24 04:38:44,709 - __main__ - INFO - Botが正常に終了しました
+2025-06-24 04:44:18,723 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 04:44:18,723 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-24 04:44:18,725 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-24 04:44:18,725 - discord.client - INFO - logging in using static token
+2025-06-24 04:44:19,380 - database - INFO - データベースの初期化が完了しました
+2025-06-24 04:44:19,732 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-24 04:44:19,732 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-24 04:44:20,241 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 378b27cf890e749ccc0e70c64d143281).
+2025-06-24 04:44:22,260 - __main__ - INFO - [PID:8437] DA_dictionary#9184 として接続しました
+2025-06-24 04:44:22,260 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-24 04:44:22,261 - __main__ - INFO - 接続サーバー数: 1
+2025-06-24 04:44:22,261 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-24 04:44:35,833 - __main__ - INFO - [PID:8437] アイテム検索開始: '蒼水晶の古代杖' from klee.com
+2025-06-24 04:44:55,185 - embed_manager - INFO - NPCItemSearchButton: 検索アイテム名 = 'アクアコア'
+2025-06-24 05:56:56,579 - __main__ - INFO - [PID:8437] アイテム検索開始: '左腕' from himas3110
+2025-06-24 06:21:34,405 - __main__ - INFO - [PID:8437] アイテム検索開始: '起動するね' from klee.com
+2025-06-24 06:22:29,742 - __main__ - INFO - [PID:8437] アイテム検索開始: '左腕' from klee.com
+2025-06-24 06:22:37,049 - __main__ - INFO - [PID:8437] アイテム検索開始: 'あ、起動してた' from klee.com
+2025-06-24 06:23:00,180 - __main__ - INFO - [PID:8437] アイテム検索開始: '左腕' from ast1939
+2025-06-24 07:23:19,647 - discord.gateway - INFO - Shard ID None has successfully RESUMED session 378b27cf890e749ccc0e70c64d143281.
+2025-06-24 07:37:42,411 - discord.client - ERROR - Attempting a reconnect in 0.92s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-24 07:37:43,744 - discord.gateway - INFO - Shard ID None has successfully RESUMED session 378b27cf890e749ccc0e70c64d143281.
+2025-06-24 07:51:55,844 - __main__ - INFO - [PID:8437] アイテム検索開始: 'ラテマル' from klee.com
+2025-06-24 07:52:10,296 - embed_manager - INFO - NPCItemSearchButton: 検索アイテム名 = 'アクアコア'
+2025-06-24 08:17:23,128 - discord.client - ERROR - Attempting a reconnect in 1.83s
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/dist-packages/discord/client.py", line 659, in connect
+    await self.ws.poll_event()
+  File "/usr/local/lib/python3.9/dist-packages/discord/gateway.py", line 646, in poll_event
+    raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
+discord.errors.ConnectionClosed: Shard ID None WebSocket closed with 1000
+2025-06-24 08:17:25,361 - discord.gateway - INFO - Shard ID None has successfully RESUMED session 378b27cf890e749ccc0e70c64d143281.
+2025-06-24 08:22:45,905 - __main__ - INFO - [PID:8437] アイテム検索開始: 'ラテマル' from klee.com
+2025-06-24 08:24:17,693 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-24 08:24:17,693 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-24 08:24:17,694 - __main__ - INFO - Botが正常に終了しました
+2025-06-24 08:24:20,957 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 08:24:20,957 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-24 08:24:20,960 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-24 08:24:20,960 - discord.client - INFO - logging in using static token
+2025-06-24 08:24:21,642 - database - INFO - データベースの初期化が完了しました
+2025-06-24 08:24:23,120 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-24 08:24:23,127 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-24 08:24:23,818 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 9416cee968739e3d20870c825d04ccb6).
+2025-06-24 08:24:25,822 - __main__ - INFO - [PID:9761] DA_dictionary#9184 として接続しました
+2025-06-24 08:24:25,823 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-24 08:24:25,823 - __main__ - INFO - 接続サーバー数: 1
+2025-06-24 08:24:25,825 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-24 08:24:32,280 - __main__ - INFO - [PID:9761] アイテム検索開始: 'ラテマル' from klee.com
+2025-06-24 08:24:41,942 - embed_manager - INFO - NPCItemSearchButton: 検索アイテム名 = 'アクアコア'
+2025-06-24 08:38:49,610 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-24 08:38:49,615 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-24 08:38:49,619 - __main__ - INFO - Botが正常に終了しました
+2025-06-24 08:42:04,967 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 08:42:04,967 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-24 08:42:04,970 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-24 08:42:04,971 - discord.client - INFO - logging in using static token
+2025-06-24 08:42:05,823 - database - INFO - データベースの初期化が完了しました
+2025-06-24 08:42:06,155 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-24 08:42:06,155 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-24 08:42:06,643 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: bfdf970b47b00d76d4c61c5d1fdc00e7).
+2025-06-24 08:42:08,649 - __main__ - INFO - [PID:10105] DA_dictionary#9184 として接続しました
+2025-06-24 08:42:08,649 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-24 08:42:08,649 - __main__ - INFO - 接続サーバー数: 1
+2025-06-24 08:42:08,649 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-24 09:14:09,989 - __main__ - INFO - [PID:10105] アイテム検索開始: 'グリーンコア' from klee.com
+2025-06-24 09:14:43,850 - __main__ - INFO - [PID:10105] アイテム検索開始: '砂岩' from himas3110
+2025-06-24 09:14:51,632 - __main__ - INFO - [PID:10105] アイテム検索開始: '砂' from ast1939
+2025-06-24 09:15:29,806 - __main__ - INFO - [PID:10105] アイテム検索開始: 'クエスト' from klee.com
+2025-06-24 09:16:18,243 - __main__ - INFO - [PID:10105] アイテム検索開始: '骨' from klee.com
+2025-06-24 09:16:30,779 - __main__ - INFO - [PID:10105] アイテム検索開始: '大きな骨' from ast1939
+2025-06-24 09:16:35,045 - __main__ - INFO - [PID:10105] アイテム検索開始: '蟲紋章' from klee.com
+2025-06-24 09:16:57,279 - __main__ - INFO - [PID:10105] アイテム検索開始: 'さ' from himas3110
+2025-06-24 09:17:00,705 - __main__ - INFO - [PID:10105] アイテム検索開始: '番人' from klee.com
+2025-06-24 09:17:53,989 - __main__ - INFO - [PID:10105] アイテム検索開始: 'ジェマ' from klee.com
+2025-06-24 09:18:02,540 - __main__ - INFO - [PID:10105] アイテム検索開始: 'マジレス' from klee.com
+2025-06-24 09:18:21,440 - __main__ - INFO - [PID:10105] アイテム検索開始: 'ほね' from klee.com
+2025-06-24 09:18:34,342 - __main__ - INFO - [PID:10105] アイテム検索開始: '古代' from klee.com
+2025-06-24 09:19:45,478 - __main__ - INFO - [PID:10105] アイテム検索開始: '怨嗟' from klee.com
+2025-06-24 09:19:53,275 - __main__ - INFO - [PID:10105] アイテム検索開始: '！？' from ast1939
+2025-06-24 09:20:09,229 - __main__ - INFO - [PID:10105] アイテム検索開始: 'ボス鹿' from klee.com
+2025-06-24 09:20:36,017 - __main__ - INFO - [PID:10105] アイテム検索開始: 'ゼクロ' from klee.com
+2025-06-24 09:21:15,630 - __main__ - INFO - [PID:10105] アイテム検索開始: 'セシド' from klee.com
+2025-06-24 09:21:25,136 - __main__ - INFO - [PID:10105] アイテム検索開始: 'セシド' from klee.com
+2025-06-24 09:21:27,372 - __main__ - INFO - [PID:10105] アイテム検索開始: 'セシドエッグ' from himas3110
+2025-06-24 09:22:54,570 - __main__ - INFO - [PID:10105] アイテム検索開始: '石' from klee.com
+2025-06-24 09:23:04,838 - __main__ - INFO - [PID:10105] アイテム検索開始: 'の' from klee.com
+2025-06-24 09:23:47,382 - __main__ - INFO - [PID:10105] アイテム検索開始: '剣' from ast1939
+2025-06-24 09:23:50,815 - __main__ - INFO - [PID:10105] アイテム検索開始: 'ボア' from klee.com
+2025-06-24 09:24:23,250 - __main__ - INFO - [PID:10105] アイテム検索開始: '花子' from himas3110
+2025-06-24 09:25:11,961 - __main__ - INFO - [PID:10105] アイテム検索開始: 'ゼクロ' from klee.com
+2025-06-24 09:25:38,824 - __main__ - INFO - [PID:10105] アイテム検索開始: '時空' from klee.com
+2025-06-24 09:26:09,978 - __main__ - INFO - [PID:10105] アイテム検索開始: '矢筒' from ast1939
+2025-06-24 09:26:24,233 - __main__ - INFO - [PID:10105] アイテム検索開始: '魔導書' from klee.com
+2025-06-24 09:26:28,005 - __main__ - INFO - [PID:10105] アイテム検索開始: '生命' from himas3110
+2025-06-24 09:26:35,315 - __main__ - INFO - [PID:10105] アイテム検索開始: '盾' from ast1939
+2025-06-24 09:28:49,083 - __main__ - INFO - [PID:10105] アイテム検索開始: '紋章' from klee.com
+2025-06-24 09:29:16,540 - __main__ - INFO - [PID:10105] アイテム検索開始: '精神' from klee.com
+2025-06-24 09:44:29,737 - __main__ - INFO - [PID:10105] アイテム検索開始: '例（NPC詳細）：
+
+ラテマル<=NPC名
+場所:
+​　ルーチェア
+業種:
+​　交換
+入手アイテム:
+​　• アクアコア×1
+　• アクアロッド×1
+　• 蒼水晶の古代杖RankB×1
+　• 蒼水晶の古代杖RankA×1
+　• 蒼水晶の古代杖RankS×1
+　• 蒼水晶の古代杖RankSS×1
+　• 蒼水晶の古代杖RankSSS×1
+
+例（取引詳細）：
+
+ラテマル-取引詳細
+入手アイテム:
+　• 蒼水晶の古代杖RankSSS×1' from klee.com
+2025-06-24 09:58:35,598 - discord.gateway - INFO - Shard ID None has successfully RESUMED session bfdf970b47b00d76d4c61c5d1fdc00e7.
+2025-06-24 11:12:48,620 - discord.gateway - INFO - Shard ID None has successfully RESUMED session bfdf970b47b00d76d4c61c5d1fdc00e7.
+2025-06-24 12:17:51,822 - discord.gateway - INFO - Shard ID None has successfully RESUMED session bfdf970b47b00d76d4c61c5d1fdc00e7.
+2025-06-24 13:52:44,223 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-24 13:52:44,225 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-24 13:52:44,230 - __main__ - INFO - Botが正常に終了しました
+2025-06-24 13:52:54,036 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 13:52:54,036 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-24 13:52:54,039 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-24 13:52:54,039 - discord.client - INFO - logging in using static token
+2025-06-24 13:52:54,660 - database - INFO - データベースの初期化が完了しました
+2025-06-24 13:52:55,464 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-24 13:52:55,464 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-24 13:52:56,002 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: b7f6418043bcde982ab82bcc2727d19d).
+2025-06-24 13:52:58,006 - __main__ - INFO - [PID:13307] DA_dictionary#9184 として接続しました
+2025-06-24 13:52:58,007 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-24 13:52:58,007 - __main__ - INFO - 接続サーバー数: 1
+2025-06-24 13:52:58,009 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-24 13:54:39,130 - __main__ - INFO - [PID:13307] アイテム検索開始: '古代' from klee.com
+2025-06-24 13:55:12,130 - embed_manager - ERROR - NPC交換選択エラー: 'NoneType' object has no attribute 'strip'
+2025-06-24 13:55:29,646 - __main__ - INFO - [PID:13307] アイテム検索開始: 'クエスト' from klee.com
+2025-06-24 13:58:45,981 - __main__ - INFO - [PID:13307] アイテム検索開始: 'えんさ' from nekimari
+2025-06-24 13:58:50,454 - __main__ - INFO - [PID:13307] アイテム検索開始: 'おんさ' from nekimari
+2025-06-24 13:58:55,555 - __main__ - INFO - [PID:13307] アイテム検索開始: '怨嗟' from nekimari
+2025-06-24 14:03:18,895 - database - INFO - データベースをバックアップしました: ./backups//backup_20250624_140318.db
+2025-06-24 14:03:18,896 - __main__ - INFO - バックアップを作成: ./backups//backup_20250624_140318.db
+2025-06-24 14:03:19,349 - csv_manager - INFO - CSVから読み込んだカラム: ['名前', '配置場所', '対応業務', '入手アイテム', '必要素材', 'EXP', 'GOLD', '一言', '画像リンク']
+2025-06-24 14:03:19,352 - csv_manager - INFO - Original columns: ['名前', '配置場所', '対応業務', '入手アイテム', '必要素材', 'EXP', 'GOLD', '一言', '画像リンク']
+2025-06-24 14:03:19,352 - csv_manager - INFO - Mapping for npc: {'名前': 'name', '配置場所': 'location', '対応業務': 'business_type', '入手アイテム': 'obtainable_items', '必要素材': 'required_materials', 'EXP': 'exp', 'GOLD': 'gold', '一言': 'description', '画像パス': 'image_path'}
+2025-06-24 14:03:19,352 - csv_manager - WARNING - マッピングされていないカラム: ['画像リンク']
+2025-06-24 14:03:19,356 - csv_manager - INFO - マッピングされていないカラムを削除しました: ['画像リンク']
+2025-06-24 14:03:19,356 - csv_manager - INFO - Renamed columns: ['name', 'location', 'business_type', 'obtainable_items', 'required_materials', 'exp', 'gold', 'description']
+2025-06-24 14:03:19,363 - csv_manager - INFO - 空のname行を削除後のレコード数: 106
+2025-06-24 14:03:19,397 - csv_manager - INFO - npcデータを106件処理しました
+2025-06-24 14:08:55,943 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-24 14:08:55,944 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-24 14:08:55,946 - __main__ - INFO - Botが正常に終了しました
+2025-06-24 14:09:05,792 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 14:09:05,795 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-24 14:09:05,797 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-24 14:09:05,798 - discord.client - INFO - logging in using static token
+2025-06-24 14:09:06,739 - database - INFO - データベースの初期化が完了しました
+2025-06-24 14:09:07,078 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-24 14:09:07,078 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-24 14:09:07,590 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 9259846275d8b47de5d036cf10aa43a8).
+2025-06-24 14:09:09,593 - __main__ - INFO - [PID:13731] DA_dictionary#9184 として接続しました
+2025-06-24 14:09:09,593 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-24 14:09:09,594 - __main__ - INFO - 接続サーバー数: 1
+2025-06-24 14:09:09,594 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-24 14:12:37,871 - __main__ - INFO - [PID:13731] アイテム検索開始: 'クエスト' from klee.com
+2025-06-24 14:12:47,314 - embed_manager - INFO - NPCItemSearchButton: 検索アイテム名 = 'エフォート・エビデンスLv4'
+2025-06-24 14:12:47,432 - search_engine - INFO - レベル/ランク除去: 'エフォート・エビデンスlv4' → 'エフォート・エビデンス'
+2025-06-24 14:13:29,391 - __main__ - INFO - [PID:13731] アイテム検索開始: 'ラテマル' from klee.com
+2025-06-24 14:13:39,659 - embed_manager - INFO - NPCItemSearchButton: 検索アイテム名 = 'アクアコア'
+2025-06-24 14:13:47,574 - embed_manager - INFO - NPCMaterialSearchSelect: 検索素材名 = '青宝物の石版'
+2025-06-24 14:13:57,562 - embed_manager - INFO - NPCMaterialSearchSelect: 検索素材名 = 'ゴーレムの欠片'
+2025-06-24 14:14:08,516 - __main__ - INFO - [PID:13731] アイテム検索開始: '青宝物の石版' from klee.com
+2025-06-24 14:15:53,942 - embed_manager - INFO - NPCMaterialSearchSelect: 検索素材名 = 'アクアコア'
+2025-06-24 14:15:56,539 - embed_manager - INFO - NPCMaterialSearchSelect: 検索素材名 = 'アクアロッド'
+2025-06-24 14:16:04,321 - embed_manager - INFO - NPCItemSearchButton: 検索アイテム名 = '蒼水晶の古代杖RankA'
+2025-06-24 14:16:04,339 - search_engine - INFO - レベル/ランク除去: '蒼水晶の古代杖ranka' → '蒼水晶の古代杖'
+2025-06-24 14:16:16,485 - __main__ - INFO - [PID:13731] アイテム検索開始: '蒼水晶の古代杖' from klee.com
+2025-06-24 14:16:52,941 - embed_manager - INFO - NPCMaterialSearchSelect: 検索素材名 = '青宝物の石版'
+2025-06-24 14:18:03,582 - __main__ - INFO - シャットダウンシグナルを受信しました
+2025-06-24 14:18:03,583 - __main__ - INFO - Botをシャットダウンしています...
+2025-06-24 14:18:03,584 - __main__ - INFO - Botが正常に終了しました
+2025-06-24 14:19:48,612 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-06-24 14:19:48,613 - __main__ - INFO - コマンドプレフィックス: '!'
+2025-06-24 14:19:48,615 - __main__ - INFO - Botを起動しています... (Ctrl+Cで停止)
+2025-06-24 14:19:48,615 - discord.client - INFO - logging in using static token
+2025-06-24 14:19:49,362 - database - INFO - データベースの初期化が完了しました
+2025-06-24 14:19:49,660 - __main__ - INFO - スラッシュコマンドの同期が完了しました
+2025-06-24 14:19:49,661 - __main__ - INFO - BOTの初期化が完了しました
+2025-06-24 14:19:50,127 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: ea5b42dd86c8c984353ef3a1a4ed647d).
+2025-06-24 14:19:52,143 - __main__ - INFO - [PID:14059] DA_dictionary#9184 として接続しました
+2025-06-24 14:19:52,143 - __main__ - INFO - Discord.py version: 2.3.2
+2025-06-24 14:19:52,143 - __main__ - INFO - 接続サーバー数: 1
+2025-06-24 14:19:52,143 - __main__ - INFO - プレゼンス設定が完了しました
+2025-06-24 14:20:05,128 - __main__ - INFO - [PID:14059] アイテム検索開始: 'アクアコア' from klee.com
+2025-06-24 14:20:16,749 - __main__ - INFO - [PID:14059] アイテム検索開始: 'ラテマル' from klee.com
+2025-06-24 14:20:24,418 - embed_manager - INFO - NPCMaterialSearchSelect: 検索素材名 = '青宝物の石版'
+2025-06-24 14:20:27,067 - embed_manager - INFO - NPCMaterialSearchSelect: 検索素材名 = 'ゴーレムの欠片'
