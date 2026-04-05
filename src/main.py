@@ -15,15 +15,22 @@ from search_engine import SearchEngine
 from embed_manager import EmbedManager, LocationAcquisitionView
 from csv_manager import CSVManager
 
-# 環境変数を読み込み
-load_dotenv()
+# スクリプトのディレクトリを基準にパスを解決
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
 
-# ログ設定
+# パス定数
+CONFIG_FILE = os.path.join(PROJECT_ROOT, 'config.json')
+LOG_DIR = os.path.join(PROJECT_ROOT, 'logs')
+LOG_FILE = os.path.join(LOG_DIR, 'bot.log')
+
+# 環境変数を読み込み
+load_dotenv(os.path.join(PROJECT_ROOT, '.env'))
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('./logs/bot.log'),
+        logging.FileHandler(LOG_FILE),
         logging.StreamHandler()
     ]
 )
@@ -65,24 +72,34 @@ class ItemReferenceBot(commands.Bot):
     def load_config(self) -> Dict[str, Any]:
         """設定ファイルを読み込み"""
         try:
-            with open('config.json', 'r', encoding='utf-8') as f:
+            with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
                 config = json.load(f)
-            
+
+            # 相対パスを絶対パスに変換
+            if config.get('database', {}).get('path', '').startswith('./'):
+                config['database']['path'] = os.path.join(
+                    PROJECT_ROOT, config['database']['path'][2:]
+                )
+            if config.get('database', {}).get('backup_path', '').startswith('./'):
+                config['database']['backup_path'] = os.path.join(
+                    PROJECT_ROOT, config['database']['backup_path'][2:]
+                )
+
             # 環境変数から値を設定
             if os.getenv('DISCORD_TOKEN'):
                 config['bot']['token'] = os.getenv('DISCORD_TOKEN')
-            
+
             if os.getenv('ADMIN_USER_IDS'):
                 admin_ids = os.getenv('ADMIN_USER_IDS').split(',')
                 config['permissions']['admin_users'] = [int(uid.strip()) for uid in admin_ids]
-            
+
             if os.getenv('ADMIN_ROLE_IDS'):
                 admin_role_ids = os.getenv('ADMIN_ROLE_IDS').split(',')
                 config['permissions']['admin_roles'] = [int(rid.strip()) for rid in admin_role_ids]
-            
+
             if os.getenv('LOG_CHANNEL_ID'):
                 config['permissions']['log_channel_id'] = int(os.getenv('LOG_CHANNEL_ID'))
-            
+
             return config
         except Exception as e:
             logger.error(f"設定ファイルの読み込みに失敗: {e}")
@@ -232,18 +249,37 @@ class ItemReferenceBot(commands.Bot):
                 if len(query.strip()) < 2:
                     await message.reply("検索文字は2文字以上で入力してください", mention_author=False, delete_after=10)
                 else:
+                    # 既存の検索候補を取得
                     suggestions = await self.search_engine.get_search_suggestions(query.strip()[:20], 5)
-                    if suggestions:
+                    # 漢字→ひらがな変換による候補を取得
+                    hiragana_suggestions = await self.search_engine.get_hiragana_suggestions(query.strip()[:20], 5)
+                    
+                    if suggestions or hiragana_suggestions:
                         embed = discord.Embed(
                             title="**アイテムが見つかりませんでした**",
                             description=f"「{query}」に一致するアイテムはありません",
                             color=discord.Color.orange()
                         )
-                        embed.add_field(
-                            name="**候補**",
-                            value="\n".join([f"- {suggestion}" for suggestion in suggestions]),
-                            inline=False
-                        )
+                        
+                        # 既存の検索候補を表示
+                        if suggestions:
+                            embed.add_field(
+                                name="**候補**",
+                                value="\n".join([f"- {suggestion}" for suggestion in suggestions]),
+                                inline=False
+                            )
+                        
+                        # 漢字→ひらがな変換による候補を表示（重複を除外）
+                        if hiragana_suggestions:
+                            # 既存の候補との重複を除去
+                            unique_hiragana_suggestions = [s for s in hiragana_suggestions if s not in suggestions]
+                            if unique_hiragana_suggestions:
+                                embed.add_field(
+                                    name="**もしかして...**",
+                                    value="\n".join([f"- {suggestion}" for suggestion in unique_hiragana_suggestions]),
+                                    inline=False
+                                )
+                        
                         await message.reply(embed=embed, mention_author=False)
                     else:
                         await message.reply("アイテムが存在しないかデータが作成されていません", mention_author=False, delete_after=10)
@@ -281,7 +317,7 @@ class ItemReferenceBot(commands.Bot):
     def is_admin_interaction(self, interaction: discord.Interaction) -> bool:
         """Interactionから管理者権限をチェック"""
         user_id = interaction.user.id
-        user_roles = [role.id for role in interaction.user.roles] if hasattr(interaction.user, 'roles') and interaction.user.roles else []
+        user_roles = [role.id for role in interaction.user.roles if role is not None] if hasattr(interaction.user, 'roles') and interaction.user.roles else []
         return self.is_admin(user_id, user_roles)
     
     async def on_command_error(self, ctx, error):
@@ -476,7 +512,7 @@ class AdminCommands(commands.Cog):
             self.bot.config['permissions']['admin_roles'] = admin_roles
             
             # 設定ファイルを更新
-            with open('config.json', 'w', encoding='utf-8') as f:
+            with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
                 json.dump(self.bot.config, f, ensure_ascii=False, indent=2)
             
             # 環境変数も更新（必要な場合）
@@ -526,7 +562,7 @@ class AdminCommands(commands.Cog):
             self.bot.config['permissions']['allowed_channels'] = allowed_channels
             
             # 設定ファイルを更新
-            with open('config.json', 'w', encoding='utf-8') as f:
+            with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
                 json.dump(self.bot.config, f, ensure_ascii=False, indent=2)
             
             await interaction.response.send_message(f"✅ チャンネル **{channel.name}** をBOT利用可能チャンネルに追加しました", ephemeral=True)
@@ -569,7 +605,7 @@ class AdminCommands(commands.Cog):
             self.bot.config['permissions']['admin_roles'] = admin_roles
             
             # 設定ファイルを更新
-            with open('config.json', 'w', encoding='utf-8') as f:
+            with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
                 json.dump(self.bot.config, f, ensure_ascii=False, indent=2)
             
             await interaction.response.send_message(f"✅ ロール **{role.name}** を管理者ロールから削除しました", ephemeral=True)
@@ -612,7 +648,7 @@ class AdminCommands(commands.Cog):
             self.bot.config['permissions']['allowed_channels'] = allowed_channels
             
             # 設定ファイルを更新
-            with open('config.json', 'w', encoding='utf-8') as f:
+            with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
                 json.dump(self.bot.config, f, ensure_ascii=False, indent=2)
             
             await interaction.response.send_message(f"✅ チャンネル **{channel.name}** をBOT利用可能チャンネルから削除しました", ephemeral=True)
@@ -795,7 +831,7 @@ async def main():
     signal.signal(signal.SIGTERM, signal_handler)
     
     # ログディレクトリを作成
-    os.makedirs('./logs', exist_ok=True)
+    os.makedirs(LOG_DIR, exist_ok=True)
     
     bot_instance = ItemReferenceBot()
     

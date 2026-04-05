@@ -1481,13 +1481,14 @@ class AcquisitionDetailsButton(discord.ui.Button):
         if view.processing:
             await interaction.response.send_message("⏳ 処理中です。しばらくお待ちください...", ephemeral=True)
             return
-            
+
         view.processing = True
         view._disable_all_buttons()
-        
+        await interaction.response.defer(ephemeral=True)
+
         try:
             related_items = await view._get_related_items()
-            
+
             embed = discord.Embed(
                 title=f"{view.item_data['formal_name']} の入手元一覧",
                 color=discord.Color.green()
@@ -1818,7 +1819,7 @@ class AcquisitionDetailsButton(discord.ui.Button):
             
             if not options and not related_items.get('acquisition_info'):
                 embed.description = "入手元情報が見つかりませんでした"
-                await interaction.response.send_message(embed=embed, ephemeral=True)
+                await interaction.followup.send(embed=embed, ephemeral=True)
             else:
                 if options:
                     # アイテム選択用のViewを作成 - optionsとアイテムを直接マッピング
@@ -1906,13 +1907,13 @@ class AcquisitionDetailsButton(discord.ui.Button):
                         detailed_view = NewRelatedItemsView(related_items, view.embed_manager, options, item_list, view.item_data)
                         # 入手元詳細の説明文を削除（プルダウンで対応済み）
                     
-                    await interaction.response.send_message(embed=embed, view=detailed_view, ephemeral=True)
+                    await interaction.followup.send(embed=embed, view=detailed_view, ephemeral=True)
                 else:
-                    await interaction.response.send_message(embed=embed, ephemeral=True)
-            
+                    await interaction.followup.send(embed=embed, ephemeral=True)
+
         except Exception as e:
             logger.error(f"入手元詳細エラー: {e}")
-            await interaction.response.send_message("❌ 入手元詳細取得中にエラーが発生しました", ephemeral=True)
+            await interaction.followup.send("❌ 入手元詳細取得中にエラーが発生しました", ephemeral=True)
         finally:
             view.processing = False
             view._enable_all_buttons()
@@ -1928,13 +1929,14 @@ class UsageDetailsButton(discord.ui.Button):
         if view.processing:
             await interaction.response.send_message("⏳ 処理中です。しばらくお待ちください...", ephemeral=True)
             return
-            
+
         view.processing = True
         view._disable_all_buttons()
-        
+        await interaction.response.defer(ephemeral=True)
+
         try:
             related_items = await view._get_related_items()
-            
+
             # ページング対応のため、全ての利用先をリスト化
             all_usage_items = []
             
@@ -1964,17 +1966,17 @@ class UsageDetailsButton(discord.ui.Button):
                     description="利用先情報が見つかりませんでした",
                     color=discord.Color.blue()
                 )
-                await interaction.response.send_message(embed=embed, ephemeral=True)
+                await interaction.followup.send(embed=embed, ephemeral=True)
             else:
                 # ページング対応のEmbedとViewを作成
                 embed, detailed_view = await view.embed_manager.create_usage_details_embed(
                     view.item_data, all_usage_items, page=0
                 )
-                await interaction.response.send_message(embed=embed, view=detailed_view, ephemeral=True)
-            
+                await interaction.followup.send(embed=embed, view=detailed_view, ephemeral=True)
+
         except Exception as e:
             logger.error(f"利用先詳細エラー: {e}")
-            await interaction.response.send_message("❌ 利用先詳細取得中にエラーが発生しました", ephemeral=True)
+            await interaction.followup.send("❌ 利用先詳細取得中にエラーが発生しました", ephemeral=True)
         finally:
             view.processing = False
             view._enable_all_buttons()
@@ -2068,16 +2070,18 @@ class UsageDetailsSelectMenu(discord.ui.Select):
     
     async def callback(self, interaction: discord.Interaction):
         try:
+            await interaction.response.defer(ephemeral=True)
+
             selected_index = int(self.values[0])
             selected_item = self.usage_items[selected_index]
-            
+
             if selected_item.get('usage_type') == 'equipment':
                 # 装備の詳細を表示
                 embed, view = await self.embed_manager.create_item_detail_embed(
                     selected_item, str(interaction.user.id)
                 )
-                await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
-                
+                await interaction.followup.send(embed=embed, view=view, ephemeral=True)
+
             elif selected_item.get('usage_type') == 'npc':
                 # NPCの詳細を表示
                 embed = discord.Embed(
@@ -2153,11 +2157,11 @@ class UsageDetailsSelectMenu(discord.ui.Select):
                 view = discord.ui.View(timeout=300)
                 await self.embed_manager._add_npc_dropdown_to_view(view, selected_item)
                 
-                await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
-                
+                await interaction.followup.send(embed=embed, view=view, ephemeral=True)
+
         except Exception as e:
             logger.error(f"利用先詳細選択エラー: {e}")
-            await interaction.response.send_message("❌ 詳細の取得中にエラーが発生しました", ephemeral=True)
+            await interaction.followup.send("❌ 詳細の取得中にエラーが発生しました", ephemeral=True)
 
 
 class UsageDetailsView(discord.ui.View):
@@ -2189,8 +2193,10 @@ class UsageDetailsSelect(discord.ui.Select):
     
     async def callback(self, interaction: discord.Interaction):
         try:
+            await interaction.response.defer(ephemeral=True)
+
             selected_value = self.values[0]
-            
+
             # equipment_の場合
             if selected_value.startswith('equipment_'):
                 index = int(selected_value.split('_')[1])
@@ -2198,32 +2204,32 @@ class UsageDetailsSelect(discord.ui.Select):
                 equipment_usage = [item for item in usage_destinations if item.get('relation_type') == 'material_for_equipment']
                 if index < len(equipment_usage):
                     selected_item = equipment_usage[index]
-                    
+
                     # 装備の詳細を表示
                     embed, view = await self.embed_manager.create_item_detail_embed(
                         selected_item, str(interaction.user.id)
                     )
-                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
-                    
+                    await interaction.followup.send(embed=embed, view=view, ephemeral=True)
+
             # npc_の場合
             elif selected_value.startswith('npc_'):
                 index = int(selected_value.split('_')[1])
                 usage_destinations = self.related_items.get('usage_destinations', [])
                 npc_usage = [item for item in usage_destinations if item.get('relation_type') == 'material_for_npc']
-                
+
                 if index < len(npc_usage):
                     selected_npc = npc_usage[index]
-                    
+
                     # NPCの詳細を表示
                     embed = discord.Embed(
                         title=f"{selected_npc['name']} の詳細情報",
                         color=discord.Color.purple()
                     )
-                    
+
                     embed.add_field(name="NPC名:", value=f"\u200B　`{selected_npc['name']}`", inline=True)
                     embed.add_field(name="場所:", value=f"\u200B　`{selected_npc.get('location', '不明')}`", inline=True)
                     embed.add_field(name="業務:", value=f"\u200B　`{selected_npc.get('business_type', '不明')}`", inline=True)
-                    
+
                     # 素材が使用される詳細を表示
                     if selected_npc.get('business_type') == 'クエスト':
                         embed.add_field(
@@ -2237,12 +2243,12 @@ class UsageDetailsSelect(discord.ui.Select):
                             value=f"\u200B　• `{self.item_data['formal_name']}`が必要",
                             inline=False
                         )
-                    
-                    await interaction.response.send_message(embed=embed, ephemeral=True)
-                    
+
+                    await interaction.followup.send(embed=embed, ephemeral=True)
+
         except Exception as e:
             logger.error(f"利用先詳細選択エラー: {e}")
-            await interaction.response.send_message("❌ アイテム詳細の表示中にエラーが発生しました", ephemeral=True)
+            await interaction.followup.send("❌ アイテム詳細の表示中にエラーが発生しました", ephemeral=True)
 
 
 class SearchResultsView(discord.ui.View):
@@ -2318,21 +2324,23 @@ class ItemSelectMenu(discord.ui.Select):
     
     async def callback(self, interaction: discord.Interaction):
         try:
+            await interaction.response.defer(ephemeral=True)
+
             # 選択されたアイテムのインデックスを取得
             selected_index = int(self.values[0])
             selected_item = self.results[selected_index]
-            
+
             # アイテム詳細のEmbedとViewを作成
             embed, view = await self.embed_manager.create_item_detail_embed(
                 selected_item, str(interaction.user.id)
             )
-            
+
             # 新しいメッセージとして送信
-            await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
-            
+            await interaction.followup.send(embed=embed, view=view, ephemeral=True)
+
         except Exception as e:
             logger.error(f"アイテム選択エラー: {e}")
-            await interaction.response.send_message("❌ アイテム詳細の取得中にエラーが発生しました", ephemeral=True)
+            await interaction.followup.send("❌ アイテム詳細の取得中にエラーが発生しました", ephemeral=True)
 
 class RelatedItemsView(discord.ui.View):
     def __init__(self, related_items: List[Dict[str, Any]], embed_manager):
@@ -2376,18 +2384,20 @@ class RelatedItemSelectMenu(discord.ui.Select):
     
     async def callback(self, interaction: discord.Interaction):
         try:
+            await interaction.response.defer(ephemeral=True)
+
             selected_index = int(self.values[0])
             selected_item = self.related_items[selected_index]
-            
+
             embed, view = await self.embed_manager.create_item_detail_embed(
                 selected_item, str(interaction.user.id)
             )
-            
-            await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
-            
+
+            await interaction.followup.send(embed=embed, view=view, ephemeral=True)
+
         except Exception as e:
             logger.error(f"関連アイテム選択エラー: {e}")
-            await interaction.response.send_message("❌ アイテム詳細の取得中にエラーが発生しました", ephemeral=True)
+            await interaction.followup.send("❌ アイテム詳細の取得中にエラーが発生しました", ephemeral=True)
 
 class FavoritesView(discord.ui.View):
     def __init__(self, favorites: List[Dict[str, Any]], user_id: str, embed_manager):
@@ -2455,48 +2465,49 @@ class RelatedItemSelect(discord.ui.Select):
     async def callback(self, interaction: discord.Interaction):
         """選択されたアイテムを検索"""
         try:
+            await interaction.response.defer(ephemeral=True)
+
             selected_item_name = self.values[0]
-            
+
             # 検索エンジンを使用してアイテムを検索
             from search_engine import SearchEngine
             from database import DatabaseManager
-            from main import ItemReferenceBot
-            
+
             # Bot設定を取得
             import json
             with open('config.json', 'r', encoding='utf-8') as f:
                 config = json.load(f)
-            
+
             db_manager = DatabaseManager()
             search_engine = SearchEngine(db_manager, config)
-            
+
             # アイテム検索実行
             search_results = await search_engine.search(selected_item_name)
-            
+
             if not search_results:
-                await interaction.response.send_message(
+                await interaction.followup.send(
                     f"🔍 「{selected_item_name}」に一致するアイテムが見つかりませんでした",
                     ephemeral=True
                 )
                 return
-            
+
             if len(search_results) == 1:
                 # 単一結果の場合は詳細表示
                 embed, view = await self.embed_manager.create_item_detail_embed(
                     search_results[0], str(interaction.user.id)
                 )
-                await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                await interaction.followup.send(embed=embed, view=view, ephemeral=True)
             else:
                 # 複数結果の場合はリスト表示
                 embed, view = await self.embed_manager.create_search_results_embed(
                     search_results, selected_item_name, page=0
                 )
-                await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
-                
+                await interaction.followup.send(embed=embed, view=view, ephemeral=True)
+
         except Exception as e:
             logger.error(f"関連アイテム検索コールバックエラー: {e}")
-            await interaction.response.send_message(
-                "❌ アイテム検索中にエラーが発生しました", 
+            await interaction.followup.send(
+                "❌ アイテム検索中にエラーが発生しました",
                 ephemeral=True
             )
 
@@ -2539,8 +2550,10 @@ class NewRelatedItemSelect(discord.ui.Select):
     
     async def callback(self, interaction: discord.Interaction):
         try:
+            await interaction.response.defer(ephemeral=True)
+
             selected_value = self.values[0]
-            
+
             # マッピングからアイテムを取得
             if selected_value in self.item_mapping:
                 selected_item = self.item_mapping[selected_value]
@@ -2877,22 +2890,22 @@ class NewRelatedItemSelect(discord.ui.Select):
                         view = None
                     
                     if view:
-                        await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                        await interaction.followup.send(embed=embed, view=view, ephemeral=True)
                     else:
-                        await interaction.response.send_message(embed=embed, ephemeral=True)
+                        await interaction.followup.send(embed=embed, ephemeral=True)
                 else:
                     # 通常のアイテム詳細表示
                     embed, view = await self.embed_manager.create_item_detail_embed(
                         selected_item, str(interaction.user.id)
                     )
-                    
-                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+
+                    await interaction.followup.send(embed=embed, view=view, ephemeral=True)
             else:
-                await interaction.response.send_message("❌ 選択されたアイテムが見つかりません", ephemeral=True)
-                
+                await interaction.followup.send("❌ 選択されたアイテムが見つかりません", ephemeral=True)
+
         except Exception as e:
             logger.error(f"関連アイテム選択エラー: {e}")
-            await interaction.response.send_message("❌ アイテム詳細の取得中にエラーが発生しました", ephemeral=True)
+            await interaction.followup.send("❌ アイテム詳細の取得中にエラーが発生しました", ephemeral=True)
 
 
 class LocationAcquisitionView(discord.ui.View):
@@ -2923,10 +2936,12 @@ class LocationAcquisitionSelect(discord.ui.Select):
     
     async def callback(self, interaction: discord.Interaction):
         try:
+            await interaction.response.defer(ephemeral=True)
+
             # 選択された値を分解
             selected = self.values[0]
             method, location = selected.split('_', 1)
-            
+
             # 検索条件を決定
             if self.acquisition_method:
                 # 入手手段から場所を選択した場合
@@ -2934,10 +2949,10 @@ class LocationAcquisitionSelect(discord.ui.Select):
             else:
                 # 場所から入手手段を選択した場合
                 await self.search_and_display(interaction, method, location)
-                
+
         except Exception as e:
             logger.error(f"場所・入手手段選択エラー: {e}")
-            await interaction.response.send_message("❌ 検索中にエラーが発生しました", ephemeral=True)
+            await interaction.followup.send("❌ 検索中にエラーが発生しました", ephemeral=True)
     
     async def search_and_display(self, interaction, method, location):
         """選択された条件で検索して結果を表示"""
@@ -2951,16 +2966,16 @@ class LocationAcquisitionSelect(discord.ui.Select):
                     description=f"**{location}** の **{method}** に該当するデータが見つかりませんでした",
                     color=discord.Color.red()
                 )
-                await interaction.response.send_message(embed=embed, ephemeral=True)
+                await interaction.followup.send(embed=embed, ephemeral=True)
                 return
-            
+
             # 結果のタイプを判定
             if method == 'クエスト' and len(results) == 1 and results[0].get('item_type') == 'npcs':
                 # クエストNPCの詳細表示
                 embed, view = await self.embed_manager.create_item_detail_embed(
                     results[0], str(interaction.user.id)
                 )
-                await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                await interaction.followup.send(embed=embed, view=view, ephemeral=True)
             elif len(results) == 1:
                 # gathering_locationタイプの場合は特別な表示
                 if results[0].get('item_type') == 'gathering_location':
@@ -3013,24 +3028,24 @@ class LocationAcquisitionSelect(discord.ui.Select):
                         unique_materials
                     )
                     
-                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                    await interaction.followup.send(embed=embed, view=view, ephemeral=True)
                 else:
                     # 通常の詳細表示
                     embed, view = await self.embed_manager.create_item_detail_embed(
                         results[0], str(interaction.user.id)
                     )
-                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                    await interaction.followup.send(embed=embed, view=view, ephemeral=True)
             else:
                 # 複数結果のリスト表示
                 query = f"{location} {method}"
                 embed, view = await self.embed_manager.create_search_results_embed(
                     results, query, page=0
                 )
-                await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
-                
+                await interaction.followup.send(embed=embed, view=view, ephemeral=True)
+
         except Exception as e:
             logger.error(f"検索結果表示エラー: {e}")
-            await interaction.response.send_message("❌ 結果表示中にエラーが発生しました", ephemeral=True)
+            await interaction.followup.send("❌ 結果表示中にエラーが発生しました", ephemeral=True)
     
     async def search_by_method_and_location(self, method, location):
         """入手手段と場所で検索"""
@@ -3158,45 +3173,47 @@ class DropItemSelect(discord.ui.Select):
     
     async def callback(self, interaction: discord.Interaction):
         try:
+            await interaction.response.defer(ephemeral=True)
+
             # 選択された値から素材名を取得
             selected_value = self.values[0]
             material_index = int(selected_value.split('_')[1])
             material_name = self.materials[material_index]
-            
+
             # 素材検索を実行
             from search_engine import SearchEngine
             from database import DatabaseManager
-            
+
             db = DatabaseManager()
             search_engine = SearchEngine(db, self.embed_manager.config)
-            
+
             # 素材を検索
             results = await search_engine.search(material_name)
-            
+
             if results:
                 if len(results) == 1:
                     # 単一結果の場合は詳細表示
                     embed, view = await self.embed_manager.create_item_detail_embed(
                         results[0], str(interaction.user.id)
                     )
-                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                    await interaction.followup.send(embed=embed, view=view, ephemeral=True)
                 else:
                     # 複数結果の場合はリスト表示
                     embed, view = await self.embed_manager.create_search_results_embed(
                         results, material_name, page=0
                     )
-                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                    await interaction.followup.send(embed=embed, view=view, ephemeral=True)
             else:
                 embed = discord.Embed(
                     title="検索結果",
                     description=f"「{material_name}」の詳細情報が見つかりませんでした",
                     color=discord.Color.red()
                 )
-                await interaction.response.send_message(embed=embed, ephemeral=True)
-                
+                await interaction.followup.send(embed=embed, ephemeral=True)
+
         except Exception as e:
             logger.error(f"ドロップアイテム選択エラー: {e}")
-            await interaction.response.send_message("❌ アイテム詳細の取得中にエラーが発生しました", ephemeral=True)
+            await interaction.followup.send("❌ アイテム詳細の取得中にエラーが発生しました", ephemeral=True)
 
 
 class NPCExchangeSelect(discord.ui.Select):
@@ -3216,6 +3233,8 @@ class NPCExchangeSelect(discord.ui.Select):
     
     async def callback(self, interaction: discord.Interaction):
         try:
+            await interaction.response.defer(ephemeral=True)
+
             # 選択された値から交換データを取得
             selected_value = self.values[0]
             exchange_index = int(selected_value.split('_')[2])
@@ -3403,11 +3422,11 @@ class NPCExchangeSelect(discord.ui.Select):
                     material_button = NPCItemSearchButton(material_items[0], button_label, self.embed_manager)
                     view.add_item(material_button)
             
-            await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
-            
+            await interaction.followup.send(embed=embed, view=view, ephemeral=True)
+
         except Exception as e:
             logger.error(f"NPC交換選択エラー: {e}")
-            await interaction.response.send_message("❌ 取引詳細の表示中にエラーが発生しました", ephemeral=True)
+            await interaction.followup.send("❌ 取引詳細の表示中にエラーが発生しました", ephemeral=True)
 
 
 class NPCMaterialSearchSelect(discord.ui.Select):
@@ -3425,22 +3444,24 @@ class NPCMaterialSearchSelect(discord.ui.Select):
     
     async def callback(self, interaction: discord.Interaction):
         try:
+            await interaction.response.defer(ephemeral=True)
+
             # 選択された値からインデックスを取得
             selected_value = self.values[0]
             material_index = int(selected_value.split('_')[1])
             selected_material = self.material_items[material_index]
-            
+
             # アイテムを検索
             from search_engine import SearchEngine
             from database import DatabaseManager
-            
+
             db = DatabaseManager()
             search_engine = SearchEngine(db, self.embed_manager.config)
-            
+
             logger.info(f"NPCMaterialSearchSelect: 検索素材名 = '{selected_material}'")
-            
+
             results = await search_engine.search(selected_material)
-            
+
             if results:
                 # 検索結果が1件の場合は直接詳細を表示
                 if len(results) == 1:
@@ -3448,22 +3469,22 @@ class NPCMaterialSearchSelect(discord.ui.Select):
                     embed, view = await self.embed_manager.create_item_detail_embed(
                         item_data, str(interaction.user.id)
                     )
-                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                    await interaction.followup.send(embed=embed, view=view, ephemeral=True)
                 else:
                     # 複数件の場合は検索結果一覧を表示
                     embed, view = await self.embed_manager.create_search_results_embed(
                         results, selected_material, page=0
                     )
-                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                    await interaction.followup.send(embed=embed, view=view, ephemeral=True)
             else:
-                await interaction.response.send_message(
+                await interaction.followup.send(
                     f"❌ 「{selected_material}」に一致するアイテムが見つかりませんでした",
                     ephemeral=True
                 )
-                
+
         except Exception as e:
             logger.error(f"素材検索エラー: {e}")
-            await interaction.response.send_message("❌ 素材検索中にエラーが発生しました", ephemeral=True)
+            await interaction.followup.send("❌ 素材検索中にエラーが発生しました", ephemeral=True)
 
 
 class NPCObtainableSearchSelect(discord.ui.Select):
@@ -3481,22 +3502,24 @@ class NPCObtainableSearchSelect(discord.ui.Select):
     
     async def callback(self, interaction: discord.Interaction):
         try:
+            await interaction.response.defer(ephemeral=True)
+
             # 選択された値からインデックスを取得
             selected_value = self.values[0]
             item_index = int(selected_value.split('_')[1])
             selected_item = self.obtainable_items[item_index]
-            
+
             # アイテムを検索
             from search_engine import SearchEngine
             from database import DatabaseManager
-            
+
             db = DatabaseManager()
             search_engine = SearchEngine(db, self.embed_manager.config)
-            
+
             logger.info(f"NPCObtainableSearchSelect: 検索アイテム名 = '{selected_item}'")
-            
+
             results = await search_engine.search(selected_item)
-            
+
             if results:
                 # 検索結果が1件の場合は直接詳細を表示
                 if len(results) == 1:
@@ -3504,22 +3527,22 @@ class NPCObtainableSearchSelect(discord.ui.Select):
                     embed, view = await self.embed_manager.create_item_detail_embed(
                         item_data, str(interaction.user.id)
                     )
-                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                    await interaction.followup.send(embed=embed, view=view, ephemeral=True)
                 else:
                     # 複数件の場合は検索結果一覧を表示
                     embed, view = await self.embed_manager.create_search_results_embed(
                         results, selected_item, page=0
                     )
-                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                    await interaction.followup.send(embed=embed, view=view, ephemeral=True)
             else:
-                await interaction.response.send_message(
+                await interaction.followup.send(
                     f"❌ 「{selected_item}」に一致するアイテムが見つかりませんでした",
                     ephemeral=True
                 )
-                
+
         except Exception as e:
             logger.error(f"入手アイテム検索エラー: {e}")
-            await interaction.response.send_message("❌ 入手アイテム検索中にエラーが発生しました", ephemeral=True)
+            await interaction.followup.send("❌ 入手アイテム検索中にエラーが発生しました", ephemeral=True)
 
 
 class NPCItemSearchButton(discord.ui.Button):
@@ -3531,42 +3554,44 @@ class NPCItemSearchButton(discord.ui.Button):
     
     async def callback(self, interaction: discord.Interaction):
         try:
+            await interaction.response.defer(ephemeral=True)
+
             # アイテムを検索
             from search_engine import SearchEngine
             from database import DatabaseManager
-            
+
             db = DatabaseManager()
             search_engine = SearchEngine(db, self.embed_manager.config)
-            
+
             # デバッグログ追加
             logger.info(f"NPCItemSearchButton: 検索アイテム名 = '{self.item_name}'")
-            
+
             results = await search_engine.search(self.item_name)
-            
+
             if results:
                 if len(results) == 1:
                     # 単一結果の場合は詳細表示
                     embed, view = await self.embed_manager.create_item_detail_embed(
                         results[0], str(interaction.user.id)
                     )
-                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                    await interaction.followup.send(embed=embed, view=view, ephemeral=True)
                 else:
                     # 複数結果の場合はリスト表示
                     embed, view = await self.embed_manager.create_search_results_embed(
                         results, self.item_name, page=0
                     )
-                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                    await interaction.followup.send(embed=embed, view=view, ephemeral=True)
             else:
                 embed = discord.Embed(
                     title="検索結果",
                     description=f"「{self.item_name}」の詳細情報が見つかりませんでした",
                     color=discord.Color.red()
                 )
-                await interaction.response.send_message(embed=embed, ephemeral=True)
-                
+                await interaction.followup.send(embed=embed, ephemeral=True)
+
         except Exception as e:
             logger.error(f"アイテム検索エラー: {e}")
-            await interaction.response.send_message("❌ アイテム検索中にエラーが発生しました", ephemeral=True)
+            await interaction.followup.send("❌ アイテム検索中にエラーが発生しました", ephemeral=True)
 
 
 class MobDropSelect(discord.ui.Select):
@@ -3584,20 +3609,22 @@ class MobDropSelect(discord.ui.Select):
     
     async def callback(self, interaction: discord.Interaction):
         try:
+            await interaction.response.defer(ephemeral=True)
+
             # 選択された値からアイテムデータを取得
             selected_value = self.values[0]
             item_index = int(selected_value.split('_')[1])
             item_data = self.dropped_items[item_index]
-            
+
             # アイテム詳細を表示
             embed, view = await self.embed_manager.create_item_detail_embed(
                 item_data, str(interaction.user.id)
             )
-            await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
-            
+            await interaction.followup.send(embed=embed, view=view, ephemeral=True)
+
         except Exception as e:
             logger.error(f"ドロップアイテム選択エラー: {e}")
-            await interaction.response.send_message("❌ アイテム詳細の表示中にエラーが発生しました", ephemeral=True)
+            await interaction.followup.send("❌ アイテム詳細の表示中にエラーが発生しました", ephemeral=True)
 
 
 class EquipmentMaterialSelect(discord.ui.Select):
@@ -3615,41 +3642,43 @@ class EquipmentMaterialSelect(discord.ui.Select):
     
     async def callback(self, interaction: discord.Interaction):
         try:
+            await interaction.response.defer(ephemeral=True)
+
             # 選択された値から素材名を取得
             selected_value = self.values[0]
             material_index = int(selected_value.split('_')[1])
             material_name = self.materials[material_index]
-            
+
             # 素材を検索
             from search_engine import SearchEngine
             from database import DatabaseManager
-            
+
             db = DatabaseManager()
             search_engine = SearchEngine(db, self.embed_manager.config)
-            
+
             results = await search_engine.search(material_name)
-            
+
             if results:
                 if len(results) == 1:
                     # 単一結果の場合は詳細表示
                     embed, view = await self.embed_manager.create_item_detail_embed(
                         results[0], str(interaction.user.id)
                     )
-                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                    await interaction.followup.send(embed=embed, view=view, ephemeral=True)
                 else:
                     # 複数結果の場合はリスト表示
                     embed, view = await self.embed_manager.create_search_results_embed(
                         results, material_name, page=0
                     )
-                    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+                    await interaction.followup.send(embed=embed, view=view, ephemeral=True)
             else:
                 embed = discord.Embed(
                     title="検索結果",
                     description=f"「{material_name}」の詳細情報が見つかりませんでした",
                     color=discord.Color.red()
                 )
-                await interaction.response.send_message(embed=embed, ephemeral=True)
-                
+                await interaction.followup.send(embed=embed, ephemeral=True)
+
         except Exception as e:
             logger.error(f"必要素材選択エラー: {e}")
-            await interaction.response.send_message("❌ 素材詳細の表示中にエラーが発生しました", ephemeral=True)
+            await interaction.followup.send("❌ 素材詳細の表示中にエラーが発生しました", ephemeral=True)
