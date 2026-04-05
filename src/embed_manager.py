@@ -293,14 +293,15 @@ class EmbedManager:
         drops = item_data.get("drops")
         if drops and str(drops).strip():
             drop_items = [item.strip() for item in str(drops).split(",") if item.strip()]
-            drop_list = [f"　• `{item}`" for item in drop_items[:10]]
-
-            drop_text = "\u200B" + "\n".join(drop_list)   # ←追加した \u200B と先頭改行
-            embed.add_field(
-                name="ドロップ品:",
-                value=drop_text,
-                inline=False
-            )
+            if drop_items:
+                drop_list = [f"　• `{item}`" for item in drop_items[:10]]
+                # 1行目にゼロ幅スペースを挿入
+                drop_list[0] = "\u200B" + drop_list[0]
+                embed.add_field(
+                    name="ドロップ品:",
+                    value="\n".join(drop_list),
+                    inline=False
+                )
         
         # エリア詳細
         area_detail = item_data.get('area_detail')
@@ -337,16 +338,17 @@ class EmbedManager:
         required_materials = item_data.get('required_materials')
         if required_materials and str(required_materials).strip():
             material_items = [item.strip() for item in str(required_materials).split(',') if item.strip()]
-            # :を×に置換
-            material_list = [f"　• `{item.replace(':', '×')}`" for item in material_items[:10]]
-            # 1行目にゼロ幅スペースを挿入
-            material_list[0] = "\u200B" + material_list[0]
-            
-            embed.add_field(
-                name="必要素材:",
-                value="\n".join(material_list),
-                inline=False
-            )
+            if material_items:
+                # :を×に置換
+                material_list = [f"　• `{item.replace(':', '×')}`" for item in material_items[:10]]
+                # 1行目にゼロ幅スペースを挿入
+                material_list[0] = "\u200B" + material_list[0]
+
+                embed.add_field(
+                    name="必要素材:",
+                    value="\n".join(material_list),
+                    inline=False
+                )
         
         # 効果（紋章系は特別な表示形式）
         item_effect = item_data.get('item_effect')
@@ -903,11 +905,9 @@ class EmbedManager:
             # 2. カンマで分割（例：「素材A:2,素材B:3」）
             # 3. 連続記述（例：「素材A:2素材B:3」）
             
-            # まず「+」で分割を試す
+            # まず「 + 」（スペース付き）で分割を試す
             if ' + ' in materials_str:
                 parts = materials_str.split(' + ')
-            elif '+' in materials_str:
-                parts = materials_str.split('+')
             else:
                 # 「+」がない場合は他の形式を試す
                 parts = [materials_str]
@@ -1568,13 +1568,13 @@ class AcquisitionDetailsButton(discord.ui.Button):
                     if info['category'] in ['採取', '採掘', '釣り']:
                         method_text = info.get('method', '')
                         location_text = info.get('location', '')
-                        display_text = f"　**{info['category']}**"
+                        display_text = f"\u200B　`{info['category']}`"
                         if method_text:
                             display_text += f"\n　• 方法: `{method_text}`"
                         if location_text:
                             display_text += f"\n　• 場所: `{location_text}`"
                         embed.add_field(
-                            name="**入手方法:**",
+                            name="入手方法:",
                             value=display_text,
                             inline=False
                         )
@@ -1691,9 +1691,9 @@ class AcquisitionDetailsButton(discord.ui.Button):
                         
                         # method_textが有効な場合のみ表示
                         if method_text and method_text != 'None':
-                            display_text = f"`{method_text}`"
+                            display_text = f"\u200B　`{method_text}`"
                             if location_text and location_text != 'None':
-                                display_text += f"\n• 場所: `{location_text}`"
+                                display_text += f"\n　• 場所: `{location_text}`"
                             embed.add_field(
                                 name="その他の入手方法:",
                                 value=display_text,
@@ -1797,7 +1797,7 @@ class AcquisitionDetailsButton(discord.ui.Button):
                             business_type = npc.get('business_type', '')
                             display_text = f"`{npc_name}`"
                             if npc_location:
-                                display_text += f" @ {npc_location}"
+                                display_text += f" ({npc_location})"
                             if business_type:
                                 display_text += f" ({business_type})"
                             if i == 0:
@@ -2097,61 +2097,20 @@ class UsageDetailsSelectMenu(discord.ui.Select):
                 if selected_item.get('exchange_data'):
                     exchange = selected_item['exchange_data']
                     if exchange.get('required_materials'):
-                        # 必要素材を箇条書き形式で表示
-                        required_materials = exchange['required_materials']
-                        required_items = []
-                        
-                        # +記号で分割されている場合を先にチェック
-                        if ' + ' in required_materials:
-                            # +記号で分割
-                            for item in required_materials.split(' + '):
-                                item = item.strip()
-                                # :表記を×表記に変換
-                                if ':' in item:
-                                    item_name, quantity = item.split(':', 1)
-                                    formatted_item = f"• {item_name.strip()}×{quantity.strip()}"
-                                else:
-                                    formatted_item = f"• {item}"
-                                required_items.append(formatted_item)
-                        # カンマで分割を試みる
-                        elif ',' in required_materials:
-                            # カンマ区切りの場合
-                            for item in required_materials.split(','):
-                                item = item.strip()
-                                # :表記を×表記に変換
-                                if ':' in item:
-                                    item_name, quantity = item.split(':', 1)
-                                    formatted_item = f"• {item_name.strip()}×{quantity.strip()}"
-                                else:
-                                    formatted_item = f"• {item}"
-                                required_items.append(formatted_item)
+                        # 共通のヘルパーメソッドを使用して箇条書き形式で表示
+                        formatted_items = self.embed_manager._parse_and_format_materials(exchange['required_materials'])
+                        if formatted_items:
+                            embed.add_field(
+                                name="必要素材:",
+                                value="\n".join(formatted_items),
+                                inline=False
+                            )
                         else:
-                            # カンマがない場合、複数アイテムが連続している可能性をチェック
-                            # パターン: アイテム名:数量アイテム名:数量...
-                            import re
-                            # 数字の後に文字が続くパターンを探す
-                            pattern = r'(.+?):(\d+)(?=[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF\u3400-\u4DBFa-zA-Z]|$)'
-                            matches = re.findall(pattern, required_materials)
-                            
-                            if matches and len(matches) > 1:
-                                # 複数アイテムが見つかった場合
-                                for item_name, quantity in matches:
-                                    formatted_item = f"• {item_name.strip()}×{quantity.strip()}"
-                                    required_items.append(formatted_item)
-                            else:
-                                # 単一アイテムまたは通常の形式
-                                if ':' in required_materials:
-                                    item_name, quantity = required_materials.split(':', 1)
-                                    formatted_item = f"• {item_name.strip()}×{quantity.strip()}"
-                                else:
-                                    formatted_item = f"• {required_materials}"
-                                required_items.append(formatted_item)
-                        
-                        embed.add_field(
-                            name="必要素材:",
-                            value="\u200B\n".join(required_items),
-                            inline=False
-                        )
+                            embed.add_field(
+                                name="必要素材:",
+                                value=f"\u200B　• `{exchange['required_materials']}`",
+                                inline=False
+                            )
                 
                 # NPCのプルダウンを追加するためのViewを作成
                 view = discord.ui.View(timeout=300)
@@ -2752,14 +2711,16 @@ class NewRelatedItemSelect(discord.ui.Select):
                                         )
                         elif items:
                             # 旧形式のフォールバック
-                            item_list = [f"• `{i.strip()}`" for i in items.split(',')]
-                            embed.add_field(name="取扱アイテム", value="\n".join(item_list[:10]), inline=False)
+                            item_list = [f"　• `{i.strip()}`" for i in items.split(',') if i.strip()]
+                            if item_list:
+                                item_list[0] = "\u200B" + item_list[0]
+                                embed.add_field(name="取扱アイテム:", value="\n".join(item_list[:10]), inline=False)
                         
                         if desc:
-                            embed.add_field(name="備考", value=f"\u200B　`{desc}`", inline=False)
-                        
+                            embed.add_field(name="備考:", value=f"\u200B　`{desc}`", inline=False)
+
                         # 取引詳細の説明文を削除（プルダウンで対応済み）
-                        
+
                         # NPCのプルダウンを追加するためのViewを作成
                         view = discord.ui.View(timeout=300)
                         await self.embed_manager._add_npc_dropdown_to_view(view, selected_item)
@@ -2870,7 +2831,7 @@ class NewRelatedItemSelect(discord.ui.Select):
                                 formatted_items = self._parse_and_format_materials(required)
                                 
                                 if formatted_items:
-                                    embed.add_field(name="必要素材/価格", value="\n".join(formatted_items), inline=False)
+                                    embed.add_field(name="必要素材/価格:", value="\n".join(formatted_items), inline=False)
                                 else:
                                     # フォールバック
                                     embed.add_field(name="必要素材/価格:", value=f"\u200B　• `{required}`", inline=False)
@@ -3305,15 +3266,16 @@ class NPCExchangeSelect(discord.ui.Select):
             
             # EXP・Gold情報
             if exp or gold:
-                cost_info = []
+                cost_items = []
                 if exp:
-                    cost_info.append(f"EXP: **{exp}**")
+                    cost_items.append(f"　• EXP: `{exp}`")
                 if gold:
-                    cost_info.append(f"Gold: **{gold}G**")
-                
+                    cost_items.append(f"　• Gold: `{gold}G`")
+                if cost_items:
+                    cost_items[0] = "\u200B" + cost_items[0]
                 embed.add_field(
                     name="コスト:",
-                    value="\u3000" + " / ".join(cost_info),
+                    value="\n".join(cost_items),
                     inline=False
                 )
             
