@@ -2,6 +2,7 @@ import logging
 import aiosqlite
 import re
 import jaconv
+import pykakasi
 from fnmatch import fnmatch
 from typing import List, Dict, Any, Optional
 from database import DatabaseManager
@@ -13,6 +14,9 @@ class SearchEngine:
     def __init__(self, db_manager: DatabaseManager, config: Dict[str, Any]):
         self.db_manager = db_manager
         self.config = config
+        # pykakasiの初期化
+        kks = pykakasi.kakasi()
+        self.converter = kks.convert
         self.fuzzy_map = {
             # 長音変換（ー、～、〜）
             'ー': ['−', '一', '～', '〜'],
@@ -568,13 +572,15 @@ class SearchEngine:
                 if gathering_info:
                     # acquisition_infoとして格納
                     related_items['acquisition_info'] = gathering_info
-                    
-                    # gathering_locationsテーブルからも検索
-                    gathering_locations = await self._search_gathering_locations(item_name)
-                    for loc in gathering_locations:
-                        loc['relation_type'] = 'gathering_location'
-                        related_items['acquisition_sources'].append(loc)
-                
+
+                # gathering_locationsテーブルからも検索（gathering_infoの有無に関わらず）
+                gathering_locations = await self._search_gathering_locations(item_name)
+                for loc in gathering_locations:
+                    loc['relation_type'] = 'gathering_location'
+                    related_items['acquisition_sources'].append(loc)
+                if gathering_locations:
+                    related_items['gathering_locations'] = gathering_locations
+
                 # 3. npcsからの取得（購入・交換・クエスト）
                 npcs_providing = await self._search_npcs_providing_material(item_name)
                 for npc in npcs_providing:
@@ -630,12 +636,14 @@ class SearchEngine:
                 gathering_info = await self._search_gathering_info(item_name)
                 if gathering_info:
                     related_items['acquisition_info'] = gathering_info
-                    
-                    # gathering_locationsテーブルからも検索
-                    gathering_locations = await self._search_gathering_locations(item_name)
-                    for loc in gathering_locations:
-                        loc['relation_type'] = 'gathering_location'
-                        related_items['acquisition_sources'].append(loc)
+
+                # gathering_locationsテーブルからも検索（gathering_infoの有無に関わらず）
+                gathering_locations = await self._search_gathering_locations(item_name)
+                for loc in gathering_locations:
+                    loc['relation_type'] = 'gathering_location'
+                    related_items['acquisition_sources'].append(loc)
+                if gathering_locations:
+                    related_items['gathering_locations'] = gathering_locations
                 
             elif item_type == 'mobs':
                 # mob名の場合
@@ -806,21 +814,21 @@ class SearchEngine:
                 db.row_factory = aiosqlite.Row
                 results = []
                 
-                # gatheringsテーブルを検索
+                # gatheringsテーブルを検索（obtained_materialsカラムで素材名を検索）
                 cursor = await db.execute(
                     """
-                    SELECT *, 'gatherings' as item_type 
-                    FROM gatherings 
-                    WHERE resource_name LIKE ?
+                    SELECT *, 'gatherings' as item_type
+                    FROM gatherings
+                    WHERE obtained_materials LIKE ?
                     """,
                     (f'%{item_name}%',)
                 )
                 rows = await cursor.fetchall()
-                
+
                 for row in rows:
                     row_dict = dict(row)
-                    # resource_nameを確認
-                    if item_name.lower() in row_dict.get('resource_name', '').lower():
+                    # obtained_materialsを確認
+                    if item_name.lower() in row_dict.get('obtained_materials', '').lower():
                         results.append(row_dict)
                 
                 return results
@@ -1116,6 +1124,96 @@ class SearchEngine:
                 
         except Exception as e:
             logger.error(f"検索候補取得エラー: {e}")
+            return []
+    
+    async def get_hiragana_suggestions(self, query: str, limit: int = 5) -> List[str]:
+        """漢字をひらがなに変換して検索候補を取得"""
+        try:
+            # 漢字が含まれているかチェック
+            if not any('\u4e00' <= c <= '\u9fff' for c in query):
+                return []
+            
+            # 漢字をひらがなに変換
+            result = self.converter(query)
+            hiragana_query = ''.join([item['hira'] for item in result])
+            
+            # 変換前後が同じ場合はスキップ
+            if hiragana_query == query:
+                return []
+            
+            async with aiosqlite.connect(self.db_manager.db_path) as db:
+                db.row_factory = aiosqlite.Row
+                suggestions = set()
+                
+                # formal_nameとcommon_nameを持つテーブル
+                tables_with_formal_name = ['equipments', 'materials', 'mobs']
+                
+                for table in tables_with_formal_name:
+                    # 正式名称をひらがなに変換して比較
+                    cursor = await db.execute(
+                        f"SELECT formal_name FROM {table}"
+                    )
+                    rows = await cursor.fetchall()
+                    
+                    for row in rows:
+                        formal_name = row['formal_name']
+                        # データベースの名前もひらがなに変換
+                        result_formal = self.converter(formal_name)
+                        hiragana_formal = ''.join([item['hira'] for item in result_formal])
+                        
+                        # 部分一致で検索
+                        if hiragana_query in hiragana_formal:
+                            suggestions.add(formal_name)
+                            if len(suggestions) >= limit:
+                                break
+                    
+                    if len(suggestions) >= limit:
+                        break
+                    
+                    # 一般名称も同様に検索
+                    cursor = await db.execute(
+                        f"SELECT common_name FROM {table} WHERE common_name IS NOT NULL"
+                    )
+                    rows = await cursor.fetchall()
+                    
+                    for row in rows:
+                        common_name = row['common_name']
+                        # カンマ区切りの各名前をチェック
+                        for name in common_name.split(','):
+                            name = name.strip()
+                            result_common = self.converter(name)
+                            hiragana_common = ''.join([item['hira'] for item in result_common])
+                            
+                            if hiragana_query in hiragana_common:
+                                suggestions.add(name)
+                                if len(suggestions) >= limit:
+                                    break
+                        
+                        if len(suggestions) >= limit:
+                            break
+                    
+                    if len(suggestions) >= limit:
+                        break
+                
+                # NPCの名前も検索
+                if len(suggestions) < limit:
+                    cursor = await db.execute("SELECT name FROM npcs")
+                    rows = await cursor.fetchall()
+                    
+                    for row in rows:
+                        npc_name = row['name']
+                        result_npc = self.converter(npc_name)
+                        hiragana_npc = ''.join([item['hira'] for item in result_npc])
+                        
+                        if hiragana_query in hiragana_npc:
+                            suggestions.add(npc_name)
+                            if len(suggestions) >= limit:
+                                break
+                
+                return sorted(list(suggestions))[:limit]
+                
+        except Exception as e:
+            logger.error(f"ひらがな変換検索候補取得エラー: {e}")
             return []
     
     async def _search_npcs_using_material(self, material_name: str) -> List[Dict[str, Any]]:
