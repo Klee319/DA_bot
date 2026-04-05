@@ -532,17 +532,16 @@ class SearchEngine:
         try:
             item_name = item_data.get('formal_name')
             item_type = item_data.get('item_type')
-            
             if not item_name:
                 return {}
-            
+
             related_items = {}
-            
+
             if item_type == 'materials':
                 # material名の場合
                 related_items['usage_destinations'] = []  # 利用先
                 related_items['acquisition_sources'] = []  # 入手元
-                
+
                 # 利用先の検索
                 # 1. equipmentテーブルで必要素材に含まれるもの
                 equipment_using = await self._search_equipment_using_material(item_name)

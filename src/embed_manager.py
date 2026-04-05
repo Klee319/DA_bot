@@ -1459,7 +1459,7 @@ class ItemDetailView(discord.ui.View):
         """関連アイテムを取得"""
         from search_engine import SearchEngine
         from database import DatabaseManager
-        
+
         db = DatabaseManager()
         search_engine = SearchEngine(db, self.embed_manager.config)
         return await search_engine.search_related_items(self.item_data)
@@ -1497,7 +1497,7 @@ class AcquisitionDetailsButton(discord.ui.Button):
             options = []
             option_index = 0
             item_type = view.item_data.get('item_type', '')
-            
+
             if item_type == 'materials':
                 # 素材の入手元包括表示
                 
@@ -1939,9 +1939,9 @@ class UsageDetailsButton(discord.ui.Button):
 
             # ページング対応のため、全ての利用先をリスト化
             all_usage_items = []
-            
+
             item_type = view.item_data.get('item_type', '')
-            
+
             if item_type == 'materials':
                 # 素材の利用先
                 usage_destinations = related_items.get('usage_destinations', [])
